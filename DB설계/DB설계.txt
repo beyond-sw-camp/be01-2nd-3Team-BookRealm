@@ -1,0 +1,44 @@
+회원	USER
+	ID		userId
+	이름		username
+	패스워드		passwd
+	주소		address
+	전화번호		phone
+	가입수단(카카오, 구글, 이메일 등등)	suType
+	관리자여부	adminyn
+도서	BOOK
+	도서코드		bookId		auto_increment	pk
+	카테고리		category
+	작가		writer
+	제목		title
+	가격		price
+	재고		stock
+	판매수량		sales
+	발행일자		publishDate
+	출판사		publisher
+주문	ORDER
+	구매코드		buyId		auto_increment	pk	
+	결제수단		payment
+	배송지주소	destination
+	회원(id)		userId		fk
+구매목록	ORDERLIST
+	구매코드		buyId	
+	도서코드		bookId		fk	
+	구매수량		purchase
+	처리상태		status
+리뷰	REVIEW
+	작성자id		userId		fk
+	도서코드		bookId		fk
+	리뷰번호		reviewId	auto_increment 	pk
+	별점		popular
+	작성내용		contents
+	작성날짜		reportDate
+장바구니	CART
+	장바구니코드	cartId		auto_increment	pk
+	도서코드		bookId		fk
+	수량		purchase
+	회원id		userId		fk
+즐겨찾기	FAVORITE
+	즐겨찾기코드	favorId		auto_increment	pk
+	도서코드		bookId		fk
+	회원id		userId		fk
