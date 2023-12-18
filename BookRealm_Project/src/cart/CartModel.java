@@ -1,8 +1,10 @@
 package cart;
 
-public class ModelCart {
+public class CartModel {
     public final String ClassName = "cart";
     private int carId,purchase,bookId;
+
+    private String userId;
 
     public String getClassName() {
         return ClassName;
@@ -40,7 +42,7 @@ public class ModelCart {
         this.userId = userId;
     }
 
-    private String userId;
+
 
 
 }
