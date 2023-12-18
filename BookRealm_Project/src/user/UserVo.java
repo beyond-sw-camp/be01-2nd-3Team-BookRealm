@@ -1,6 +1,8 @@
 package user;
 
-public class userVo {
+public class UserVo {
+
+    public final String ClassName = "User";
     private int userId;
     private String username;
     private String passwd;
@@ -9,10 +11,11 @@ public class userVo {
     private String suType;
     private int adminyn;
 
-    public userVo() {
+
+    public UserVo() {
     }
 
-    public userVo(int userId, String username, String passwd, String address, String phone, String suType, int adminyn) {
+    public UserVo(int userId, String username, String passwd, String address, String phone, String suType, int adminyn) {
         this.userId = userId;
         this.username = username;
         this.passwd = passwd;
