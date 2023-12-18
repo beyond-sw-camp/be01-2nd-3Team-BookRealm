@@ -1,13 +1,9 @@
 package favorite;
 
-public class FavoriteModel {
-    public final String ClassName = "favorite";
-    private int favorId,bookId;
-    private String userId;
-
-    public String getClassName() {
-        return ClassName;
-    }
+public class FavoriteVO {
+    private int favorId;  //즐겨찾기 코드 (PK)
+    private int bookId;  // 도서코드
+    private String userId;  // 회원ID
 
     public int getFavorId() {
         return favorId;
