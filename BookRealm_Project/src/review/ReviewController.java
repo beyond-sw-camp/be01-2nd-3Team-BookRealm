@@ -13,17 +13,17 @@ public class ReviewController {
     }
 
     // 리뷰 전체를 보여줌
-    public void showAll() {
+    public void showAll() throws SQLException {
         rs = reviewDAO.selectAll();
         // 결과 화면 추가해야함.
     }
 
-    public void showByBookId(int bookId) {
+    public void showByBookId(int bookId) throws SQLException {
         rs = reviewDAO.selectByBookId(bookId);
         // 결과 화면 추가해야함.
     }
 
-    public void showByUserId(String userId){
+    public void showByUserId(String userId) throws SQLException {
         rs = reviewDAO.selectByUserId(userId);
         // 결과 화면 추가해야함.
     }
