@@ -1,12 +1,12 @@
 package order;
 
-public class orderVo {
+public class OrderVO {
     private int buyId;
     private String payment;
     private String destination;
     private int userId;
 
-    public orderVo() {
+    public OrderVO() {
     }
 
 

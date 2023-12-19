@@ -5,21 +5,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import static ConnUtil.CloseHelper.closeAll;
 
-public class UserDao {
+public class UserDAO {
     static Statement stmt = null;
     static ResultSet rs = null;
     static Connection conn = null;
     static PreparedStatement pstmt = null;
 
-    public UserDao() {
+    public UserDAO() {
         conn = ConnectionSingletonHelper.getConnection("mariadb");
     }
 
 
     //selectAll (전체 회원 조회)
-    public ArrayList<UserVo> selectAll() throws SQLException {
-        ArrayList<UserVo> result = new ArrayList<>();
-        UserVo vo = null;
+    public ArrayList<UserVO> selectAll() throws SQLException {
+        ArrayList<UserVO> result = new ArrayList<>();
+        UserVO vo = null;
         // 작업 객체 생성
         stmt = conn.createStatement();
 
@@ -31,7 +31,7 @@ public class UserDao {
 
         // ResultSet 처리 → 일반적 반복문 활용
         while (rs.next()) {
-            vo = new UserVo();
+            vo = new UserVO();
 
             vo.setUserId(rs.getString("userId"));
             vo.setUsername(rs.getString("username"));
@@ -51,8 +51,8 @@ public class UserDao {
     }
 
     //select by id (회원 정보 조회)
-    public UserVo selectById(String id) throws SQLException {
-        UserVo vo = new UserVo();
+    public UserVO selectById(String id) throws SQLException {
+        UserVO vo = new UserVO();
 
         // 작업 객체 생성
         pstmt = conn.prepareStatement("select * from User where userId = ?");
@@ -100,7 +100,7 @@ public class UserDao {
     }
 
     //insert (회원가입)
-    public int join(UserVo vo) throws SQLException
+    public int join(UserVO vo) throws SQLException
     {
         // 반환할 결과값을 담아낼 변수 (적용된 행의 갯수)
         int result = 0;
