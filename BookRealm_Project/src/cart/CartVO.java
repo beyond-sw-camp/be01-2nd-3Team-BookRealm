@@ -1,21 +1,18 @@
 package cart;
 
-public class CartModel {
-    public final String ClassName = "cart";
-    private int carId,purchase,bookId;
+public class CartVO {
+    private int cartId;  // 장바구니 코드 (PK)
+    private int purchase;  //수량
+    private int bookId; // 도서코드
+    private String userId; //회원ID
 
-    private String userId;
 
-    public String getClassName() {
-        return ClassName;
+    public int getcartId() {
+        return cartId;
     }
 
-    public int getCarId() {
-        return carId;
-    }
-
-    public void setCarId(int carId) {
-        this.carId = carId;
+    public void setcartId(int cartId) {
+        this.cartId = cartId;
     }
 
     public int getPurchase() {
@@ -41,8 +38,6 @@ public class CartModel {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
-
 
 
 }
