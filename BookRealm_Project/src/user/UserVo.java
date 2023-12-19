@@ -3,7 +3,7 @@ package user;
 public class UserVo {
 
     public final String ClassName = "User";
-    private int userId;
+    private String userId;
     private String username;
     private String passwd;
     private String address;
@@ -15,7 +15,7 @@ public class UserVo {
     public UserVo() {
     }
 
-    public UserVo(int userId, String username, String passwd, String address, String phone, String suType, int adminyn) {
+    public UserVo(String userId, String username, String passwd, String address, String phone, String suType, int adminyn) {
         this.userId = userId;
         this.username = username;
         this.passwd = passwd;
@@ -25,11 +25,11 @@ public class UserVo {
         this.adminyn = adminyn;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

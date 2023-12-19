@@ -1,12 +1,9 @@
 package user;
 
 import ConnUtil.ConnectionSingletonHelper;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import static ConnUtil.CloseHelper.close;
+import static ConnUtil.CloseHelper.closeAll;
 
 public class UserDao {
     static Statement stmt = null;
@@ -19,24 +16,24 @@ public class UserDao {
     }
 
 
-    //selectAll
+    //selectAll (전체 회원 조회)
     public ArrayList<UserVo> selectAll() throws SQLException {
         ArrayList<UserVo> result = new ArrayList<>();
-
+        UserVo vo = null;
         // 작업 객체 생성
-        Statement stmt = conn.createStatement();
+        stmt = conn.createStatement();
 
         // 쿼리문 준비 → select
         String sql = "SELECT * FROM USER";
 
         // 생성된 작업 객체를 활용하여 쿼리문 실행 → select → executeQuery() → ResultSet 반환 → 일반적으로 반복 처리
-        ResultSet rs = stmt.executeQuery(sql);
+        rs = stmt.executeQuery(sql);
 
         // ResultSet 처리 → 일반적 반복문 활용
         while (rs.next()) {
-            UserVo vo = new UserVo();
+            vo = new UserVo();
 
-            vo.setUserId(rs.getInt("userId"));
+            vo.setUserId(rs.getString("userId"));
             vo.setUsername(rs.getString("username"));
             vo.setPasswd(rs.getString("passwd"));
             vo.setAddress(rs.getString("address"));
@@ -48,26 +45,121 @@ public class UserDao {
         }
 
         //반환
-        close(rs);
-        close(stmt);
+        closeAll(conn, stmt, rs);
 
         return result;
     }
 
-    //select by id
-    public UserVo selectById(int id) throws SQLException {
-        UserVo result = new UserVo();
+    //select by id (회원 정보 조회)
+    public UserVo selectById(String id) throws SQLException {
+        UserVo vo = new UserVo();
 
         // 작업 객체 생성
-        PreparedStatement pstmt = conn.prepareStatement("select * from User where userId = ?");
-        pstmt.setInt(1, id);
+        pstmt = conn.prepareStatement("select * from User where userId = ?");
+        pstmt.setString(1, id);
         rs = pstmt.executeQuery();  // 반환값 있는 경우
 
         ResultSetMetaData rsmd = rs.getMetaData();
         int count = rsmd.getColumnCount();
 
+        if (rs.next()) {
+            vo.setUserId(rs.getString("userId"));
+            vo.setUsername(rs.getString("username"));
+            vo.setPasswd(rs.getString("passwd"));
+            vo.setAddress(rs.getString("address"));
+            vo.setPhone(rs.getString("phone"));
+            vo.setSuType(rs.getString("suType"));
+            vo.setAdminyn(rs.getInt("adminyn"));
+        }
+
+        //반환
+        closeAll(conn,pstmt,rs);
+        return vo;
+    }
+
+    //select passwd (로그인 할 때 비밀번호 조회)
+    public int login(String uId, String uPasswd) throws SQLException {
+        int result = -1;
+
+        pstmt = conn.prepareStatement("select passwd from User where userId = ?");
+        pstmt.setString(1,uId);
+
+        rs = pstmt.executeQuery();  // 반환값 있는 경우
+
+        if(rs.next()) {
+            if(rs.getString(1).equals(uPasswd)){
+                result = 1; //로그인 성공
+            }
+            else {
+                result = 0; //비밀번호 불일치
+            }
+        }
+
+        closeAll(conn,pstmt,rs);
+        return result; // 아이디 불일치
+    }
+
+    //insert (회원가입)
+    public int join(UserVo vo) throws SQLException
+    {
+        // 반환할 결과값을 담아낼 변수 (적용된 행의 갯수)
+        int result = 0;
+        // 작업 객체 생성
+        pstmt = conn.prepareStatement("INSERT INTO User(userid, username, passwd, addresss, phone, sutype, adminyn)"
+                + " VALUES(?, ?, ?, ?, ?, ?, ?)");
+
+        pstmt.setString(1,vo.getUserId());
+        pstmt.setString(2, vo.getUsername());
+        pstmt.setString(3, vo.getPasswd());
+        pstmt.setString(4, vo.getAddress());
+        pstmt.setString(5, vo.getPhone());
+        pstmt.setString(6, vo.getSuType());
+        pstmt.setInt(7, vo.getAdminyn());
+
+        // 작업 객체를 활용하여 쿼리문 실행(전달)
+        result = pstmt.executeUpdate();
+
+        //반환
+        closeAll(conn, pstmt, rs);
+
+        // 최종 결과값 반환
+        return result;
+
+    }//end add()
+
+    //delete (회원 탈퇴)
+    public int delete(String id) throws SQLException {
+        //반환할 결과값
+        int result = 0;
+
+        // 작업 객체 생성, 실행
+        pstmt = conn.prepareStatement("DELETE from User where userID = ?");
+        pstmt.setString(1, id);
+
+        result = pstmt.executeUpdate();
+
+        //반환
+        closeAll(conn, pstmt, rs);
 
         return result;
     }
 
+    //update (회원 정보 수정)
+    public int update(String field, String ud, String id) throws SQLException {
+        //반환할 결과값
+        int result = 0;
+
+        // 작업 객체 생성, 실행
+        pstmt = conn.prepareStatement("UPDATE User set ? = ? where id = ?");
+        pstmt.setString(1, field);
+        pstmt.setString(2, ud);
+        pstmt.setString(3, id);
+
+        result = pstmt.executeUpdate();
+
+        //반환
+        closeAll(conn, pstmt, rs);
+
+        return result;
+    }
 }

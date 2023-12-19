@@ -46,4 +46,16 @@ public class CloseHelper {
         }
 
     }
+
+    public static void closeAll(Connection conn, PreparedStatement pstmt, ResultSet rs) {
+        close(conn);
+        close(pstmt);
+        close(rs);
+    }
+
+    public static void closeAll(Connection conn, Statement stmt, ResultSet rs) {
+        close(conn);
+        close(stmt);
+        close(rs);
+    }
 }
