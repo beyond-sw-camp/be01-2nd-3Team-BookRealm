@@ -1,6 +1,6 @@
 package favorite;
 
-public class ModelFavorite {
+public class FavoriteModel {
     public final String ClassName = "favorite";
     private int favorId,bookId;
     private String userId;
