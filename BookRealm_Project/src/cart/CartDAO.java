@@ -66,6 +66,13 @@ public class CartDAO {
             stmt = conn.createStatement();
             //4. 실행 및 리턴
             rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                cvo.setcartId(rs.getInt("cartId"));
+                cvo.setUserId(rs.getString("userId"));
+                cvo.setBookId(rs.getInt("bookId"));
+                cvo.setPurchase(rs.getInt("purchase"));
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
@@ -95,6 +102,13 @@ public class CartDAO {
             stmt = conn.createStatement();
             //4. 실행 및 리턴
             rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                cvo.setcartId(rs.getInt("cartId"));
+                cvo.setUserId(rs.getString("userId"));
+                cvo.setBookId(rs.getInt("bookId"));
+                cvo.setPurchase(rs.getInt("purchase"));
+            }
         }catch (SQLException e){
             e.printStackTrace();
         }finally {
