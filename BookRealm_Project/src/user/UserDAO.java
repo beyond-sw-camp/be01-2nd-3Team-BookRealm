@@ -150,7 +150,7 @@ public class UserDAO {
         int result = 0;
 
         // 작업 객체 생성, 실행
-        pstmt = conn.prepareStatement("UPDATE User set ? = ? where id = ?");
+        pstmt = conn.prepareStatement("UPDATE User set ? = ? where UserId = ?");
         pstmt.setString(1, field);
         pstmt.setString(2, ud);
         pstmt.setString(3, id);
