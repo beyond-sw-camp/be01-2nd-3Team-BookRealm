@@ -74,7 +74,9 @@ public class UserDAO {
 
         //반환
         closeAll(conn,pstmt,rs);
-        return vo;
+
+        if(count > 0) return vo;
+        else return null;
     }
 
     //select passwd (로그인 할 때 비밀번호 조회)
