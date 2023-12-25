@@ -9,6 +9,8 @@ public class UserVO {
     private String address;
     private String phone;
     private String suType;
+
+    //0 일반회원, 1 관리자
     private int adminyn;
 
 
@@ -23,6 +25,16 @@ public class UserVO {
         this.phone = phone;
         this.suType = suType;
         this.adminyn = adminyn;
+    }
+
+    public UserVO(UserVO user) {
+        userId = user.userId;
+        username = user.username;
+        passwd = user.passwd;
+        address = user.address;
+        phone = user.phone;
+        suType = user.suType;
+        adminyn = user.adminyn;
     }
 
     public String getUserId() {

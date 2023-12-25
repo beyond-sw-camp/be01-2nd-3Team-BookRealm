@@ -58,7 +58,9 @@ public class UserDAO {
         rs = pstmt.executeQuery();  // 반환값 있는 경우
 
         ResultSetMetaData rsmd = rs.getMetaData();
-        int count = rsmd.getColumnCount();
+        rs.last();
+        int count = rs.getRow();
+        rs.beforeFirst();
 
         if (rs.next()) {
             vo.setUserId(rs.getString("userId"));
@@ -70,7 +72,8 @@ public class UserDAO {
             vo.setAdminyn(rs.getInt("adminyn"));
         }
 
-        return vo;
+        if(count > 0) return vo;
+        else return null;
     }
 
     //select passwd (로그인 할 때 비밀번호 조회)
@@ -100,7 +103,7 @@ public class UserDAO {
         // 반환할 결과값을 담아낼 변수 (적용된 행의 갯수)
         int result = 0;
         // 작업 객체 생성
-        pstmt = conn.prepareStatement("INSERT INTO User(userid, username, passwd, addresss, phone, sutype, adminyn)"
+        pstmt = conn.prepareStatement("INSERT INTO User(userid, username, passwd, address, phone, sutype, adminyn)"
                 + " VALUES(?, ?, ?, ?, ?, ?, ?)");
 
         pstmt.setString(1,vo.getUserId());
@@ -130,20 +133,37 @@ public class UserDAO {
 
         result = pstmt.executeUpdate();
 
-
         return result;
     }
 
     //update (회원 정보 수정)
-    public int update(String field, String ud, String id) throws SQLException {
+    public int update(int field, String ud, String id) throws SQLException {
         //반환할 결과값
         int result = 0;
 
         // 작업 객체 생성, 실행
-        pstmt = conn.prepareStatement("UPDATE User set ? = ? where UserId = ?");
-        pstmt.setString(1, field);
-        pstmt.setString(2, ud);
-        pstmt.setString(3, id);
+        switch (field){
+            case 1:
+                pstmt = conn.prepareStatement("UPDATE User set username = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+            case 2:
+                pstmt = conn.prepareStatement("UPDATE User set passwd = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+            case 3:
+                pstmt = conn.prepareStatement("UPDATE User set address = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+            case 4:
+                pstmt = conn.prepareStatement("UPDATE User set phone = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+        }
 
         result = pstmt.executeUpdate();
 
@@ -178,5 +198,9 @@ public class UserDAO {
         }
 
         return result;
+    }
+
+    public void close() {
+        closeAll(conn, pstmt, stmt, rs);
     }
 }
