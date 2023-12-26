@@ -201,5 +201,30 @@ public class BookDAO {
 		}
 		return result;
 	}
+	//책 타이틀로 bookID반환하는 함수
+	public int getBookIDByTitle(String title) {
+		int bookId = 0;
+
+		try {
+			// 쿼리문 준비 - select
+			String sql = "SELECT bookId FROM BOOK WHERE title = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, title);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				bookId = rs.getInt("bookId");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 닫기 (자원 반환)
+			CloseHelper.close(rs);
+			CloseHelper.close(pstmt);
+		}
+
+		return bookId;
+	}
 
 }
