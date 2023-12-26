@@ -1,8 +1,11 @@
 package review;
 
 import ConnUtil.ConnectionSingletonHelper;
+import book.BookVO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReviewDAO {
 
@@ -15,33 +18,89 @@ public class ReviewDAO {
     }
 
     // 전체 리뷰 조회
-    public ResultSet selectAll() throws SQLException {
+    public List<ReviewVO> selectAll() throws SQLException {
         pstmt = conn.prepareStatement("SELECT * FROM REVIEW");
         rs = pstmt.executeQuery();
-        return rs;
+        List<ReviewVO> list = new ArrayList<>();
+        while (rs.next()) {
+
+            ReviewVO vo = new ReviewVO();
+
+            vo.setBookId(rs.getInt("bookId"));
+            vo.setReviewId(rs.getInt("reviewId"));
+            vo.setPopular(rs.getInt("popular"));
+            vo.setContents(rs.getString("contents"));
+            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setUserId(rs.getString("userId"));
+
+            list.add(vo);
+
+        }
+        rs.close();
+        return list;
     }
 
     // 도서코드에 대한 전체 리뷰 조회
-    public ResultSet selectByBookId(int bookId) throws SQLException {
+    public ReviewVO selectByBookId(int bookId) throws SQLException {
         pstmt = conn.prepareStatement("SELECT * FROM REVIEW WHERE BOOKID = ?");
         pstmt.setInt(1,bookId);
         rs = pstmt.executeQuery();
-        return rs;
+        ReviewVO vo = new ReviewVO();
+        while (rs.next()) {
+            vo.setBookId(rs.getInt("bookId"));
+            vo.setReviewId(rs.getInt("reviewId"));
+            vo.setPopular(rs.getInt("popular"));
+            vo.setContents(rs.getString("contents"));
+            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setUserId(rs.getString("userId"));
+        }
+
+        rs.close();
+        return vo;
     }
 
     // 유저가 작성한 리뷰들 전체 조회
-    public ResultSet selectByUserId(String userId) throws SQLException {
+    public List<ReviewVO> selectByUserId(String userId) throws SQLException {
         pstmt = conn.prepareStatement("SELECT * FROM REVIEW WHERE USERID = ?");
         pstmt.setString(1,userId);
         rs = pstmt.executeQuery();
-        return rs;
+
+        List<ReviewVO> list = new ArrayList<>();
+        while (rs.next()) {
+
+            ReviewVO vo = new ReviewVO();
+
+            vo.setBookId(rs.getInt("bookId"));
+            vo.setReviewId(rs.getInt("reviewId"));
+            vo.setPopular(rs.getInt("popular"));
+            vo.setContents(rs.getString("contents"));
+            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setUserId(rs.getString("userId"));
+
+            list.add(vo);
+
+        }
+        rs.close();
+        return list;
     }
 
-    public ResultSet selectByReviewId(int reviewId) throws SQLException {
+    public ReviewVO selectByReviewId(int reviewId) throws SQLException {
         pstmt = conn.prepareStatement("SELECT * FROM REVIEW WHERE REVIEWID = ?");
         pstmt.setInt(1,reviewId);
         rs = pstmt.executeQuery();
-        return rs;
+        ReviewVO vo = new ReviewVO();
+
+        while (rs.next()) {
+            vo.setBookId(rs.getInt("bookId"));
+            vo.setReviewId(rs.getInt("reviewId"));
+            vo.setPopular(rs.getInt("popular"));
+            vo.setContents(rs.getString("contents"));
+            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setUserId(rs.getString("userId"));
+        }
+
+        rs.close();
+        return vo;
     }
 
     // 신규 리뷰 작성
