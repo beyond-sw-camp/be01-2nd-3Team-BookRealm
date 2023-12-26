@@ -1,5 +1,6 @@
 package user;
 
+import ConnUtil.CloseHelper;
 import ConnUtil.ConnectionSingletonHelper;
 import java.sql.*;
 import java.util.ArrayList;
@@ -160,6 +161,38 @@ public class UserDAO {
         //반환
         closeAll(conn, pstmt, rs);
 
+        return result;
+    }
+
+    public int updateAll(UserVO vo) throws SQLException {
+        int result = 0;
+
+        // 쿼리문 준비 - update
+        String sql = "UPDATE USER SET VALUES( ?, ?, ?, ?, ?, ?, ?) WHERE USERID = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vo.getUserId());
+            pstmt.setString(2, vo.getUsername());
+            pstmt.setString(3, vo.getPasswd());
+            pstmt.setString(4, vo.getAddress());
+            pstmt.setString(5, vo.getPhone());
+            pstmt.setString(6, vo.getSuType());
+            pstmt.setInt(7, vo.getAdminyn());
+            pstmt.setString(8, vo.getUserId());
+
+            result = pstmt.executeUpdate();
+            if (result > 0) {
+                conn.commit();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 닫기 (자원 반환)
+            CloseHelper.close(pstmt);
+            CloseHelper.close(conn);
+        }
         return result;
     }
 }
