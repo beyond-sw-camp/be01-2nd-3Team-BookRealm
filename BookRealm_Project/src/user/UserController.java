@@ -15,7 +15,14 @@ public class UserController {
             result = nView();
         } while(result == 1);
 
+        result = userView();
+        switch (result) {
+            case 1:
+                do {
+                    int i = info();
+                } while(true);
 
+        }
 
 
     }
@@ -33,12 +40,11 @@ public class UserController {
             case 1:
                 login();
                 return 1;
-                break;
             case 2:
-                join()
+                join();
+                return 0;
         }
-
-
+        return -1;
     }
     public void login() throws SQLException {
         String id, passwd;
@@ -86,6 +92,28 @@ public class UserController {
 
         user = new UserVO(id, name, passwd, address, phone, "일반", 0);
         result = dao.join(user);
-
+        if(result > 0) System.out.println("회원 등록에 성공하였습니다");
+        else System.out.println("회원 등록을 실패하였습니다.");
     }
+
+    private int userView() {
+        System.out.println("==========" + user.getUsername() + "님 환영 합니다==========");
+        System.out.println("1. 마 이 페 이 지");
+        System.out.println("2. 리 뷰 작 성");
+        System.out.println("3. 회 원 탈 퇴");
+        return sc.nextInt();
+    }
+
+    private int info() {
+        System.out.println("==========" + user.getUsername() + "님의 정보==========");
+        System.out.println("아이디 : " + user.getUserId());
+        System.out.println("이름 : " + user.getUsername());
+        System.out.println("주소 : " + user.getAddress());
+        System.out.println("휴대폰 번호 : " + user.getPhone() );
+        System.out.println();
+        System.out.println();
+        System.out.println("정보 수정을 원하시면 ");
+    }
+
+
 }
