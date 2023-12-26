@@ -83,5 +83,38 @@ public class UserController {
         }
     }
 
+    public void adminUserMenu() throws SQLException {
+        int op = 0;
 
+        while (true) {
+            System.out.println("============= 회원 관리 모드 =============");
+            System.out.println("1: 회원 전체 조회");
+            System.out.println("2: 회원 조회");
+            System.out.println("3: 회원 정보 수정");
+            System.out.println("4: 회원 정보 삭제");
+            System.out.println("9: EXIT");
+            System.out.print(">>>  ");    op = sc.nextInt();
+
+            switch (op) {
+                case 1:
+                    showUserAll();
+                    break;
+                case 2:
+                    showUserById();
+                    break;
+                case 3:
+                    editUser();
+                    break;
+                case 4:
+                    deleteUser();
+                    break;
+                case 9:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다.");
+                    break;
+            }
+        }
+
+    }
 }

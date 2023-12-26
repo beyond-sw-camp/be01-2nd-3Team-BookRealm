@@ -1,5 +1,7 @@
 package book;
 
+import user.UserController;
+
 import java.awt.print.Book;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -102,6 +104,68 @@ public class BookController {
         }
 
         System.out.println("--------------------------------------");
+
+    }
+
+    public void adminMain() throws SQLException {
+
+        int op = 0;
+
+        while (true){
+            System.out.println("============= 관리자 모드 =============");
+            System.out.println("1: 회원 관리");
+            System.out.println("2: 도서 관리");
+            System.out.println("9: EXIT");
+            System.out.print(">>>  ");    op = sc.nextInt();
+
+            switch (op) {
+                case 1:
+                    new UserController().adminUserMenu();
+                    break;
+                case 2:
+                    adminBookMenu();
+                    break;
+                case 9:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다.");
+                    break;
+            }
+        }
+    }
+
+    public void adminBookMenu() throws SQLException {
+        int op = 0;
+
+        while (true) {
+            System.out.println("============= 도서 관리 모드 =============");
+            System.out.println("1: 도서 추가");
+            System.out.println("2: 도서 조회");
+            System.out.println("3: 도서 수정");
+            System.out.println("4: 도서 삭제");
+            System.out.println("9: EXIT");
+            System.out.print(">>>  ");    op = sc.nextInt();
+
+            switch (op) {
+                case 1:
+                    add();
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                    edit();
+                    break;
+                case 4:
+                    delete();
+                    break;
+                case 9:
+                    return;
+                default:
+                    System.out.println("잘못된 입력입니다.");
+                    break;
+            }
+        }
 
     }
 
