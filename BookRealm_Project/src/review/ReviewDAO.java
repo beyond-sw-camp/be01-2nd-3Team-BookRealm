@@ -30,7 +30,7 @@ public class ReviewDAO {
             vo.setReviewId(rs.getInt("reviewId"));
             vo.setPopular(rs.getInt("popular"));
             vo.setContents(rs.getString("contents"));
-            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setReportDate(rs.getTimestamp("reportDate").toLocalDateTime());
             vo.setUserId(rs.getString("userId"));
 
             list.add(vo);
@@ -51,7 +51,7 @@ public class ReviewDAO {
             vo.setReviewId(rs.getInt("reviewId"));
             vo.setPopular(rs.getInt("popular"));
             vo.setContents(rs.getString("contents"));
-            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setReportDate(rs.getTimestamp("reportDate").toLocalDateTime());
             vo.setUserId(rs.getString("userId"));
         }
 
@@ -74,7 +74,7 @@ public class ReviewDAO {
             vo.setReviewId(rs.getInt("reviewId"));
             vo.setPopular(rs.getInt("popular"));
             vo.setContents(rs.getString("contents"));
-            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setReportDate(rs.getTimestamp("reportDate").toLocalDateTime());
             vo.setUserId(rs.getString("userId"));
 
             list.add(vo);
@@ -95,7 +95,7 @@ public class ReviewDAO {
             vo.setReviewId(rs.getInt("reviewId"));
             vo.setPopular(rs.getInt("popular"));
             vo.setContents(rs.getString("contents"));
-            vo.setReportDate(rs.getDate("reportDate"));
+            vo.setReportDate(rs.getTimestamp("reportDate").toLocalDateTime());
             vo.setUserId(rs.getString("userId"));
         }
 
@@ -105,26 +105,24 @@ public class ReviewDAO {
 
     // 신규 리뷰 작성
     public void writeReview(ReviewVO vo) throws SQLException {
-        pstmt = conn.prepareStatement("INSERT INTO REVIEW VALUES( ?, ?, ?, ?, ?, ?)");
-        pstmt.setInt(1,vo.getReviewId());
-        pstmt.setInt(2,vo.getPopular());
-        pstmt.setString(3,vo.getContents());
-        pstmt.setDate(4,vo.getReportDate());
-        pstmt.setString(5,vo.getUserId());
-        pstmt.setInt(6,vo.getBookId());
+        pstmt = conn.prepareStatement("INSERT INTO REVIEW VALUES( ?, ?, ?, ?, ?)");
+        pstmt.setInt(1,vo.getPopular());
+        pstmt.setString(2,vo.getContents());
+        pstmt.setTimestamp(3,Timestamp.valueOf(vo.getReportDate()));
+        pstmt.setString(4,vo.getUserId());
+        pstmt.setInt(5,vo.getBookId());
         int r = pstmt.executeUpdate();
     }
 
     // 작성한 리뷰 수정
     public void editReview(ReviewVO vo) throws SQLException {
-        pstmt = conn.prepareStatement("UPDATE REVIEW SET VALUES( ?, ?, ?, ?, ?, ?) WHERE review_id = ?");
-        pstmt.setInt(1,vo.getReviewId());
-        pstmt.setInt(2,vo.getPopular());
-        pstmt.setString(3,vo.getContents());
-        pstmt.setDate(4,vo.getReportDate());
-        pstmt.setString(5,vo.getUserId());
-        pstmt.setInt(6,vo.getBookId());
-        pstmt.setInt(7,vo.getReviewId());
+        pstmt = conn.prepareStatement("UPDATE REVIEW SET VALUES( ?, ?, ?, ?, ?) WHERE review_id = ?");
+        pstmt.setInt(1,vo.getPopular());
+        pstmt.setString(2,vo.getContents());
+        pstmt.setTimestamp(3,Timestamp.valueOf(vo.getReportDate()));
+        pstmt.setString(4,vo.getUserId());
+        pstmt.setInt(5,vo.getBookId());
+        pstmt.setInt(6,vo.getReviewId());
         int r = pstmt.executeUpdate();
     }
 
