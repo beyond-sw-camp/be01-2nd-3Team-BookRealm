@@ -59,8 +59,6 @@ public class BookDAO {
 		} finally {
 			// 닫기 (자원 반환)
 			CloseHelper.close(rs);
-			CloseHelper.close(stmt);
-			CloseHelper.close(conn);
 		}
 		return list;
 	}
@@ -99,8 +97,6 @@ public class BookDAO {
 		} finally {
 			// 닫기 (자원 반환)
 			CloseHelper.close(rs);
-			CloseHelper.close(stmt);
-			CloseHelper.close(conn);
 		}
 		return vo;
 	}
@@ -111,19 +107,20 @@ public class BookDAO {
 		int result = 0;
 
 		// 쿼리문 준비 - insert
-		String sql = "INSERT INTO BOOK VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+		String sql = "INSERT INTO BOOK(category, writer, title, price, stock, sales, publishDate, publisher) " +
+				"VALUES(?, ?, ?, ?, ?, ?, ?, ? )";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getBookId());
-			pstmt.setString(2, vo.getCategory());
-			pstmt.setString(3, vo.getWriter());
-			pstmt.setString(4, vo.getTitle());
-			pstmt.setInt(5, vo.getPrice());
+			//pstmt.setInt(1, vo.getBookId());
+			pstmt.setString(1, vo.getCategory());
+			pstmt.setString(2, vo.getWriter());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setInt(4, vo.getPrice());
+			pstmt.setInt(5, vo.getStock());
 			pstmt.setInt(6, vo.getStock());
-			pstmt.setInt(7, vo.getSales());
-			pstmt.setDate(8, vo.getPublishDate());
-			pstmt.setString(9, vo.getPublisher());
+			pstmt.setDate(7, vo.getPublishDate());
+			pstmt.setString(8, vo.getPublisher());
 
 			result = pstmt.executeUpdate();
 			if (result > 0) {
@@ -133,9 +130,7 @@ public class BookDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			// 닫기 (자원 반환)
-			CloseHelper.close(pstmt);
-			CloseHelper.close(conn);
+
 		}
 		return result;
 	}
@@ -146,19 +141,21 @@ public class BookDAO {
 		int result = 0;
 
 		// 쿼리문 준비 - update
-		String sql = "UPDATE BOOK SET VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ? ) WHERE bookId = ?";
+		String sql = "UPDATE BOOK SET " +
+				"CATEGORY = ?, WRITER = ?, TITLE = ?, PRICE = ?, STOCK = ?, SALES = ?," +
+				"PUBLISHDATE = ?, PUBLISHER = ? WHERE BOOKID = ?";
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, vo.getBookId());
-			pstmt.setString(2, vo.getCategory());
-			pstmt.setString(3, vo.getWriter());
-			pstmt.setString(4, vo.getTitle());
-			pstmt.setInt(5, vo.getPrice());
-			pstmt.setInt(6, vo.getStock());
-			pstmt.setInt(7, vo.getSales());
-			pstmt.setDate(8, vo.getPublishDate());
-			pstmt.setString(9, vo.getPublisher());
+			pstmt.setString(1, vo.getCategory());
+			pstmt.setString(2, vo.getWriter());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setInt(4, vo.getPrice());
+			pstmt.setInt(5, vo.getStock());
+			pstmt.setInt(6, vo.getSales());
+			pstmt.setDate(7, vo.getPublishDate());
+			pstmt.setString(8, vo.getPublisher());
+			pstmt.setInt(9, vo.getBookId());
 
 			result = pstmt.executeUpdate();
 			if (result > 0) {
@@ -170,7 +167,6 @@ public class BookDAO {
 		} finally {
 			// 닫기 (자원 반환)
 			CloseHelper.close(pstmt);
-			CloseHelper.close(conn);
 		}
 		return result;
 	}
@@ -197,7 +193,6 @@ public class BookDAO {
 		} finally {
 			// 닫기 (자원 반환)
 			CloseHelper.close(pstmt);
-			CloseHelper.close(conn);
 		}
 		return result;
 	}
