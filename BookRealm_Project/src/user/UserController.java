@@ -1,5 +1,8 @@
 package user;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -8,20 +11,32 @@ public class UserController {
     Scanner sc= new Scanner(System.in);
     UserDAO dao = new UserDAO();
     UserVO user;
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public void mainView() throws SQLException {
+    public void mainView() throws SQLException, IOException {
         int result;
         do {
             result = nView();
         } while(result == 1);
 
-        result = userView();
-        switch (result) {
-            case 1:
-                do {
-                    int i = info();
-                } while(true);
+        while(true) {
+            result = userView();
+            switch (result) {
+                case 1:
+                    do {
+                        int i = info();
+                        if(i == 1) userMod();
+                        else break;
+                    } while (true);
+                    break;
+                case 3:
+                    int n = userDelete();
+                    if(n==1) return;
+                    break;
+                case 4:
+                    return;
 
+            }
         }
 
 
@@ -112,8 +127,69 @@ public class UserController {
         System.out.println("휴대폰 번호 : " + user.getPhone() );
         System.out.println();
         System.out.println();
-        System.out.println("정보 수정을 원하시면 ");
+        System.out.println("정보 수정을 원하시면 1, 다시 돌아가려면 2를 눌러주세요");
+
+        return 1;
     }
 
+    private void userMod() throws SQLException, IOException {
+        System.out.println("==========정보 수정==========");
+        System.out.println("1. 이름 수정");
+        System.out.println("2. 비밀번호 수정");
+        System.out.println("3. 주소 수정");
+        System.out.println("4. 핸드폰 번호 수정");
 
+        int n = sc.nextInt();
+        String s;
+        int result;
+
+        switch (n) {
+            case 1:
+                System.out.println("변경하실 이름을 입력해주세요");
+                s = sc.next();
+                result = dao.update("username",s,user.getUserId());
+                if(result > 0) System.out.println("성공적으로 변경되었습니다.");
+                break;
+            case 2:
+                while(true) {
+                    System.out.println("현재 비밀 번호를 입력하세요");
+                    s = sc.next();
+                    if (user.getPasswd().equals(s)) {
+                        System.out.println("바꾸실 비밀 번호를 입력하세요");
+                        s=sc.next();
+                        result = dao.update("passwd",s, user.getUserId());
+                        if(result > 0) System.out.println("성공적으로 변경되었습니다.");
+                        break;
+                    } else {
+                        System.out.println("비밀번호가 일치하지 않습니다.");
+                    }
+                }
+                break;
+            case 3:
+                System.out.println("변경하실 주소를 입력하세요");
+                s = br.readLine();
+                result = dao.update("address",s, user.getUserId());
+                if(result > 0) System.out.println("성공적으로 변경되었습니다.");
+                break;
+            case 4:
+                System.out.println("변경하실 핸드폰 번호를 입력하세요");
+                s = sc.next();
+                result = dao.update("address",s, user.getUserId());
+                if(result > 0) System.out.println("성공적으로 변경되었습니다.");
+                break;
+            default:
+                System.out.println("잘못된 번호를 선택하셨습니다.");
+        }
+    }
+
+    public int userDelete() throws SQLException {
+        System.out.println("정말로 탈퇴하시겠습니까?");
+        System.out.println("1 : 예 2: 아니오");
+        int n = sc.nextInt();
+        if(n == 1) {
+            int num = dao.delete(user.getUserId());
+            if(num > 0) System.out.println("성공적으로 탈퇴하셨습니다.");
+            return 1;
+        } else return 0;
+    }
 }
