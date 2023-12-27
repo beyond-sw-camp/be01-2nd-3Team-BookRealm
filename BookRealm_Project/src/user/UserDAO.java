@@ -1,5 +1,6 @@
 package user;
 
+import ConnUtil.CloseHelper;
 import ConnUtil.ConnectionSingletonHelper;
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,9 +45,6 @@ public class UserDAO {
             result.add(vo);
         }
 
-        //반환
-        closeAll(conn, stmt, rs);
-
         return result;
     }
 
@@ -72,8 +70,6 @@ public class UserDAO {
             vo.setAdminyn(rs.getInt("adminyn"));
         }
 
-        //반환
-        closeAll(conn,pstmt,rs);
         return vo;
     }
 
@@ -95,7 +91,6 @@ public class UserDAO {
             }
         }
 
-        closeAll(conn,pstmt,rs);
         return result; // 아이디 불일치
     }
 
@@ -119,9 +114,6 @@ public class UserDAO {
         // 작업 객체를 활용하여 쿼리문 실행(전달)
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
-
         // 최종 결과값 반환
         return result;
 
@@ -138,8 +130,6 @@ public class UserDAO {
 
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
 
         return result;
     }
@@ -157,8 +147,35 @@ public class UserDAO {
 
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
+
+        return result;
+    }
+
+    public int updateAll(UserVO vo) throws SQLException {
+        int result = 0;
+
+        // 쿼리문 준비 - update
+        String sql = "UPDATE USER SET VALUES( ?, ?, ?, ?, ?, ?, ?) WHERE USERID = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vo.getUserId());
+            pstmt.setString(2, vo.getUsername());
+            pstmt.setString(3, vo.getPasswd());
+            pstmt.setString(4, vo.getAddress());
+            pstmt.setString(5, vo.getPhone());
+            pstmt.setString(6, vo.getSuType());
+            pstmt.setInt(7, vo.getAdminyn());
+            pstmt.setString(8, vo.getUserId());
+
+            result = pstmt.executeUpdate();
+            if (result > 0) {
+                conn.commit();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return result;
     }
