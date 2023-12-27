@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserController {
+public class UserController2 {
 
     Scanner sc = new Scanner(System.in);
 
