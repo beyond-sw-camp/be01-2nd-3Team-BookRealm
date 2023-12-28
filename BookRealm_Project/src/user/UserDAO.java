@@ -1,5 +1,6 @@
 package user;
 
+import ConnUtil.CloseHelper;
 import ConnUtil.ConnectionSingletonHelper;
 import java.sql.*;
 import java.util.ArrayList;
@@ -44,9 +45,6 @@ public class UserDAO {
             result.add(vo);
         }
 
-        //반환
-        closeAll(conn, stmt, rs);
-
         return result;
     }
 
@@ -60,7 +58,9 @@ public class UserDAO {
         rs = pstmt.executeQuery();  // 반환값 있는 경우
 
         ResultSetMetaData rsmd = rs.getMetaData();
-        int count = rsmd.getColumnCount();
+        rs.last();
+        int count = rs.getRow();
+        rs.beforeFirst();
 
         if (rs.next()) {
             vo.setUserId(rs.getString("userId"));
@@ -71,9 +71,6 @@ public class UserDAO {
             vo.setSuType(rs.getString("suType"));
             vo.setAdminyn(rs.getInt("adminyn"));
         }
-
-        //반환
-        closeAll(conn,pstmt,rs);
 
         if(count > 0) return vo;
         else return null;
@@ -97,7 +94,6 @@ public class UserDAO {
             }
         }
 
-        closeAll(conn,pstmt,rs);
         return result; // 아이디 불일치
     }
 
@@ -107,7 +103,7 @@ public class UserDAO {
         // 반환할 결과값을 담아낼 변수 (적용된 행의 갯수)
         int result = 0;
         // 작업 객체 생성
-        pstmt = conn.prepareStatement("INSERT INTO User(userid, username, passwd, addresss, phone, sutype, adminyn)"
+        pstmt = conn.prepareStatement("INSERT INTO User(userid, username, passwd, address, phone, sutype, adminyn)"
                 + " VALUES(?, ?, ?, ?, ?, ?, ?)");
 
         pstmt.setString(1,vo.getUserId());
@@ -120,9 +116,6 @@ public class UserDAO {
 
         // 작업 객체를 활용하여 쿼리문 실행(전달)
         result = pstmt.executeUpdate();
-
-        //반환
-        closeAll(conn, pstmt, rs);
 
         // 최종 결과값 반환
         return result;
@@ -140,28 +133,74 @@ public class UserDAO {
 
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
-
         return result;
     }
 
     //update (회원 정보 수정)
-    public int update(String field, String ud, String id) throws SQLException {
+    public int update(int field, String ud, String id) throws SQLException {
         //반환할 결과값
         int result = 0;
 
         // 작업 객체 생성, 실행
-        pstmt = conn.prepareStatement("UPDATE User set ? = ? where UserId = ?");
-        pstmt.setString(1, field);
-        pstmt.setString(2, ud);
-        pstmt.setString(3, id);
+        switch (field){
+            case 1:
+                pstmt = conn.prepareStatement("UPDATE User set username = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+            case 2:
+                pstmt = conn.prepareStatement("UPDATE User set passwd = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+            case 3:
+                pstmt = conn.prepareStatement("UPDATE User set address = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+            case 4:
+                pstmt = conn.prepareStatement("UPDATE User set phone = ? where UserId = ?");
+                pstmt.setString(1, ud);
+                pstmt.setString(2, id);
+                break;
+        }
 
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
 
         return result;
+    }
+
+    public int updateAll(UserVO vo) throws SQLException {
+        int result = 0;
+
+        // 쿼리문 준비 - update
+        String sql = "UPDATE USER SET VALUES( ?, ?, ?, ?, ?, ?, ?) WHERE USERID = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vo.getUserId());
+            pstmt.setString(2, vo.getUsername());
+            pstmt.setString(3, vo.getPasswd());
+            pstmt.setString(4, vo.getAddress());
+            pstmt.setString(5, vo.getPhone());
+            pstmt.setString(6, vo.getSuType());
+            pstmt.setInt(7, vo.getAdminyn());
+            pstmt.setString(8, vo.getUserId());
+
+            result = pstmt.executeUpdate();
+            if (result > 0) {
+                conn.commit();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public void close() {
+        closeAll(conn, pstmt, stmt, rs);
     }
 }

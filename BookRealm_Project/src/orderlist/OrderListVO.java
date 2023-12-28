@@ -1,6 +1,6 @@
 package orderlist;
 
-public class OrderListVO {
+public class        OrderListVO {
 
     private int buyId;      // 구매코드
     private int bookId;     // 도서코드
