@@ -7,7 +7,7 @@ public class BSP_MainPage {
 
 	private static Scanner sc = new Scanner(System.in);
 
-	public static int MainMenu() {
+	public int MainMenu() {
 
 		StringBuffer sb = new StringBuffer();
 		int select = 0;
@@ -30,7 +30,7 @@ public class BSP_MainPage {
 		return select;
 	}
 
-	public static void mainMenu() throws SQLException {
+	public void mainMenu() throws SQLException {
 
 		int no = 0;
 
