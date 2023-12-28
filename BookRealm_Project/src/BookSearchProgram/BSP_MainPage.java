@@ -30,7 +30,7 @@ public class BSP_MainPage {
 		return select;
 	}
 
-	public static void main(String[] args) throws SQLException {
+	public static void mainMenu() throws SQLException {
 
 		int no = 0;
 
