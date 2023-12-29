@@ -1,5 +1,8 @@
 # <div align="center"> BookRealm </div>
 
+![image](https://github.com/choi3179/BookRealm/assets/145534055/380d2be2-c08f-43e5-b0f5-aa7ad89b89af) <br /><br /><br />
+
+
 # 😀 팀원
 이영진, 김단아, 안우용, 최원규 <br /><br /><br />
 
