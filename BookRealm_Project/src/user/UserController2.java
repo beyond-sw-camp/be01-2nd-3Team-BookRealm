@@ -50,7 +50,7 @@ public class UserController2 {
         int result;
         int n;
 
-        System.out.println("==========일반 회원==========");
+        System.out.println("==========로그인==========");
         System.out.println("1. 로 그 인");
         System.out.println("2. 회 원 가 입");
         result =  sc.nextInt();
@@ -121,6 +121,7 @@ public class UserController2 {
         System.out.println("1. 마 이 페 이 지");
         System.out.println("2. 리 뷰 작 성");
         System.out.println("3. 회 원 탈 퇴");
+        System.out.println("4. 도서 검색 으로 나가기");
         return sc.nextInt();
     }
 
