@@ -49,22 +49,48 @@ public class UserController {
     public void editUser() throws SQLException {
         System.out.print("수정할 회원의 아이디를 입력하세요 : ");  String userId = sc.next();
         UserVO vo = userDAO.selectById(userId);
+        int op = 0;
+        int result = 0;
         if(vo != null){
-            vo.setUserId(userId);
-            System.out.print("이름 입력[" + vo.getUsername() + "] : ");                     vo.setUsername(sc.next());
-            System.out.print("주소 입력[" + vo.getAddress() + "] : ");                      vo.setAddress(sc.nextLine());  sc.nextLine();
-            System.out.print("전화번호 입력[" + vo.getPhone() + "] : ");                      vo.setPhone(sc.next());
-            System.out.print("관리자 전환 여부[" + vo.getAdminyn() + "](1: 관리자) : ");       vo.setAdminyn(sc.nextInt());
+            System.out.println("[" + vo.getUserId() + ", " + vo.getUsername() + "] 유저 정보를 수정합니다.");
+            System.out.println("1 : 관리자 권한 전환");
+            System.out.println("2 : 비밀번호 초기화");
+            System.out.println("9 : EXIT");
+            while (true) {
+                System.out.print(">>> ");
+                op = sc.nextInt();
+                switch (op) {
+                    case 1 :
+                        System.out.print("관리자 권한 수정(0: 일반 / 1: 관리자) : ");   int yn = sc.nextInt();
+                        result = userDAO.updateByAdmin(op,yn,vo.getUserId());
+                        if(result > 0)
+                            System.out.println("회원 정보 수정이 완료 되었습니다.");
+                        else
+                            System.out.println("회원 정보 수정에 실패하였습니다.");
+                        return;
+                    case 2 :
+                        System.out.print("사용자 비밀번호 변경 : ");   String passwd = sc.next();
+                        result = userDAO.updateByAdmin(op,passwd,vo.getUserId());
+                        if(result > 0)
+                            System.out.println("회원 정보 수정이 완료 되었습니다.");
+                        else
+                            System.out.println("회원 정보 수정에 실패하였습니다.");
+                        return;
+                    case 9 :
+                        return;
+                    default:
+                        System.out.println("선택할 수 없는 옵션입니다.");
+                        break;
+                }
+
+
+            }
         }
         else{
             System.out.println("존재하지 않는 회원입니다.");
-            return;
         }
 
-        if(userDAO.updateAll(vo) > 0)
-            System.out.println("회원 정보 수정이 완료 되었습니다.");
-        else
-            System.out.println("회원 정보 수정에 실패하였습니다.");
+
     }
 
     public void deleteUser() throws SQLException {

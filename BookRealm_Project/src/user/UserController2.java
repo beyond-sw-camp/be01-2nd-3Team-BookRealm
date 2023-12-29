@@ -1,5 +1,7 @@
 package user;
 
+import book.BookController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,57 +17,69 @@ public class UserController2 {
 
     public void mainView() throws SQLException, IOException {
         int result;
-        do {
+        /*do {
             result = nView();
         } while(result != 1);
 
-        while(true) {
-            result = userView();
-            switch (result) {
-                case 1:
-                    do {
-                        int i = info();
-                        if(i == 1) userMod();
-                        else break;
-                    } while (true);
-                    break;
-                case 3:
-                    int n = userDelete();
-                    if(n==1) {
-                        dao.close();
-                        return;
-                    }
-                    break;
-                case 4:
-                    dao.close();
-                    return;
+        if(result == 1){
 
+        }
+        else{
+            return;
+        }*/
+
+        while(true){
+            result = nView();
+            if(result != 1)
+                return;
+            else{
+                while(true) {
+                    result = userView();
+                    switch (result) {
+                        case 1:
+                            do {
+                                int i = info();
+                                if(i == 1) userMod();
+                                else break;
+                            } while (true);
+                            break;
+                        case 3:
+                            int n = userDelete();
+                            if(n==1) {
+                                dao.close();
+                                return;
+                            }
+                            break;
+                        case 4:
+                            dao.close();
+                            return;
+
+                    }
+                }
             }
         }
-
-
     }
 
     public int nView() throws SQLException {
         int result;
         int n;
 
-        System.out.println("==========일반 회원==========");
+        System.out.println("==========로그인==========");
         System.out.println("1. 로 그 인");
         System.out.println("2. 회 원 가 입");
         result =  sc.nextInt();
 
         switch (result) {
             case 1:
-                login();
-                return 1;
+                int op = login();
+                return op;
             case 2:
                 join();
                 return 0;
         }
         return -1;
     }
-    public void login() throws SQLException {
+    public int login() throws SQLException {
         String id, passwd;
         int result;
         do {
@@ -79,12 +93,19 @@ public class UserController2 {
             if (result == 1) {
                 System.out.println("로그인에 성공하였습니다");
                 user = dao.selectById(id);
+                if(user.getAdminyn() != 0){
+                   new BookController().adminMain();
+                   return 2;
+                }
+                return 1;
             } else if (result == 0) {
                 System.out.println("비밀번호가 일치하지 않습니다.");
             } else if (result == -1) {
                 System.out.println("일치하는 아이디가 존재하지 않습니다.");
             }
         } while(result != 1);
+
+        return 0;
     }
 
     public void join() throws SQLException {
@@ -121,6 +142,7 @@ public class UserController2 {
         System.out.println("1. 마 이 페 이 지");
         System.out.println("2. 리 뷰 작 성");
         System.out.println("3. 회 원 탈 퇴");
+        System.out.println("4. 도서 검색 으로 나가기");
         return sc.nextInt();
     }
 

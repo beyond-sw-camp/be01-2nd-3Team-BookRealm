@@ -1,5 +1,8 @@
 package BookSearchProgram;
 
+import user.UserController2;
+
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -30,7 +33,7 @@ public class BSP_MainPage {
 		return select;
 	}
 
-	public void mainMenu() throws SQLException {
+	public void mainMenu() throws SQLException, IOException {
 
 		int no = 0;
 
@@ -40,7 +43,8 @@ public class BSP_MainPage {
 			switch (no) {
 			case 1:
 				System.out.println("로그인을 선택하셨습니다.");
-				System.out.println();
+				UserController2 user = new UserController2();
+				user.mainView();
 				break;
 			case 2:
 				System.out.println("도서 검색을 선택하셨습니다.");
