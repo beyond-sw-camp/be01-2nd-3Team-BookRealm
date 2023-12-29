@@ -41,12 +41,16 @@ public class ReviewDAO {
     }
 
     // 도서코드에 대한 전체 리뷰 조회
-    public ReviewVO selectByBookId(int bookId) throws SQLException {
+    public List<ReviewVO> selectByBookId(int bookId) throws SQLException {
         pstmt = conn.prepareStatement("SELECT * FROM REVIEW WHERE BOOKID = ?");
         pstmt.setInt(1,bookId);
         rs = pstmt.executeQuery();
-        ReviewVO vo = new ReviewVO();
+        List<ReviewVO> list = new ArrayList<>();
+
+
         while (rs.next()) {
+            ReviewVO vo = new ReviewVO();
+
             vo.setBookId(rs.getInt("bookId"));
             vo.setReviewId(rs.getInt("reviewId"));
             vo.setPopular(rs.getInt("popular"));
@@ -56,7 +60,7 @@ public class ReviewDAO {
         }
 
         rs.close();
-        return vo;
+        return list;
     }
 
     // 유저가 작성한 리뷰들 전체 조회
@@ -104,19 +108,21 @@ public class ReviewDAO {
     }
 
     // 신규 리뷰 작성
-    public void writeReview(ReviewVO vo) throws SQLException {
-        pstmt = conn.prepareStatement("INSERT INTO REVIEW VALUES( ?, ?, ?, ?, ?)");
+    public int writeReview(ReviewVO vo) throws SQLException {
+        pstmt = conn.prepareStatement("INSERT INTO REVIEW (popular, contents, reportdate, userid, boolkid) VALUES( ?, ?, ?, ?, ?)");
         pstmt.setInt(1,vo.getPopular());
         pstmt.setString(2,vo.getContents());
         pstmt.setTimestamp(3,Timestamp.valueOf(vo.getReportDate()));
         pstmt.setString(4,vo.getUserId());
         pstmt.setInt(5,vo.getBookId());
         int r = pstmt.executeUpdate();
+
+        return r;
     }
 
     // 작성한 리뷰 수정
-    public void editReview(ReviewVO vo) throws SQLException {
-        pstmt = conn.prepareStatement("UPDATE REVIEW SET VALUES( ?, ?, ?, ?, ?) WHERE review_id = ?");
+    public int editReview(ReviewVO vo) throws SQLException {
+        pstmt = conn.prepareStatement("UPDATE REVIEW SET VALUES popular = ?, contents = ?, reportdate = ?, userid = ?, bookid = ? WHERE review_id = ?");
         pstmt.setInt(1,vo.getPopular());
         pstmt.setString(2,vo.getContents());
         pstmt.setTimestamp(3,Timestamp.valueOf(vo.getReportDate()));
@@ -124,12 +130,15 @@ public class ReviewDAO {
         pstmt.setInt(5,vo.getBookId());
         pstmt.setInt(6,vo.getReviewId());
         int r = pstmt.executeUpdate();
+
+        return r;
     }
 
     // 작성한 리뷰 삭제
-    public void deleteReview(int reviewId) throws SQLException {
+    public int deleteReview(int reviewId) throws SQLException {
         pstmt = conn.prepareStatement("DELETE FROM REVIEW WHERE reviewId = ?");
         pstmt.setInt(1,reviewId);
         int r = pstmt.executeUpdate();
+        return r;
     }
 }

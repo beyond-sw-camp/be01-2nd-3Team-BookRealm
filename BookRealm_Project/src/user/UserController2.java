@@ -1,5 +1,6 @@
 package user;
 
+import ReviewController.WriteController;
 import book.BookController;
 
 import java.io.BufferedReader;
@@ -43,6 +44,9 @@ public class UserController2 {
                                 else break;
                             } while (true);
                             break;
+                        case 2:
+                            WriteController writeController = new WriteController();
+                            writeController.reviewinsert(user);
                         case 3:
                             int n = userDelete();
                             if(n==1) {

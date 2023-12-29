@@ -35,27 +35,6 @@ public class WriteController {
 
     }
 
-    public static void main(String[] args) throws IOException, SQLException {
-        int no = 0;
-        do {
-            no = getMenu();
-            switch (no) {
-                case 1:
-                    System.out.println("리뷰쓰기");
-                    reviewinsert();
-                    break;
-
-                case 2:
-                    System.out.println("도서리뷰 검색하기");
-                    reviewsearch();
-                case 3:
-                    System.out.println("종 료");
-                    sc.close();
-                    System.exit(0);
-            }
-        } while (no != 3);
-
-    }
 
     private static void reviewsearch() throws IOException {
         BookDAO bookDAO = new BookDAO();
@@ -67,8 +46,7 @@ public class WriteController {
 
     }
 
-    private static void reviewinsert() throws IOException, SQLException {
-        UserVO userVO = new UserVO();
+    public void reviewinsert(UserVO userVO) throws IOException, SQLException {
         System.out.println("리뷰를 작성할 책 이름을 적으세요.");
         String bookname = br.readLine();
         System.out.println("리뷰 내용 및 별점을 적으세요");
@@ -81,7 +59,7 @@ public class WriteController {
         ////////////////////////////////////////////////
 
         ReviewVO reviewVO = new ReviewVO(popular, contents, reportDate, userId, bookId);
-        reviewDAO.writeReview(reviewVO);
+        int n = reviewDAO.writeReview(reviewVO);
 
     }
 
