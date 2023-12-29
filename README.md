@@ -1,6 +1,6 @@
 # <div align="center"> BookRealm </div>
 
-![image](https://github.com/choi3179/BookRealm/assets/145534055/380d2be2-c08f-43e5-b0f5-aa7ad89b89af) <br /><br /><br />
+![image](https://github.com/choi3179/BookRealm/assets/145534055/51b72d32-e175-4dee-ad76-4899567c4c09) <br /><br /><br />
 
 
 # 😀 팀원
