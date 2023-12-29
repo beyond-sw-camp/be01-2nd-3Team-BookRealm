@@ -27,8 +27,8 @@ public class ConnectionSingletonHelper {
             } else if (dsn.equals("mariadb")) {
                 Class.forName("org.mariadb.jdbc.Driver");
                 conn = DriverManager.getConnection(
-                        "jdbc:mariadb://localhost:3307/bookrealm",
-                        "root", "maria");
+                        "jdbc:mariadb://localhost:3306/bookrealm",
+                        "root", "root");
             }
 
         } catch (Exception e) {
