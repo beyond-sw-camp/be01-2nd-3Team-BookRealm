@@ -1,4 +1,4 @@
-# BookRealm
+# <div align="center"> BookRealm </div>
 
 # 😀 팀원
 이영진, 김단아, 안우용, 최원규 <br /><br /><br />
