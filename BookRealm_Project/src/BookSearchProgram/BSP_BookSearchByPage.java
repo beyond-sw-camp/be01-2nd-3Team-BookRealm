@@ -4,10 +4,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import book.BookDAO;
+import book.BookVO;
+
 public class BSP_BookSearchByPage {
 
 	private static Scanner sc = new Scanner(System.in);
-	private static BSP_DAO dao = new BSP_DAO();
+	private static BookDAO dao = new BookDAO();
 
 	public static int BookSearchByMenu() {
 
@@ -72,9 +75,9 @@ public class BSP_BookSearchByPage {
 		String c = sc.nextLine();
 		System.out.println("============================");
 
-		ArrayList<BSP_VO> list = (ArrayList<BSP_VO>) dao.selectBycategory(c);
+		ArrayList<BookVO> list = (ArrayList<BookVO>) dao.selectBycategory(c);
 
-		for (BSP_VO vo : list) {
+		for (BookVO vo : list) {
 			System.out.println("도서코드 : " + vo.getBookId());
 			System.out.println("카테고리 : " + vo.getCategory());
 			System.out.println("제목 : " + vo.getTitle());
@@ -90,9 +93,9 @@ public class BSP_BookSearchByPage {
 		String t = sc.nextLine();
 		System.out.println("============================");
 
-		ArrayList<BSP_VO> list = (ArrayList<BSP_VO>) dao.selectBytitle(t);
+		ArrayList<BookVO> list = (ArrayList<BookVO>) dao.selectBytitle(t);
 
-		for (BSP_VO vo : list) {
+		for (BookVO vo : list) {
 			System.out.println("도서코드 : " + vo.getBookId());
 			System.out.println("카테고리 : " + vo.getCategory());
 			System.out.println("제목 : " + vo.getTitle());
@@ -108,9 +111,9 @@ public class BSP_BookSearchByPage {
 		String w = sc.nextLine();
 		System.out.println("============================");
 
-		ArrayList<BSP_VO> list = (ArrayList<BSP_VO>) dao.selectBywriter(w);
+		ArrayList<BookVO> list = (ArrayList<BookVO>) dao.selectBywriter(w);
 
-		for (BSP_VO vo : list) {
+		for (BookVO vo : list) {
 			System.out.println("도서코드 : " + vo.getBookId());
 			System.out.println("카테고리 : " + vo.getCategory());
 			System.out.println("제목 : " + vo.getTitle());
@@ -125,9 +128,9 @@ public class BSP_BookSearchByPage {
 		int bookId = sc.nextInt();
 		System.out.println("============================");
 
-		ArrayList<BSP_VO> list = (ArrayList<BSP_VO>) dao.viewDetails(bookId);
+		ArrayList<BookVO> list = (ArrayList<BookVO>) dao.viewDetails(bookId);
 
-		for (BSP_VO vo : list) {
+		for (BookVO vo : list) {
 			System.out.println("도서코드 : " + vo.getBookId());
 			System.out.println("카테고리 : " + vo.getCategory());
 			System.out.println("제목 : " + vo.getTitle());

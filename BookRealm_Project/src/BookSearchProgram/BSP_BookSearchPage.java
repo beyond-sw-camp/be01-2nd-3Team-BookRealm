@@ -4,10 +4,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import book.BookDAO;
+import book.BookVO;
+
 public class BSP_BookSearchPage {
 
 	private static Scanner sc = new Scanner(System.in);
-	private static BSP_DAO dao = new BSP_DAO();
+	private static BookDAO dao = new BookDAO();
 
 	public static int BookSearchMenu() {
 
@@ -57,9 +60,9 @@ public class BSP_BookSearchPage {
 	}
 
 	private static void bestseller() throws SQLException {
-		ArrayList<BSP_VO> list = (ArrayList<BSP_VO>) dao.bestseller();
+		ArrayList<BookVO> list = (ArrayList<BookVO>) dao.bestseller();
 
-		for (BSP_VO vo : list) {
+		for (BookVO vo : list) {
 			System.out.println("도서코드 : " + vo.getBookId());
 			System.out.println("카테고리 : " + vo.getCategory());
 			System.out.println("제목 : " + vo.getTitle());
