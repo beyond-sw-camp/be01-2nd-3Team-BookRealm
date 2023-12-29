@@ -5,6 +5,7 @@ import review.ReviewVO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BSP_BookSearchByPage {
@@ -130,7 +131,7 @@ public class BSP_BookSearchByPage {
 
 		ArrayList<BSP_VO> list = (ArrayList<BSP_VO>) dao.viewDetails(bookId);
 		ReviewDAO reviewDAO = new ReviewDAO();
-		ArrayList<ReviewVO> list2 = reviewDAO.selectByBookId(bookId);
+		List<ReviewVO> list2 = reviewDAO.selectByBookId(bookId);
 
 
 		for (BSP_VO vo : list) {
@@ -144,9 +145,13 @@ public class BSP_BookSearchByPage {
 			System.out.println("판매랑 : " + vo.getSales());
 			System.out.println("재고 : " + vo.getStock());
 			System.out.println("============================");
+
 		}
-		reviewDAO.selectByBookId(bookId).getPopular();
-		reviewDAO.selectByBookId(bookId).getContents();
+		for(ReviewVO reivew : list2) {
+			System.out.println("별점 : " + reivew.getPopular());
+			System.out.println("별점 : " + reivew.getContents());
+			System.out.println("============================");
+		}
 
 	}
 
