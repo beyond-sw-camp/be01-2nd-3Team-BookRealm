@@ -1,6 +1,5 @@
 package user;
 
-import ConnUtil.CloseHelper;
 import ConnUtil.ConnectionSingletonHelper;
 import java.sql.*;
 import java.util.ArrayList;
@@ -171,30 +170,46 @@ public class UserDAO {
         return result;
     }
 
-    public int updateAll(UserVO vo) throws SQLException {
+    public int updateByAdmin(int op, Object value, String userId) throws SQLException {
         int result = 0;
+        String sql;
 
-        // 쿼리문 준비 - update
-        String sql = "UPDATE USER SET VALUES( ?, ?, ?, ?, ?, ?, ?) WHERE USERID = ?";
+        switch (op) {
+            case 1:
+                try{
+                    sql = "UPDATE USER SET ADMINYN = ? WHERE USERID = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setInt(1,(Integer)value);
+                    pstmt.setString(2, userId);
+                    result = pstmt.executeUpdate();
+                    if (result > 0) {
+                        conn.commit();
 
-        try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, vo.getUserId());
-            pstmt.setString(2, vo.getUsername());
-            pstmt.setString(3, vo.getPasswd());
-            pstmt.setString(4, vo.getAddress());
-            pstmt.setString(5, vo.getPhone());
-            pstmt.setString(6, vo.getSuType());
-            pstmt.setInt(7, vo.getAdminyn());
-            pstmt.setString(8, vo.getUserId());
-
-            result = pstmt.executeUpdate();
-            if (result > 0) {
-                conn.commit();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                try{
+                    sql = "UPDATE USER SET PASSWD = ? WHERE USERID = ?";
+                    pstmt = conn.prepareStatement(sql);
+                    pstmt.setString(1,value.toString());
+                    pstmt.setString(2, userId);
+                    result = pstmt.executeUpdate();
+                    if (result > 0) {
+                        conn.commit();
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                    return 0;
+                }
+                break;
+            default:
+                System.out.println("입력이 잘못되었습니다.");
+                break;
         }
 
         return result;
