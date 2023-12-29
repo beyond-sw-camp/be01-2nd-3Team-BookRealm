@@ -8,7 +8,7 @@
 
 <h3>✔ 논리적 설계</h3>
 
-![이미지](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EB%85%BC%EB%A6%AC%EC%A0%81%20%EC%84%A4%EA%B3%84.png)
+![이미지](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EB%85%BC%EB%A6%AC%EC%A0%81%20%EC%84%A4%EA%B3%84.png)<br /><br /><br />
 
 <h3>✔ 물리적 설계</h3>
 
