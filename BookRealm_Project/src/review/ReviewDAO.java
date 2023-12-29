@@ -109,7 +109,7 @@ public class ReviewDAO {
 
     // 신규 리뷰 작성
     public int writeReview(ReviewVO vo) throws SQLException {
-        pstmt = conn.prepareStatement("INSERT INTO REVIEW (popular, contents, reportdate, userid, boolkid) VALUES( ?, ?, ?, ?, ?)");
+        pstmt = conn.prepareStatement("INSERT INTO REVIEW (popular, contents, reportdate, userid, bookid) VALUES( ?, ?, ?, ?, ?)");
         pstmt.setInt(1,vo.getPopular());
         pstmt.setString(2,vo.getContents());
         pstmt.setTimestamp(3,Timestamp.valueOf(vo.getReportDate()));

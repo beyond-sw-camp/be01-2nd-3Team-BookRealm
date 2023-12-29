@@ -47,6 +47,7 @@ public class UserController2 {
                         case 2:
                             WriteController writeController = new WriteController();
                             writeController.reviewinsert(user);
+                            break;
                         case 3:
                             int n = userDelete();
                             if(n==1) {
