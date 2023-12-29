@@ -1,7 +1,11 @@
 package BookSearchProgram;
 
+import review.ReviewDAO;
+import review.ReviewVO;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import book.BookDAO;
@@ -129,6 +133,9 @@ public class BSP_BookSearchByPage {
 		System.out.println("============================");
 
 		ArrayList<BookVO> list = (ArrayList<BookVO>) dao.viewDetails(bookId);
+		ReviewDAO reviewDAO = new ReviewDAO();
+		List<ReviewVO> list2 = reviewDAO.selectByBookId(bookId);
+
 
 		for (BookVO vo : list) {
 			System.out.println("도서코드 : " + vo.getBookId());
@@ -140,6 +147,12 @@ public class BSP_BookSearchByPage {
 			System.out.println("가격 : " + vo.getPrice());
 			System.out.println("판매랑 : " + vo.getSales());
 			System.out.println("재고 : " + vo.getStock());
+			System.out.println("============================");
+
+		}
+		for(ReviewVO reivew : list2) {
+			System.out.println("별점 : " + reivew.getPopular());
+			System.out.println("별점 : " + reivew.getContents());
 			System.out.println("============================");
 		}
 
