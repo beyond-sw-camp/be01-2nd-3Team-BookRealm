@@ -3,8 +3,11 @@
 
 # ⚙ DB설계
 <h3>✔ 개념적 설계</h3>
+
 ![image](https://github.com/choi3179/BookRealm/assets/145534055/eebaad93-cdd2-422a-aa01-ff4507f995f6) <br /><br /><br />
 
-<h3>✔ 논리적 설계</h3> <br /><br /><br />
+<h3>✔ 논리적 설계</h3>
+
+![이미지](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EB%85%BC%EB%A6%AC%EC%A0%81%20%EC%84%A4%EA%B3%84.png)
 
 <h3>✔ 물리적 설계</h3> <br /><br /><br />
