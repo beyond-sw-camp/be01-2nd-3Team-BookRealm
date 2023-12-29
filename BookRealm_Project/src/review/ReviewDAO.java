@@ -57,6 +57,7 @@ public class ReviewDAO {
             vo.setContents(rs.getString("contents"));
             vo.setReportDate(rs.getTimestamp("reportDate").toLocalDateTime());
             vo.setUserId(rs.getString("userId"));
+            list.add(vo);
         }
 
         rs.close();
