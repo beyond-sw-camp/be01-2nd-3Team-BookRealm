@@ -51,12 +51,10 @@ public class UserController2 {
                         case 3:
                             int n = userDelete();
                             if(n==1) {
-                                dao.close();
                                 return;
                             }
                             break;
                         case 4:
-                            dao.close();
                             return;
 
                     }
@@ -132,7 +130,8 @@ public class UserController2 {
         System.out.println("이름을 입력하세요");
         name = sc.next();
         System.out.println("주소를 입력하세요");
-        address = sc.next();
+        sc.nextLine();
+        address = sc.nextLine();
         System.out.println("핸드폰 번호를 입력하세요");
         phone = sc.next();
 

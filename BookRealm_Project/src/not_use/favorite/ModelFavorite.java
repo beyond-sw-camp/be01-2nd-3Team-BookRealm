@@ -1,4 +1,4 @@
-package favorite;
+package not_use.favorite;
 
 public class ModelFavorite {
     public final String ClassName = "favorite";

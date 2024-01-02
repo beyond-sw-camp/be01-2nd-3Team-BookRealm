@@ -1,4 +1,4 @@
-package orderlist;
+package not_use.orderlist;
 
 import ConnUtil.ConnectionSingletonHelper;
 
@@ -16,7 +16,7 @@ public class OrderListDAO {
     }
 
     // SELECT O.BUYID, L.BOOKID, L.PURCHASE, L.`STATUS`, O.PAYMENT, O.DESTINATION
-    // FROM `order` O JOIN `orderlist` L ON O.BUYID = L.BUYID WHERE ID = ?;
+    // FROM `not_use.order` O JOIN `not_use.orderlist` L ON O.BUYID = L.BUYID WHERE ID = ?;
     // 구매 코드에 따른 주문 내역 전체 리스트 조회
     public ResultSet selectAllList(int buyId) throws SQLException {
         pstmt = conn.prepareStatement("SELECT O.BUYID, L.BOOKID, L.PURCHASE, L.`STATUS`, O.PAYMENT, O.DESTINATION" +

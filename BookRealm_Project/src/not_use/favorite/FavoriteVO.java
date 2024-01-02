@@ -1,4 +1,4 @@
-package favorite;
+package not_use.favorite;
 
 public class FavoriteVO {
     private int favorId;  //즐겨찾기 코드 (PK)

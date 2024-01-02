@@ -1,4 +1,4 @@
-package cart;
+package not_use.cart;
 
 public class CartVO {
     private int cartId;  // 장바구니 코드 (PK)

@@ -1,4 +1,4 @@
-package favorite;
+package not_use.favorite;
 
 import ConnUtil.CloseHelper;
 import ConnUtil.ConnectionSingletonHelper;
