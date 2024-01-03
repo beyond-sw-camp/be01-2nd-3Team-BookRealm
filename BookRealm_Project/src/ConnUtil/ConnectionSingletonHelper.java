@@ -17,7 +17,7 @@ public class ConnectionSingletonHelper {
             if (dsn.equals("mysql")) {
                 Class.forName("org.gjt.mm.mysql.Driver");
                 conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/encore",
+                        "jdbc:mysql://localhost:3307/bookrealm",
                         "root", "maria");
             } else if (dsn.equals("oracle")) {
                 Class.forName("oracle.jdbc.driver.OracleDriver");
