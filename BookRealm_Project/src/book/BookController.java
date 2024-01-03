@@ -23,7 +23,7 @@ public class BookController {
         sc.nextLine();
         BookVO vo = new BookVO();
         System.out.print("도서 제목 입력 : ");       vo.setTitle(sc.nextLine());
-        System.out.print("작가 입력 : ");           vo.setWriter(sc.next());
+        System.out.print("작가 입력 : ");            vo.setWriter(sc.nextLine());
         System.out.print("카테고리 입력 : ");        vo.setCategory(sc.next());
         System.out.print("출판사 입력 : ");          vo.setPublisher(sc.next());
         System.out.print("입고된 재고 수 : ");        vo.setStock(sc.nextInt());  sc.nextLine();

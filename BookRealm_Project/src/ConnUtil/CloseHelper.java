@@ -54,16 +54,14 @@ public class CloseHelper {
         close(conn);
     }
 
-    public static void closeAll(Connection conn, Statement stmt,  ResultSet rs) {
+    public static void closeAll(Statement stmt,  ResultSet rs) {
         close(rs);
         close(stmt);
-        close(conn);
     }
 
-    public static void closeAll(Connection conn, PreparedStatement pstmt,  ResultSet rs) {
+    public static void closeAll(PreparedStatement pstmt,  ResultSet rs) {
         close(rs);
         close(pstmt);
-        close(conn);
     }
 
 }

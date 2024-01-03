@@ -43,7 +43,7 @@ public class UserDAO {
 
             result.add(vo);
         }
-
+        closeAll(stmt, rs);
         return result;
     }
 
@@ -71,6 +71,7 @@ public class UserDAO {
             vo.setAdminyn(rs.getInt("adminyn"));
         }
 
+        closeAll(pstmt, rs);
         if(count > 0) return vo;
         else return null;
     }
@@ -93,6 +94,7 @@ public class UserDAO {
             }
         }
 
+        closeAll(pstmt, rs);
         return result; // 아이디 불일치
     }
 
@@ -116,6 +118,7 @@ public class UserDAO {
         // 작업 객체를 활용하여 쿼리문 실행(전달)
         result = pstmt.executeUpdate();
 
+        closeAll(pstmt, rs);
         // 최종 결과값 반환
         return result;
 
@@ -132,6 +135,7 @@ public class UserDAO {
 
         result = pstmt.executeUpdate();
 
+        closeAll(pstmt, rs);
         return result;
     }
 
@@ -166,7 +170,7 @@ public class UserDAO {
 
         result = pstmt.executeUpdate();
 
-
+        closeAll(pstmt, rs);
         return result;
     }
 
@@ -212,10 +216,7 @@ public class UserDAO {
                 break;
         }
 
+        closeAll(pstmt, rs);
         return result;
-    }
-
-    public void close() {
-        closeAll(conn, pstmt, stmt, rs);
     }
 }

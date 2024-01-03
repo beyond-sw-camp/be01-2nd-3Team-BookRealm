@@ -31,8 +31,7 @@ public class OrderDAO {
         // 작업 객체를 활용하여 쿼리문 실행(전달)
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
+
 
         // 최종 결과값 반환
         return result;
@@ -49,8 +48,6 @@ public class OrderDAO {
 
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
 
         return result;
     }
@@ -68,8 +65,6 @@ public class OrderDAO {
 
         result = pstmt.executeUpdate();
 
-        //반환
-        closeAll(conn, pstmt, rs);
 
         return result;
     }

@@ -1,5 +1,6 @@
 package BookSearchProgram;
 
+import ConnUtil.ConnectionSingletonHelper;
 import user.UserController2;
 
 import java.io.IOException;
@@ -54,6 +55,7 @@ public class BSP_MainPage {
 			case 3:
 				System.out.println("프로그램을 종료합니다.");
 				sc.close();
+				ConnectionSingletonHelper.close();
 				System.exit(0);
 
 			}
