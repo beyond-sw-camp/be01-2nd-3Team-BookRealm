@@ -16,7 +16,7 @@ CREATE TABLE `BOOK` (
 	`bookId`	INT UNSIGNED	NOT NULL,
 	`category`	VARCHAR(50)	NULL,
 	`writer`	VARCHAR(50)	NULL,
-	`title`	INT UNSIGNED	NULL,
+	`title`	VARCHAR(50)	NULL,
 	`price`	INT UNSIGNED	NULL,
 	`stock`	INT UNSIGNED	NULL,
 	`sales`	INT UNSIGNED	NULL,
