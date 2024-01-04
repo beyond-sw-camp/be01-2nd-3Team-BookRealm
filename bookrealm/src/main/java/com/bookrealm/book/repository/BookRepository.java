@@ -1,9 +1,15 @@
-package com.bookrealm.repository;
+package com.bookrealm.book.repository;
 
-import com.bookrealm.model.book;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.bookrealm.book.model.Book;
+
 @Repository
-public interface bookRepository extends JpaRepository<book, Integer> {
+public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    Optional<book> findByISBN(Integer ISBN);
+    Optional<Book> findByBookId(Book bookId);
 
 }
