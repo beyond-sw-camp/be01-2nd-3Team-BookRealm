@@ -1,4 +1,4 @@
-package com.bookrealm.book.model;
+package com.bookrealm.model;
 
 import jakarta.persistence.*;
 import java.sql.Date;

@@ -1,4 +1,4 @@
-package com.bookrealm.cart.model;
+package com.bookrealm.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
