@@ -5,26 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table
 @Entity
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length = 10)
-    private Integer id;  // 장바구니 코드 (PK)
+    @Column(name = "cart_id")
+    private Long id;  // 장바구니 코드 (PK)
 
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
     private Integer purchase;  //수량
 
-    @Column(length = 20, nullable = false)
+    @Column(nullable = false)
     private Integer bookId; // 도서코드
 
-    @Column(length = 20, nullable = false)
-    private String userId;
+    @Column(nullable = false)
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 }

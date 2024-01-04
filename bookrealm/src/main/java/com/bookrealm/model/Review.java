@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -15,12 +17,14 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 10)
-    private int reviewId;
+    private Long id;
 
     @Column(length = 50, nullable = false)
-    private String userId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(length = 10, nullable = false)
+    @Column(nullable = false)
     private int bookId;
 
     @Column(length = 10)

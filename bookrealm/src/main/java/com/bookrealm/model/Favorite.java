@@ -7,19 +7,16 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table
-@AllArgsConstructor
-@NoArgsConstructor
 public class Favorite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(length = 10)
-    private Integer favorId;  //즐겨찾기 코드 (PK)
+    @Column(name = "favorite_id")
+    private Long id;  //즐겨찾기 코드 (PK)
 
-    @Column(length = 10)
+    @Column(nullable = false)
     private Integer bookId;  // 도서코드
 
-    @Column(length = 10)
+    @Column(nullable = false)
     private String userId;  // 회원ID
 }
