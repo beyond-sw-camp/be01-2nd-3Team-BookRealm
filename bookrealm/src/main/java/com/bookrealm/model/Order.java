@@ -32,4 +32,7 @@ public class Order {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderList> orderLists = new ArrayList<>();
 }

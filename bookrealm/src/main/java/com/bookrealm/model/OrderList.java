@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -12,13 +14,16 @@ public class OrderList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="orderlist_id")
     private Long id;
 
-    @Column( nullable = false)
-    private int buyId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
 
-    @Column(nullable = false)
-    private int bookId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     @Column(nullable = false)
     private int purchase;

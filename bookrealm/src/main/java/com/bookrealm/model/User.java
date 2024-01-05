@@ -2,6 +2,7 @@ package com.bookrealm.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,8 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String userId;
+    @Email
+    private String email;
 
     private String username;
 
@@ -37,7 +39,6 @@ public class User {
     @Enumerated (EnumType.STRING)
     private Admin adminyn; // USER, ADMIN
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
@@ -47,4 +48,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Favorite> favorites = new ArrayList<>();
 }

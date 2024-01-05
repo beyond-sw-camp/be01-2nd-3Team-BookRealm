@@ -10,6 +10,4 @@ import com.bookrealm.model.Book;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
-    Optional<Book> findByBookId(Book bookId);
-
 }

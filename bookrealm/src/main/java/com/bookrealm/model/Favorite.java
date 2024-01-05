@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.FetchType.LAZY;
+
 @Data
 @Entity
 public class Favorite {
@@ -14,9 +16,13 @@ public class Favorite {
     @Column(name = "favorite_id")
     private Long id;  //즐겨찾기 코드 (PK)
 
-    @Column(nullable = false)
-    private Integer bookId;  // 도서코드
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "bood_id")
+    private Book book;
 
-    @Column(nullable = false)
-    private String userId;  // 회원ID
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
 }

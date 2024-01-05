@@ -19,13 +19,13 @@ public class Review {
     @Column(length = 10)
     private Long id;
 
-    @Column(length = 50, nullable = false)
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
-    private int bookId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     @Column(length = 10)
     private int popular;

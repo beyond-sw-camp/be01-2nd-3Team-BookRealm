@@ -19,13 +19,11 @@ public class Cart {
     @Column(nullable = false)
     private Integer purchase;  //수량
 
-    @Column(nullable = false)
-    private Integer bookId; // 도서코드
-
-    @Column(nullable = false)
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 }
