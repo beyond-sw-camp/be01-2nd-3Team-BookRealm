@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -34,7 +34,8 @@ public class User {
 
     private String phone;
 
-    private String suType;
+    @Enumerated (EnumType.STRING)
+    private SuType suType; // NORMAL, KAKAO
 
     @Enumerated (EnumType.STRING)
     private Admin adminyn; // USER, ADMIN
