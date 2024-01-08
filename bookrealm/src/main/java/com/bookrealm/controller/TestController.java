@@ -15,18 +15,4 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TestController {
 
-    @Autowired
-    private NaverBookClient naverBookClient;
-
-    @PostMapping("/admin/book/search")
-    public ModelAndView searchBook(@RequestParam(value = "query") String query){
-
-        ModelAndView mav = new ModelAndView("/admin/book/result");
-
-        SearchBookRes result = naverBookClient.searchBookApi(new SearchBookReq(query));
-
-        mav.addObject("result",result);
-
-        return mav;
-    }
 }
