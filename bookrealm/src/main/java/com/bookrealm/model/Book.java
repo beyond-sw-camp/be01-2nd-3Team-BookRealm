@@ -41,6 +41,8 @@ public class Book {
     @Column(nullable = false)
     private LocalDate publishDate;  // 출간일
     
+    private String image;  // 섬네일 이미지의 URL
+    
     @Column(columnDefinition = "TEXT")
     private String description;  // 네이버 도서의 책 소개
 
