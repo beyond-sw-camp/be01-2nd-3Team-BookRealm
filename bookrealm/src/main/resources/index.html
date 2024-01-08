@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Book Realm</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 20px;
+}
+
+h1 {
+	color: #333;
+}
+
+table {
+	width: 100%;
+	/* 표(table)의 테두리와 셀(td)의 테두리 사이의 간격 제거, 
+	겹치는 부분은 한 줄로 나타냄 */
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+</style>
+</head>
+<body>
+
+	<h1>Book Realm</h1>
+	<!-- <a th:href="@{/test/books}"><img class="logo" src="BookRealm_logo.png" alt="" width="50" height="50"></a> -->
+	<br />
+
+	<h2>All Books</h2>
+	
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Writer</th>
+			<th>category</th>
+			<th>Price</th>
+			<th>publisher</th>
+			<th>publishDate</th>
+		</tr>
+		<!-- Iterate over books -->
+		<!-- <form th:action="@{/test/books}" method="get"> -->
+		<tr th:each="book : ${allBooks}">
+			<td th:text="${book.id}"></td>
+			<td><a th:href="@{/test/books/detail(id=${book.id})}" th:text="${book.title}"></a></td>
+			<td th:text="${book.writer}"></td>
+			<td th:text="${book.category}"></td>
+			<td th:text="${book.price}"></td>
+			<td th:text="${book.publisher}"></td>
+			<td th:text="${book.publishDate}"></td>
+		</tr>
+	</table>
+	<br />
+
+	<h2>Search Books</h2>
+	<form th:action="@{/test/books/search}" method="get">
+		<!-- label은 input 제목 제공 -->
+		<label for="searchTerm">도서 검색</label> <input type="text"
+			id="searchTerm" name="term" placeholder="Input Book Title or Writer"
+			required>
+		<button type="submit">검색</button>
+	</form>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Writer</th>
+			<th>category</th>
+			<th>Price</th>
+			<th>publisher</th>
+			<th>publishDate</th>
+		</tr>
+		<!-- Iterate over books -->
+		<tr th:each="book : ${books}">
+			<td th:text="${book.id}"></td>
+			<td><a th:href="@{/test/books/detail(id=${book.id})}" th:text="${book.title}"></a></td>
+			<td th:text="${book.writer}"></td>
+			<td th:text="${book.category}"></td>
+			<td th:text="${book.price}"></td>
+			<td th:text="${book.publisher}"></td>
+			<td th:text="${book.publishDate}"></td>
+		</tr>
+	</table>
+	<br />
+
+	<h2>Best Sellers</h2>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>Title</th>
+			<th>Writer</th>
+			<th>category</th>
+			<th>Price</th>
+			<th>publisher</th>
+			<th>publishDate</th>
+		</tr>
+		<!-- Iterate over best sellers -->
+		<!-- <form th:action="@{/test/books/bestSellers}" method="get"> -->
+		<tr th:each="book : ${bestSellers}">
+			<td th:text="${book.id}"></td>
+			<td><a th:href="@{/test/books/detail(id=${book.id})}" th:text="${book.title}"></a></td>
+			<td th:text="${book.writer}"></td>
+			<td th:text="${book.category}"></td>
+			<td th:text="${book.price}"></td>
+			<td th:text="${book.publisher}"></td>
+			<td th:text="${book.publishDate}"></td>
+		</tr>
+	</table>
+
+</body>
+</html>

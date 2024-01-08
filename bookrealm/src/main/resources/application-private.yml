@@ -1,0 +1,11 @@
+naver:
+  url:
+    book: https://openapi.naver.com/v1/search/book.json
+  client:
+    id: 0IjtY5VP34umHyRvpyUw
+    secret: aEkPnOQqMx
+
+aladin:
+  api:
+    ttb: ttbjacobis1729001
+    url: http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?
