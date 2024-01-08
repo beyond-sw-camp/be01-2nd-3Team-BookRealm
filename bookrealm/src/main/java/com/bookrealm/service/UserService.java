@@ -48,6 +48,9 @@ public class UserService {
                 .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND, "이메일이 존재하지 않습니다"));
 
         //password 틀림
+        if(!encoder.matches(selectedUser.getPasswd(), password)) {
+            throw new AppException(ErrorCode.INAVALID_PASSWORD, "패스워드가 잘못 입력되었습니다.");
+        }
         return "";
     }
 }

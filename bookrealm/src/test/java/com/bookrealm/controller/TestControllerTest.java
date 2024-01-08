@@ -48,7 +48,7 @@ class TestControllerTest {
         String phone = "01042991435";
         SuType suType = NORMAL;
 
-        mockMvc.perform(post("/test/join")
+        mockMvc.perform(post("/join/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new JoinDto(email, username, passwd, address, phone, suType))))
@@ -56,7 +56,7 @@ class TestControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
+
 
 
 }
