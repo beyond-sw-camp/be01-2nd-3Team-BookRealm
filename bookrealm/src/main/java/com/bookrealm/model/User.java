@@ -3,17 +3,16 @@ package com.bookrealm.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
     @Id
@@ -34,7 +33,8 @@ public class User {
 
     private String phone;
 
-    private String suType;
+    @Enumerated (EnumType.STRING)
+    private SuType suType; // NORMAL, KAKAO
 
     @Enumerated (EnumType.STRING)
     private Admin adminyn; // USER, ADMIN
