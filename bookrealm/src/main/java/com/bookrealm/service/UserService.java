@@ -6,17 +6,25 @@ import com.bookrealm.model.User;
 import com.bookrealm.model.dto.JoinDto;
 import com.bookrealm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.bookrealm.model.Admin.USER;
 
 @Service
-@RequiredArgsConstructor
+
 public class UserService {
+
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+
+    @Autowired
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder encoder) {
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
 
     public Long join(JoinDto dto) {
 
@@ -49,7 +57,7 @@ public class UserService {
 
         //password 틀림
         if(!encoder.matches(selectedUser.getPasswd(), password)) {
-            throw new AppException(ErrorCode.INAVALID_PASSWORD, "패스워드가 잘못 입력되었습니다.");
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드가 잘못 입력되었습니다.");
         }
         return "";
     }
