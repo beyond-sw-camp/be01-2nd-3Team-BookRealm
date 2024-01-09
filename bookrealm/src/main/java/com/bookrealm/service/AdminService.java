@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AdminService {
     List<Book> saveAll(List<Book> books);
+    List<Book> findAll();
 }

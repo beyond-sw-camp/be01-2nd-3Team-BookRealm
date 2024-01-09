@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>도서 검색 결과</title>
+</head>
+<style>
+    body {
+        max-width: 100%;
+        margin: 20px;
+    }
+    table {
+        width: 100%;
+        #table-layout: fixed;
+    }
+    td {
+        padding: 10px;
+        text-align: center;
+    }
+    td img {
+        width: 100%;
+        height: auto;
+    }
+    .search-head {
+        margin: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .search-head div {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+</style>
+<body>
+<div class="search-head">
+    <div>검색 결과</div>
+    <div><button type="submit" style="display: inline-block" onclick="insertChecked()">선택 추가</button></div>
+</div>
+
+<table border="1">
+
+    <tr>
+        <th width="10%"></th>
+        <th width="25%">title</th>
+        <th width="15%">author</th>
+        <th width="10%">금액</th>
+        <th width="20%">출판사</th>
+        <th width="10%">ISBN</th>
+        <th width="8%">출간일</th>
+        <th width="2%"><input type="checkbox" id="allCheckBox" onclick="allChecked()"></th>
+    </tr>
+    <!-- Iterate over books -->
+    <tr th:each="book, num: ${result['items']}">
+        <!--<td><a th:href="${book.link}" th:text="${book.link}"></a></td>-->
+        <td height="0">
+            <img th:src="${book.image}">
+        </td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.discount}"></td>
+        <td th:text="${book.publisher}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.pubdate}"></td>
+        <td align="center"><input type="checkbox" class="chk" name="chk" th:value="${num.index}"></td>
+    </tr>
+</table>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script th:inline="javascript">
+    //체크박스 전체 선택 클릭 이벤트
+    function allChecked(){
+
+        const checkbox = document.getElementById('allCheckBox');  //전체 체크박스 버튼
+        const is_checked = checkbox.checked;                      //전체 체크박스 버튼 체크 여부
+
+        if(is_checked){
+            chkAllChecked()
+        } else{
+            chkAllUnChecked()
+        }
+    }
+
+    //체크박스 전체 체크
+    function chkAllChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = true;
+        });
+    }
+
+    //체크박스 전체 체크 해제
+    function chkAllUnChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = false;
+        });
+    }
+
+    function insertChecked() {
+       const selects = document.querySelectorAll('input[name="chk"]:checked');
+
+        if(selects.length === 0){
+            alert("선택된 항목이 없습니다.");
+            return false;
+        }
+        else{
+            if(confirm("DB에 추가하시겠습니까?")){
+                const arr = [];
+
+                // 선택된 index의 객체를 배열에 저장
+                document.querySelectorAll('input[name="chk"]:checked').forEach(function(v, i) {
+                    arr.push(JSON.stringify([[${result['items']}]][v.value]));
+                });
+                /*console.log(arr);
+                // 저장 POST 요청을 위한 동적 폼 생성
+                const form = document.createElement('form');
+                form.setAttribute('method', 'post');
+                form.setAttribute('action', '/admin/book/save');
+
+                var form_input = document.createElement('input');
+                form_input.setAttribute('type','hidden');
+                form_input.setAttribute('name','selections');
+                form_input.setAttribute('value',arr);
+                form.appendChild(form_input);
+                document.body.appendChild(form);
+                console.log(arr);
+                //form.submit();*/
+                var paramList = {
+                    "selections" : JSON.stringify(arr)
+                }
+                console.log(paramList['selections'])
+                $.ajax({
+                    type : "POST",
+                    url : "/admin/book/save",
+                    data : paramList,
+                    success : function(data) {
+                        alert("저장이 완료되었습니다.");
+                    },
+                    error : function(e) {
+                        alert("저장 실패");
+                    }
+                });
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

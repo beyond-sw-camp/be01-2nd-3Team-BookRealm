@@ -27,4 +27,9 @@ public class AdminServiceImpl implements AdminService{
         return bookRepository.saveAll(books);
         //return 0;
     }
+
+    @Override
+    public List<Book> findAll() {
+        return bookRepository.findAll();
+    }
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Home</title>
+</head>
+<style>
+    .btns {
+        display: flex;
+        flex-direction: row;
+    }
+    .btns div{
+        padding: 0 10px;
+    }
+</style>
+<body>
+    <h1>도서 관리</h1>
+    <div class="btns">
+        <div><button type="submit" style="display: inline-block" th:onclick="|location.href='@{/admin/book/search}'|">도서 추가</button></div>
+        <div><button type="submit" style="display: inline-block" th:onclick="|location.href='@{/admin/book/manage}'|">도서 수정</button></div>
+    </div>
+    <h1>회원 관리</h1>
+    <div class="btns">
+        <div><button type="submit" style="display: inline-block">회원 정보 수정</button></div>
+    </div>
+</body>
+</html>

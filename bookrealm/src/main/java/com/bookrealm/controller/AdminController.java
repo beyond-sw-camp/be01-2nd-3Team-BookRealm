@@ -5,17 +5,11 @@ import com.bookrealm.naver.NaverBookClient;
 import com.bookrealm.naver.dto.SearchBookReq;
 import com.bookrealm.naver.dto.SearchBookRes;
 import com.bookrealm.service.AdminService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -32,6 +26,19 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    @RequestMapping
+    public String home(){
+        return "/admin/home";
+    }
+
+    @RequestMapping("/book/manage")
+    public ModelAndView manageBook() {
+        ModelAndView mav = new ModelAndView("/admin/book/manage");
+        List<Book> bookList = adminService.findAll();
+        mav.addObject("bookList",bookList);
+        return mav;
+    }
+
     @GetMapping("/book/search")
     public String searchBook(){
 
@@ -40,7 +47,7 @@ public class AdminController {
     @GetMapping("/book/search/result")
     public ModelAndView searchBook(@RequestParam(name = "query") String query){
 
-        ModelAndView mav = new ModelAndView("admin/book/manage");
+        ModelAndView mav = new ModelAndView("search_result");
 
         SearchBookRes result = naverBookClient.searchBookApi(new SearchBookReq(query));
         //List<SearchBookRes.SearchBookItem> list = result.getItems();
