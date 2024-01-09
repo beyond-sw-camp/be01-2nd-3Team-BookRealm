@@ -1,6 +1,5 @@
 package com.bookrealm.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -13,11 +12,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false)
@@ -37,7 +36,7 @@ public class User {
     private SuType suType; // NORMAL, KAKAO
 
     @Enumerated (EnumType.STRING)
-    private Admin adminyn; // USER, ADMIN
+    private Role role; // USER, ADMIN
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();

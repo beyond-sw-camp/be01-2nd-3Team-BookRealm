@@ -1,44 +1,39 @@
 package com.bookrealm.config;
 
-import com.bookrealm.service.UserService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @Configuration
-@EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록이 됨.
+@EnableWebSecurity
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                // stateless한 rest api를 개발할 것이므로 csrf 공격에 대한 옵션은 꺼둔다.
-                .csrf((csrf) -> csrf.disable())
-                // 특정 URL에 대한 권한 설정.
-                .authorizeHttpRequests((authorizeRequests) -> {
-                    authorizeRequests.requestMatchers("/user/**").authenticated();
+        // csrf 비활성화 (사이트 요청 위조) ---> csrf 토큰이 없어도 서버는 응답
+        // 스프링에서는 csrf 기본은 활성화 (보안 목적) ---> csrf 토큰을 url에 포함해야 서버는 응답
+        http
+            .authorizeHttpRequests((requests) -> requests
+                    .requestMatchers("/admin", "/user").authenticated()
+                    .anyRequest().permitAll())
+                .formLogin(customizer -> customizer
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login/login")
+                        .usernameParameter("email")
+                        .defaultSuccessUrl("/")
+                        .permitAll()
+                )
+            .httpBasic(Customizer.withDefaults());
+        return http.build();
+    }
 
-                    authorizeRequests.requestMatchers("/admin/**")
-                            // ROLE_은 붙이면 안 된다. hasRole()을 사용할 때 자동으로 ROLE_이 붙기 때문이다.
-                            .hasRole("ADMIN");
-
-                    authorizeRequests.anyRequest().permitAll();
-                })
-
-                .formLogin((formLogin) -> {
-                    /* 권한이 필요한 요청은 해당 url로 리다이렉트 */
-                    formLogin.loginPage("/login");
-                })
-
-                .build();
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

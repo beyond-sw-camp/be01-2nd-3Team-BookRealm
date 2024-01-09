@@ -20,6 +20,10 @@ public class LoginController {
     private final UserService userService;
 
     @PostMapping("/login")
+//    {
+//        "email":"a@naver.com",
+//        "password":"1234"
+//    }
     public ResponseEntity<String> log(@RequestBody LoginDto dto) {
         String token = userService.login(dto.getEmail(), dto.getPassword());
         return ResponseEntity.ok().body(token);

@@ -10,7 +10,7 @@ import lombok.Getter;
 public class JoinDto {
     private String email;
     private String username;
-    private String passwd;
+    private String password;
     private Address address;
     private String phone;
     private SuType suType;

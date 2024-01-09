@@ -35,7 +35,7 @@ class LoginControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     @Test
-    @WithAnonymousUser
+    @WithMockUser
     void 로그인_성공() throws Exception {
         String email = "yjin@naver.com";
         String password = "1234";
@@ -70,4 +70,20 @@ class LoginControllerTest {
 
     }
 
+    @Test
+    @WithMockUser
+    void 로그인_실패_비밀번호_틀림() throws Exception {
+        String email = "yjin@naver.com";
+        String password = "1234";
+
+        when(userService.login(any(), any()))
+                .thenThrow(new AppException(ErrorCode.INVALID_PASSWORD, " "));
+
+        mockMvc.perform(post("/login/login")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(new LoginDto(email, password))))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+    }
 }
