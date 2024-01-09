@@ -27,9 +27,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests.requestMatchers("/user/**").authenticated();
 
-                    authorizeRequests.requestMatchers("/admin/**")
+                    /*authorizeRequests.requestMatchers("/admin/**")
                             // ROLE_은 붙이면 안 된다. hasRole()을 사용할 때 자동으로 ROLE_이 붙기 때문이다.
-                            .hasRole("ADMIN");
+                            .hasRole("ADMIN");*/
 
                     authorizeRequests.anyRequest().permitAll();
                 })

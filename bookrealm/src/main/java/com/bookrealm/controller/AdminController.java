@@ -1,22 +1,35 @@
 package com.bookrealm.controller;
 
+import com.bookrealm.model.Book;
 import com.bookrealm.naver.NaverBookClient;
 import com.bookrealm.naver.dto.SearchBookReq;
 import com.bookrealm.naver.dto.SearchBookRes;
+import com.bookrealm.service.AdminService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final NaverBookClient naverBookClient;
+    private final AdminService adminService;
 
     @Autowired
-    AdminController(NaverBookClient naverBookClient){
+    AdminController(NaverBookClient naverBookClient, AdminService adminService){
+
         this.naverBookClient = naverBookClient;
+        this.adminService = adminService;
     }
 
     @GetMapping("/book/search")
@@ -27,13 +40,44 @@ public class AdminController {
     @GetMapping("/book/search/result")
     public ModelAndView searchBook(@RequestParam(name = "query") String query){
 
-        ModelAndView mav = new ModelAndView("/admin/book/manage");
+        ModelAndView mav = new ModelAndView("admin/book/manage");
 
         SearchBookRes result = naverBookClient.searchBookApi(new SearchBookReq(query));
-        System.out.println(result);
-        mav.addObject("result",result);
+        //List<SearchBookRes.SearchBookItem> list = result.getItems();
 
+        mav.addObject("result",result);
         return mav;
     }
 
+    /*@PostMapping("/book/save")
+    public String saveBook(@RequestParam(value = "selections") List<String> selections) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<Book> books = new ArrayList<>();
+
+        StringBuilder sb;
+        for(String selection : selections){
+            HashMap<String, String> map = new HashMap<String, String>();
+            System.out.println(selection);
+            map = mapper.readValue(selection, new TypeReference<HashMap<String, String>>() {});
+            System.out.println(map);
+            Book book = new Book();
+            book.setTitle(map.get("title"));
+            book.setPrice(Integer.parseInt(map.get("discount")));
+            book.setImage(map.get("image"));
+            book.setWriter(map.get("author"));
+            book.setPublisher(map.get("publisher"));
+            book.setIsbn(Long.parseLong(map.get("isbn")));
+            book.setDescription(map.get("description"));
+            sb = new StringBuilder(map.get("pubdate"));
+            sb.insert(4,'-').insert(7,'-');
+            book.setPublishDate(LocalDate.parse(sb));
+
+            books.add(book);
+        }
+
+        adminService.saveAll(books);
+        return "redirect:/admin/book/search";
+
+    }*/
 }
