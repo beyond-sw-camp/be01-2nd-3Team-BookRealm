@@ -5,10 +5,7 @@ import com.bookrealm.naver.dto.SearchBookReq;
 import com.bookrealm.naver.dto.SearchBookRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -27,13 +24,13 @@ public class AdminController {
 
         return "/admin/book/search";
     }
-    @PostMapping("/book/search")
-    public ModelAndView searchBook(@RequestParam(value = "query") String query){
+    @GetMapping("/book/search/result")
+    public ModelAndView searchBook(@RequestParam(name = "query") String query){
 
-        ModelAndView mav = new ModelAndView("/admin/book/result");
+        ModelAndView mav = new ModelAndView("/admin/book/manage");
 
         SearchBookRes result = naverBookClient.searchBookApi(new SearchBookReq(query));
-
+        System.out.println(result);
         mav.addObject("result",result);
 
         return mav;

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+  body {
+    max-width: 100%;
+    margin: 20px;
+  }
+  table {
+    width: 100%;
+    #table-layout: fixed;
+  }
+  td {
+    padding: 10px;
+    text-align: center;
+  }
+  td img {
+    width: 100%;
+    height: auto;
+  }
+  .search-head {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div class="search-head">
+    <div><h1>검색 결과</h1></div>
+    <div align="center"><button type="submit">선택 추가</button></div>
+  </div>
+  <table>
+
+    <tr>
+    <th width="15%"></th>
+    <th width="25%">title</th>
+    <th width="5%">author</th>
+    <th width="10%">금액</th>
+    <th width="10%">출판사</th>
+    <th width="10%">ISBN</th>
+    <th width="8%">출간일</th>
+    <th width="2%"><input type="checkbox"></th>
+  </tr>
+  <!-- Iterate over books -->
+    <tr th:each="book : ${result['items']}">
+    <!--<td><a th:href="${book.link}" th:text="${book.link}"></a></td>-->
+    <td height="0">
+      <img th:src="${book.image}">
+    </td>
+    <td th:text="${book.title}"></td>
+    <td th:text="${book.author}"></td>
+    <td th:text="${book.discount}"></td>
+    <td th:text="${book.publisher}"></td>
+    <td th:text="${book.isbn}"></td>
+    <td th:text="${book.pubdate}"></td>
+    <td align="center"><input type="checkbox"></td>
+  </tr>
+</table>
+<br />
+</body>
+</html>

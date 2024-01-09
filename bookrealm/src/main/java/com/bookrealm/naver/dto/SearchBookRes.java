@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -32,7 +33,7 @@ public class SearchBookRes {
         private String publisher;       // 출판사
         private Long isbn;           // ISBN
         private String description;     // 네이버 도서 책 소개
-        private String pubDate;           // 출간일
+        private String pubdate;           // 출간일
 
     }
 
