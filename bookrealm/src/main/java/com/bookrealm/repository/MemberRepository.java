@@ -1,7 +1,6 @@
 package com.bookrealm.repository;
 
 import com.bookrealm.model.Member;
-import com.bookrealm.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

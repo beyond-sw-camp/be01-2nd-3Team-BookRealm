@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link href="starter-template.css" rel="stylesheet">
+
 <meta charset="UTF-8">
 <title>Book Realm</title>
 <style>
@@ -34,6 +39,7 @@ th {
 </head>
 <body>
 
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
 	<h1>Book Realm</h1>
 	<!-- <a th:href="@{/test/books}"><img class="logo" src="BookRealm_logo.png" alt="" width="50" height="50"></a> -->
 	<br />

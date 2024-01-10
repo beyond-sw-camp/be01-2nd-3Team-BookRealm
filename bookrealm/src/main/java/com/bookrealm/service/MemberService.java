@@ -2,16 +2,17 @@ package com.bookrealm.service;
 
 import com.bookrealm.exception.AppException;
 import com.bookrealm.exception.ErrorCode;
+import com.bookrealm.model.Address;
 import com.bookrealm.model.Member;
-import com.bookrealm.model.User;
+import com.bookrealm.model.SuType;
 import com.bookrealm.model.dto.JoinDto;
 import com.bookrealm.repository.MemberRepository;
-import com.bookrealm.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static com.bookrealm.model.Role.USER;
 
@@ -38,14 +39,15 @@ public class MemberService {
                 .ifPresent(user1 -> {
                     throw new AppException(ErrorCode.EMAIL_DUPLICATED, "이미 존재하는 이메일 입니다.");
                 });
+        Address address = new Address(dto.getPostcode(), dto.getAddress(), dto.getDetailAddress(), dto.getExtraAddress());
 
         Member member = Member.builder()
                 .email(dto.getEmail())
                 .username(dto.getUsername())
-                .passwd(encoder.encode(dto.getPassword()))
-                .address(dto.getAddress())
+                .passwd(encoder.encode(dto.getPassword1()))
+                .address(address)
                 .phone(dto.getPhone())
-                .suType(dto.getSuType())
+                .suType(SuType.NORMAL)
                 .role(USER)
                 .build();
 
@@ -64,7 +66,16 @@ public class MemberService {
         if(!encoder.matches(password, selectedUser.getPasswd())) {
             throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드가 잘못 입력 했습니다.");
         }
-
         return null;
     }
+
+    public Member getUser(String username) {
+        Optional<Member> siteUser = this.memberRepository.findByEmail(username);
+        if (siteUser.isPresent()) {
+            return siteUser.get();
+        } else {
+            throw new AppException(ErrorCode.MEMBER_NOT_FOUND, "siteuser not found");
+        }
+    }
+
 }

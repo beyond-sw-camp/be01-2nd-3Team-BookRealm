@@ -2,9 +2,8 @@ package com.bookrealm.service;
 
 import com.bookrealm.model.Member;
 import com.bookrealm.model.Role;
-import com.bookrealm.model.User;
+import org.springframework.security.core.userdetails.User;
 import com.bookrealm.repository.MemberRepository;
-import com.bookrealm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 // 스프링 시큐리티가 제공하는 UserDetailsService 인터페이스 구현
-public class UserSecurityService implements UserDetailsService {
+public class MemberDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
@@ -28,21 +27,21 @@ public class UserSecurityService implements UserDetailsService {
     @Override // 사용자명으로 비밀번호 조회
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException{
-        Optional<User> _user = this.userRepository.findByEmail(email);
+        Optional<Member> _member = this.memberRepository.findByEmail(email);
 
-        if(_user.isEmpty()){
+        if(_member.isEmpty()){
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
 
-        User siteUser = _user.get();
+        Member member = _member.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        if(siteUser.getRole() == Role.ADMIN){
+        if(member.getRole() == Role.ADMIN){
             // 사용자명이 'admin'일 경우에만 ADMIN 권한 부여
             authorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
         }else{
             authorities.add(new SimpleGrantedAuthority(Role.USER.getValue()));
         }
-        return new User(siteUser.getEmail(), siteUser.getPasswd(), authorities);
+        return new User(member.getEmail(), member.getPasswd(), authorities);
     }
 }
