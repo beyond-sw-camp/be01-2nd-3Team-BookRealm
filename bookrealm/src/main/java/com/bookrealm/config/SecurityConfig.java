@@ -31,7 +31,12 @@ public class SecurityConfig {
         // 스프링에서는 csrf 기본은 활성화 (보안 목적) ---> csrf 토큰을 url에 포함해야 서버는 응답
         http
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/admin", "/user").authenticated()
+                    /*.requestMatchers("/admin", "/user").authenticated()*/
+                    .requestMatchers("/user/**").authenticated()
+
+                    .requestMatchers("/admin/**")
+                            // ROLE_은 붙이면 안 된다. hasRole()을 사용할 때 자동으로 ROLE_이 붙기 때문이다.
+                            .hasRole("ADMIN")
                     .anyRequest().permitAll())
                 .formLogin(customizer -> customizer
                         .loginPage("/login")

@@ -33,8 +33,8 @@ public class ReviewService {
 
     }
 
-    public List<Review> findByUserId(Long userID){
-        return reviewRepository.findByUserId(userID);
+    public List<Review> findByMemberId(Long memberID){
+        return reviewRepository.findByMemberId(memberID);
     }
 
     public List<Review> findByBookId(Long bookID){
