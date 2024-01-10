@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<style>
+  body {
+    max-width: 100%;
+    margin: 20px;
+  }
+  td {
+    padding: 10px;
+    text-align: center;
+  }
+</style>
+<body>
+  <h2>회원 관리</h2>
+
+<table border="1" width="90%">
+
+  <tr>
+    <th width="10%">이름</th>
+    <th width="15%">Email</th>
+    <th width="25%">주소</th>
+    <th width="20%">연락처</th>
+    <th width="10%">관리자권한</th>
+    <th width="10%"></th>
+    <th width="10%"></th>
+  </tr>
+
+  <tr th:each="member: ${members}">
+    <td th:text="${member.username}"></td>
+    <td th:text="${member.email}"></td>
+    <td th:text="${member.address.address} + ' ' + ${member.address.detailAddress} + ' ' + ${member.address.extraAddress}"></td>
+    <td th:text="${member.phone}"></td>
+    <td th:text="${member.role}"></td>
+    <td>수정/주문관리</td>
+    <td>삭제</td>
+  </tr>
+</table>
+</body>
+</html>

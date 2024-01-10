@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.bookrealm.model.Role.USER;
@@ -76,6 +77,10 @@ public class MemberService {
         } else {
             throw new AppException(ErrorCode.MEMBER_NOT_FOUND, "siteuser not found");
         }
+    }
+
+    public List<Member> findAllUsers(){
+        return memberRepository.findAll();
     }
 
 }
