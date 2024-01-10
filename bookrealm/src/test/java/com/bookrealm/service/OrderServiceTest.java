@@ -2,8 +2,8 @@ package com.bookrealm.service;
 
 import com.bookrealm.model.*;
 import com.bookrealm.repository.BookRepository;
+import com.bookrealm.repository.MemberRepository;
 import com.bookrealm.repository.OrderRepository;
-import com.bookrealm.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderServiceTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
     private BookRepository bookRepository;
