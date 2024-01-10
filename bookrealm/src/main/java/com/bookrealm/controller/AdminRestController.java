@@ -52,4 +52,11 @@ public class AdminRestController {
         }
         return new ResponseEntity<List<Book>>(adminService.saveAll(books), HttpStatus.OK);
     }
+
+    @PostMapping("book/delete")
+    public ResponseEntity<Void> deleteBooks(@RequestParam(value = "ids[]") List<Long> ids){
+        System.out.println(ids);
+        adminService.deleteByIdIn(ids);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
 }

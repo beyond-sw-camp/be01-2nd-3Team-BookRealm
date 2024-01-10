@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    List<Review> findByUserId(Long userID);
+    List<Review> findByMemberId(Long memberID);
     List<Review> findByBookId(Long bookID);
 
 

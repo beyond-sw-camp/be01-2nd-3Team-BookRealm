@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+</head>
+<body>
+    <div align="center">
+    <h1>도서 수정</h1>
+    <br />
+    <form th:action="@{/admin/book/manage/edit}" method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td align="center" colspan="2"><img th:src="${book.image}"></td>
+            </tr>
+            <tr>
+                <td>도서명: </td>
+                <td><input type="text" name="title" th:value="${book.title}" /></td>
+            </tr>
+            <tr>
+                <td>ISBN: </td>
+                <td><input type="text" name="isbn" th:value="${book.isbn}" readonly/></td>
+            </tr>
+            <tr>
+                <td>저자: </td>
+                <td><input type="text" name="writer" th:value="${book.writer}" /></td>
+            </tr>
+            <tr>
+                <td>출판사: </td>
+                <td><input type="text" name="publisher" th:value="${book.publisher}" /></td>
+            </tr>
+            <tr>
+                <td>출간일: </td>
+                <td><input type="date" name="publishDate" th:value="${book.publishDate}" /></td>
+            </tr>
+            <tr>
+                <td>가격: </td>
+                <td><input type="text" name="price" th:value="${book.price}" /></td>
+            </tr>
+            <tr>
+                <td>재고: </td>
+                <td><input type="number" name="stock" th:value="${book.stock}" th:min="0"/></td>
+            </tr>
+            <tr>
+                <td>판매수량: </td>
+                <td><input type="number" name="sales" th:value="${book.sales}" min="0" th:max="${book.stock}"/></td>
+            </tr>
+        </table>
+        <input type="hidden" name="id" th:value="${book.id}"/>
+        <input type="hidden" name="category" th:value="${book.category}"/>
+        <input type="hidden" name="description" th:value="${book.description}"/>
+        <input type="hidden" name="image" th:value="${book.image}"/>
+        <tr>
+            <td colspan="2"><button type="submit">저 장(추가)</button> </td>
+        </tr>
+    </form>
+</div>
+</body>
+</html>

@@ -21,6 +21,16 @@ spring:
   profiles:
     include: private
 
+  security:
+    oauth2:
+      resourceserver:
+
+#jwt
+jwt:
+  token:
+    secret: "secretKey"
+
+
 logging:
   level:
     org:

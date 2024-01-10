@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
 
+import com.bookrealm.model.Member;
+import com.bookrealm.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,12 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.bookrealm.model.Address;
 import com.bookrealm.model.Book;
 import com.bookrealm.model.Cart;
-import com.bookrealm.model.User;
 import com.bookrealm.repository.BookRepository;
 import com.bookrealm.repository.CartRepository;
-import com.bookrealm.repository.UserRepository;
-
-import jakarta.transaction.Transactional;
 
 @SpringBootTest
 class CartServiceTest {
@@ -30,20 +28,20 @@ class CartServiceTest {
     private CartRepository cartRepository;
 	
 	@Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 	
 	@Autowired
     private BookRepository bookRepository;
 	
-	public User savedUser() {
-    	User newUser = new User();
-    	newUser.setEmail("bb@naver.com");
-    	newUser.setUsername("김단아");
-    	newUser.setPasswd("1111");
-    	newUser.setAddress(new Address("시흥시", "대은로", "62"));
-    	newUser.setPhone("01023456789");
-    	newUser.setSuType(NORMAL);
-    	return userRepository.save(newUser);
+	public Member savedMember() {
+    	Member newMember = new Member();
+    	newMember.setEmail("bb@naver.com");
+    	newMember.setUsername("김단아");
+    	newMember.setPasswd("1111");
+    	newMember.setAddress(new Address("123","시흥시", "대은로", "62"));
+    	newMember.setPhone("01023456789");
+    	newMember.setSuType(NORMAL);
+    	return memberRepository.save(newMember);
     }
     
     public Book savedBook() {
@@ -64,16 +62,16 @@ class CartServiceTest {
     @Test
     public void 장바구니_담기() {
     	//given
-    	User user = savedUser();
+    	Member member = savedMember();
     	Book book = savedBook();
     	
     	// when
-    	Cart cart = Cart.createCart(user);
+    	Cart cart = Cart.createCart(member);
     	Cart savedCart = new Cart();
     	
     	// then
-        savedCart = cartService.addCart(user, book, 1);
-        assertEquals(user.getId(), savedCart.getUser().getId());
+        savedCart = cartService.addCart(member, book, 1);
+        assertEquals(member.getId(), savedCart.getMember().getId());
         assertEquals(book.getId(), savedCart.getBook().getId());
 //        assertEquals(cart.getPurchase(), savedCart.getPurchase());
     }
@@ -82,17 +80,17 @@ class CartServiceTest {
 	public void 장바구니_제거(){
 
 		//given
-		User user = savedUser();
+		Member member = savedMember();
 		Book book = savedBook();
-		Cart cart = Cart.createCart(user);
-		cartService.addCart(user, book, 1);
+		Cart cart = Cart.createCart(member);
+		cartService.addCart(member, book, 1);
 
 		//when
-		cartService.deleteBookFromCart(user, book);
+		cartService.deleteBookFromCart(member, book);
 
 
 		//then
-		Cart updateCart = cartRepository.findById(user.getId()).orElse(null);
+		Cart updateCart = cartRepository.findById(member.getId()).orElse(null);
 		assertNull(updateCart, "장바구니에서 상품이 올바르게 제거되었는지 확인");
 
 	}

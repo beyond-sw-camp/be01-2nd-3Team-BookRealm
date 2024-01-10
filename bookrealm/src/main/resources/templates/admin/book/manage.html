@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Book Manage</title>
@@ -35,7 +35,7 @@
 <body>
 <div class="search-head">
     <div>도서 관리</div>
-    <div><button type="submit" style="display: inline-block" onclick="insertChecked()">선택 도서 삭제</button></div>
+    <div><button type="submit" style="display: inline-block" onclick="deleteChecked()">선택 도서 삭제</button></div>
 </div>
 <table border="1">
 
@@ -62,9 +62,68 @@
         <td th:text="${book.publisher}"></td>
         <td th:text="${book.isbn}"></td>
         <td th:text="${book.publishDate}"></td>
-        <td align="center"><input type="button" class="edit" name="edit" th:value="수정"></td>
+        <td align="center"><input type="button" class="edit" name="edit" th:onclick="|location.href='@{/admin/book/manage/edit(id=${book.id})}'|" th:value="수정"></td>
         <td align="center"><input type="checkbox" class="chk" name="chk" th:value="${book.id}"></td>
     </tr>
 </table>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script th:inline="javascript">
+    function allChecked(){
+
+        const checkbox = document.getElementById('allCheckBox');  //전체 체크박스 버튼
+        const is_checked = checkbox.checked;                      //전체 체크박스 버튼 체크 여부
+
+        if(is_checked){
+            chkAllChecked()
+        } else{
+            chkAllUnChecked()
+        }
+    }
+
+    //체크박스 전체 체크
+    function chkAllChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = true;
+        });
+    }
+
+    //체크박스 전체 체크 해제
+    function chkAllUnChecked(){
+        document.querySelectorAll(".chk").forEach(function(v, i) {
+            v.checked = false;
+        });
+    }
+
+    function deleteChecked() {
+        const selects = document.querySelectorAll('input[name="chk"]:checked');
+
+        if(selects.length === 0){
+            alert("선택된 항목이 없습니다.");
+            return false;
+        }
+        else{
+            if(confirm("선택한 도서를 삭제하시겠습니까?")){
+                const arr = [];
+
+                document.querySelectorAll('input[name="chk"]:checked').forEach(function(v, i) {
+                    arr.push(v.value);
+                });
+
+                $.ajax({
+                    type : "POST",
+                    url : "/admin/book/delete",
+                    data : {"ids": arr},
+                    success : function(data) {
+                        alert("삭제가 완료되었습니다.");
+                        location.reload();
+                    },
+                    error : function(e) {
+                        alert("삭제 실패");
+                    }
+                });
+            }
+        }
+    }
+</script>
 </body>
 </html>
