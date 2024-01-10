@@ -13,4 +13,6 @@ public interface AdminService {
     Optional<Book> findById(Long id);
 
     Book save(Book book);
+
+    void deleteByIdIn(List<Long> ids);
 }

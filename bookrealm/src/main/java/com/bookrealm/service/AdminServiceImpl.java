@@ -43,4 +43,9 @@ public class AdminServiceImpl implements AdminService{
     public Book save(Book book) {
         return bookRepository.save(book);
     }
+
+    @Override
+    public void deleteByIdIn(List<Long> ids) {
+        bookRepository.deleteAllById(ids);
+    }
 }
