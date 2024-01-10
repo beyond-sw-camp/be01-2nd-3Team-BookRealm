@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -102,7 +103,43 @@ class ReviewServiceTest {
             assertNotNull(review.getPopular());
             assertNotNull(review.getReportDate());
         }
+    }
 
+    @Test
+    public void 리뷰수정(){
+        // given
+        Review originalReview = new Review();
+        member.setId(1L);
+        book.setId(1L);
+        originalReview.setId(4L);
+        // when  수정할 내용
+        String newContents = "Updated Contents!!!!!!";
+        int newPopular = 3;
+        ReviewDto reviewDto = new ReviewDto(newContents, newPopular);
+        reviewService.updateReview(originalReview.getId(), reviewDto.getContents(), reviewDto.getPopular());
+
+        // then
+        Review updatedReview = reviewService.findById(originalReview.getId());
+        assertNotNull(updatedReview);
+        assertEquals(newContents, updatedReview.getContents());
+        assertEquals(newPopular, updatedReview.getPopular());
+
+    }
+
+    @Test
+    public void 리뷰삭제(){
+        // given
+        Review originalReview = new Review();
+        member.setId(1L);
+        book.setId(1L);
+        originalReview.setId(4L);
+
+        //when
+        reviewService.deleteReview(originalReview.getId());
+
+        //then
+        Review deletedReview = reviewService.findById(originalReview.getId());
+        assertNull(deletedReview);
 
     }
 }
