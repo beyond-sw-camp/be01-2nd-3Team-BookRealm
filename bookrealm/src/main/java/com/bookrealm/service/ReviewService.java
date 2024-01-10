@@ -1,5 +1,7 @@
 package com.bookrealm.service;
 
+import com.bookrealm.exception.AppException;
+import com.bookrealm.exception.ErrorCode;
 import com.bookrealm.model.Book;
 import com.bookrealm.model.Review;
 import com.bookrealm.model.User;
@@ -36,7 +38,13 @@ public class ReviewService {
     }
 
     public List<Review> findByBookId(Long bookID){
-        return reviewRepository.findByBookId(bookID);
+
+        List<Review> searchResults = reviewRepository.findByBookId(bookID);
+
+        if (searchResults.isEmpty()) {
+            throw new AppException(ErrorCode.BOOK_NOT_FOUND, "검색 결과가 없습니다");
+        }
+        return searchResults;
     }
     
 }
