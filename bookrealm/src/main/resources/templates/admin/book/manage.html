@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Manage</title>
+</head>
+<style>
+    body {
+        max-width: 100%;
+        margin: 20px;
+    }
+    table {
+        width: 100%;
+    }
+    td {
+        padding: 10px;
+        text-align: center;
+    }
+    td img {
+        width: 100%;
+        height: auto;
+    }
+    .search-head {
+        margin: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .search-head div {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+</style>
+<body>
+<div class="search-head">
+    <div>도서 관리</div>
+    <div><button type="submit" style="display: inline-block" onclick="insertChecked()">선택 도서 삭제</button></div>
+</div>
+<table border="1">
+
+    <tr>
+        <th width="10%"></th>
+        <th width="25%">title</th>
+        <th width="15%">author</th>
+        <th width="10%">금액</th>
+        <th width="10%">출판사</th>
+        <th width="10%">ISBN</th>
+        <th width="8%">출간일</th>
+        <th width="10%"></th>
+        <th width="2%"><input type="checkbox" id="allCheckBox" onclick="allChecked()"></th>
+    </tr>
+    <!-- Iterate over books -->
+    <tr th:each="book, num: ${bookList}">
+        <!--<td><a th:href="${book.link}" th:text="${book.link}"></a></td>-->
+        <td height="0">
+            <img th:src="${book.image}">
+        </td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.writer}"></td>
+        <td th:text="${book.price}"></td>
+        <td th:text="${book.publisher}"></td>
+        <td th:text="${book.isbn}"></td>
+        <td th:text="${book.publishDate}"></td>
+        <td align="center"><input type="button" class="edit" name="edit" th:value="수정"></td>
+        <td align="center"><input type="checkbox" class="chk" name="chk" th:value="${book.id}"></td>
+    </tr>
+</table>
+</body>
+</html>

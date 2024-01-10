@@ -4,7 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -28,12 +29,15 @@ public class SearchBookRes {
         private String link;            // 네이버 도서 정보 url
         private String image;           // 섬네일 이미지 url
         private String author;          // 저자 이름
-        private int discount;       // 판매가격(api 상에 가격이 없으면 반환 x)
+        private int discount;           // 판매가격(api 상에 가격이 없으면 반환 x)
         private String publisher;       // 출판사
-        private Long isbn;           // ISBN
+        private Long isbn;              // ISBN
         private String description;     // 네이버 도서 책 소개
-        private String pubDate;           // 출간일
+        private String pubdate;         // 출간일
 
+        public void setAuthor(String author) {
+            this.author = author.replace("^",", ");
+        }
     }
 
 }

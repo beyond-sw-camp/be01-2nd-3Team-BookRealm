@@ -3,6 +3,7 @@ package com.bookrealm.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,16 +12,18 @@ import java.util.List;
 
 @Entity
 @Data
+@DynamicInsert
 public class Book {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 30, name = "book_id")
-    private Long id;  //국제표준 도서번호
+    private Long id;
     
     @Column(nullable = false)
     private Integer price;  // 판매 가격
 
+    @ColumnDefault("10")
     private Integer stock;  // 재고
     
     @ColumnDefault("0")
@@ -42,6 +45,9 @@ public class Book {
     private LocalDate publishDate;  // 출간일
     
     private String image;  // 섬네일 이미지의 URL
+
+    @Column(unique = true, length = 15)
+    private Long isbn;  // ISBN
     
     @Column(columnDefinition = "TEXT")
     private String description;  // 네이버 도서의 책 소개

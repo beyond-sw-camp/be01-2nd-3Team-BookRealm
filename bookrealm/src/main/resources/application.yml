@@ -14,7 +14,7 @@ spring:
   #JPA
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     generate-ddl: false
     show-sql: true
   # private yml import

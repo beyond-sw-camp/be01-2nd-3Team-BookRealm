@@ -24,7 +24,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     Page<Book> findBestSellers(Pageable pageable);
     
     Optional<Book> findById(Long id);
-    
+
+    //void saveAll(List<Book> books);
     
 //    페이지 없이 한 페이지에 모든 리스트를 보여줄 때
 //    @Query("SELECT b FROM Book b")
