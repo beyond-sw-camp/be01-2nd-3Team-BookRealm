@@ -16,7 +16,7 @@ import static jakarta.persistence.FetchType.LAZY;
 @Table(name = "orders")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor//(access = AccessLevel.PROTECTED)
 public class Order {
 
     @Id
@@ -24,7 +24,8 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    private String payment;
+    @Enumerated(EnumType.STRING)
+    private Payment payment;
 
     @Embedded
     private Address desination;
