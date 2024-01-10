@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Book Manage</title>
@@ -62,7 +62,7 @@
         <td th:text="${book.publisher}"></td>
         <td th:text="${book.isbn}"></td>
         <td th:text="${book.publishDate}"></td>
-        <td align="center"><input type="button" class="edit" name="edit" th:value="수정"></td>
+        <td align="center"><input type="button" class="edit" name="edit" th:onclick="|location.href='@{/admin/book/manage/edit(id=${book.id})}'|" th:value="수정"></td>
         <td align="center"><input type="checkbox" class="chk" name="chk" th:value="${book.id}"></td>
     </tr>
 </table>

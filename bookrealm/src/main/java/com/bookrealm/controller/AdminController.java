@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,17 +27,36 @@ public class AdminController {
         this.adminService = adminService;
     }
 
+    // 관리자 홈 화면
     @RequestMapping
     public String home(){
         return "/admin/home";
     }
 
+    // DB 저장 도서 관리 페이지
     @RequestMapping("/book/manage")
     public ModelAndView manageBook() {
         ModelAndView mav = new ModelAndView("/admin/book/manage");
         List<Book> bookList = adminService.findAll();
         mav.addObject("bookList",bookList);
         return mav;
+    }
+
+    // 수정 폼
+    @GetMapping("/book/manage/edit")
+    public ModelAndView editBookView(@RequestParam Long id){
+        ModelAndView mav = new ModelAndView("/admin/book/edit");
+        Optional<Book> book = adminService.findById(id);
+        mav.addObject("book", book.get());
+        return mav;
+    }
+
+    // 수정 요청
+    @PostMapping("/book/manage/edit")
+    public String editBook(Book editbook){
+        adminService.save(editbook);
+
+        return "redirect:/admin/book/manage";
     }
 
     @GetMapping("/book/search")
