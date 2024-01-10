@@ -3,8 +3,8 @@ package com.bookrealm.service;
 import com.bookrealm.exception.AppException;
 import com.bookrealm.exception.ErrorCode;
 import com.bookrealm.model.Book;
+import com.bookrealm.model.Member;
 import com.bookrealm.model.Review;
-import com.bookrealm.model.User;
 import com.bookrealm.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +21,9 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public void addReview(User user, Book book, String contents, int popular) {
+    public void addReview(Member member, Book book, String contents, int popular) {
         Review review = new Review();
-        review.setUser(user);
+        review.setMember(member);
         review.setBook(book);
         review.setContents(contents);
         review.setPopular(popular);
@@ -46,5 +46,5 @@ public class ReviewService {
         }
         return searchResults;
     }
-    
+
 }

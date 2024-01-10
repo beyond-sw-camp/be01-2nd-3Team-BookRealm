@@ -8,16 +8,18 @@ import lombok.Getter;
 @Getter
 public class Address {
 
-    private String city;
-    private String street;
-    private String zipcode;
+    private String postcode;
+    private String address;
+    private String detailAddress;
+    private String extraAddress;
 
     protected Address() {
     }
 
-    public Address(String city, String street, String zipcode) {
-        this.city = city;
-        this.street = street;
-        this.zipcode = zipcode;
+    public Address(String postcode, String address, String detailAddress, String extraAddress) {
+        this.postcode = postcode;
+        this.address = address;
+        this.detailAddress = detailAddress;
+        this.extraAddress = extraAddress;
     }
 }

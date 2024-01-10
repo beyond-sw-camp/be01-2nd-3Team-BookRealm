@@ -30,8 +30,8 @@ public class Order {
     private Address desination;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @OneToMany(mappedBy = "order")
     private List<OrderList> orderLists = new ArrayList<>();

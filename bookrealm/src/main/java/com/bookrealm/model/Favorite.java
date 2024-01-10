@@ -21,8 +21,6 @@ public class Favorite {
     private Book book;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
-
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
