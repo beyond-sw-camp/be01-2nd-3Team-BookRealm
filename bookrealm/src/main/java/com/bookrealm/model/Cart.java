@@ -20,7 +20,7 @@ public class Cart {
 	@Column(name = "cart_id")
 	private Long id; // 장바구니 코드 (PK)
 
-	@Column(nullable = false, columnDefinition = "INT DEFAULT 1")
+	@Column(nullable = false, columnDefinition = "Integer DEFAULT 1")
 	private Integer purchase; // 수량
 
 	@ManyToOne(fetch = LAZY)

@@ -64,4 +64,14 @@ public class CartService {
         return user_books;
 	}
 
+	public Cart deleteBookFromCart(User user, Book book){
+		Cart cart = cartRepository.findByIdAndBookId(user.getId(),book.getId());
+
+		if(cart != null){
+			cartRepository.delete(cart);
+		}
+
+		return cart;
+	}
+
 }
