@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bookrealm.model.Book;
 import com.bookrealm.service.BookService;
 
-@RequestMapping("/test")
+@RequestMapping("/book")
 @Controller
-public class BookTestController {
+public class BookController {
 
 	private final BookService bookService;
 
 	@Autowired
-	public BookTestController(BookService bookService) {
+	public BookController(BookService bookService) {
 		this.bookService = bookService;
 	}
 
@@ -34,7 +34,7 @@ public class BookTestController {
 //        return "index";  
 //    }
 
-	@GetMapping("/books")
+	@GetMapping("/all")
 	public String getAll(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 		@RequestParam(name = "size", defaultValue = "20") int size) {  // page : 현재 페이지 번호, size : 한 페이지에 보여질 항목 수
 		// 페이징 정보를 생성하여 BookService의 findAll 메서드에 전달
@@ -45,33 +45,35 @@ public class BookTestController {
 		// Page에서 Content를 추출하여 List로 변환하여 모델에 추가
 		// Model에 "allBooks"라는 이름으로 페이징된 도서 목록 추가
 		model.addAttribute("allBooks", bookPage.getContent());  // bookPage.getContent() : 현재 페이지의 도서 목록
-		return "index";
+		return "book-all";
 	}
 
-	@GetMapping("/books/search")
-	public String searchBooks(Model model, @RequestParam("term") String searchTerm) {
+	@GetMapping("/search")
+	public String searchBook(Model model, @RequestParam("term") String searchTerm) {
+		
 		List<Book> searchResults = bookService.findBooksByTitleOrWriter(searchTerm);
-		model.addAttribute("books", searchResults);
-		return "index";
+		model.addAttribute("searchBook", searchResults);
+		
+		return "book-search";
+		
 	}
 
-	@GetMapping("/books/bestSellers")
+	@GetMapping
 	public String getBestSellers(Model model) {
+		
 		List<Book> bestSellers = bookService.findBestSellers();
 		model.addAttribute("bestSellers", bestSellers);
+		
 		return "index";
 	}
 	
-	@GetMapping("/books/detail")
+	@GetMapping("/detail")
 	public String getBookDetail(Model model, @RequestParam("id") Long id) {
-	    // bookService를 통해 도서 상세 정보를 가져옵니다.
+		
 	    Optional<Book> bookDetail = bookService.findBookById(id);
-
-	    // 도서 상세 정보를 Model에 추가합니다.
 	    model.addAttribute("book", bookDetail.orElse(null));
 
-	    // "bookDetail"이라는 뷰를 반환합니다.
-	    return "bookDetail";
+	    return "book-detail";
 	}
 
 }
