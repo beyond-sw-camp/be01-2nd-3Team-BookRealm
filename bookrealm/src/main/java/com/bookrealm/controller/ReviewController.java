@@ -36,10 +36,10 @@ public class ReviewController {
         return "redirect:/review-list";
     }
 
-    @GetMapping("/review-list")
-    public String showReviewList(Model model) {
-        // 리뷰 리스트를 모델에 추가
-        model.addAttribute("reviews", reviewService.getAllReviews());
-        return "review-list";
-    }
+//    @GetMapping("/review-list")
+//    public String showReviewList(Model model) {
+//        // 리뷰 리스트를 모델에 추가
+//        model.addAttribute("reviews", reviewService.getAllReviews());
+//        return "review-list";
+//    }
 }
