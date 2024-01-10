@@ -47,7 +47,7 @@ public class AdminController {
     @GetMapping("/book/search/result")
     public ModelAndView searchBook(@RequestParam(name = "query") String query){
 
-        ModelAndView mav = new ModelAndView("search_result");
+        ModelAndView mav = new ModelAndView("/admin/book/search_result_save");
 
         SearchBookRes result = naverBookClient.searchBookApi(new SearchBookReq(query));
         //List<SearchBookRes.SearchBookItem> list = result.getItems();
