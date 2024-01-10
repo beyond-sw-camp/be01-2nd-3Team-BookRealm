@@ -42,9 +42,6 @@ th {
     <button type="submit">검색</button>
 	</form>
 	
-	<br />
-
-	<h2>Best Sellers</h2>
 	<table>
 		<tr>
 			<th>ID</th>
@@ -55,7 +52,7 @@ th {
 			<th>publisher</th>
 			<th>publishDate</th>
 		</tr>
-		<tr th:each="book : ${bestSellers}">
+		<tr th:each="book : ${searchBook}">
 			<td th:text="${book.id}"></td>
 			<td><a th:href="@{/book/detail(id=${book.id})}" th:text="${book.title}"></a></td>
 			<td th:text="${book.writer}"></td>
@@ -65,6 +62,6 @@ th {
 			<td th:text="${book.publishDate}"></td>
 		</tr>
 	</table>
-
+	
 </body>
 </html>
