@@ -29,21 +29,15 @@ public class BookService {
         return bookRepository.findAll(pageable);
     }
 	
-//	// 제목 또는 작가에 특정 키워드를 포함하는 도서 조회
-//	public List<Book> findBooksByTitleOrWriter(String searchTerm) {
-//		return bookRepository.findByTitleAndWriter(searchTerm);
-//	}
-	
 	// 제목 또는 작가에 특정 키워드를 포함하는 도서 조회
     public List<Book> findBooksByTitleOrWriter(String searchTerm) {
-       
-       List<Book> searchResults = bookRepository.findByTitleAndWriter(searchTerm);
-       // 검색 결과 없음
-       if (searchResults.isEmpty()) {  
-    	   throw new AppException(ErrorCode.BOOK_NOT_FOUND, "검색 결과가 없습니다");
-       }
-       return searchResults;
-        
+        List<Book> searchResults = bookRepository.findByTitleAndWriter(searchTerm);
+
+        // 검색 결과 없음
+        if (searchResults.isEmpty()) {  
+        }
+
+        return searchResults;
     }
 
 	// 판매량 기준으로 상위 5개 도서 조회 (페이징)
