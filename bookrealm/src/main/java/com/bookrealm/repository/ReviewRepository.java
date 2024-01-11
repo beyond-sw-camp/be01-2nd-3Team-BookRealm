@@ -8,17 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByMemberId(Long memberID);
     List<Review> findByBookId(Long bookID);
 
+    List<Review> findByBookIdOrderByReportDateDesc(Long bookId);
+    List<Review> findByMemberIdOrderByReportDateDesc(Long bookId);
 
-
-//    @Transactional
-//    @Modifying(clearAutomatically = true)
-//    @Query(value = "SELECT contents,popular,reportDate FROM Review WHERE user.id = :userId")
-//    List<Review> findByUserId(@Param("userid") Long userID);
 
 
 }
