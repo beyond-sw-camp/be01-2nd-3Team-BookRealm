@@ -1,24 +1,35 @@
-<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg
-    navbar-light bg-light border-bottom" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">SBB</a>
-        <button class="navbar-toggler" type="button"
-                data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <!--추가된 부분-->
-                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}">로그인</a>
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}">로그아웃</a>
-                    <!--추가된 부분 end-->
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/join}">회원가입</a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<nav th:fragment="navbarFragment"
+		class="navbar navbar-expand-lg
+    navbar-light bg-light border-bottom justify-content-space-between d-flex" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" style="margin-bottom: 50px;">
+		<div class="container-fluid align-items-center">
+			<a th:href="@{/}"><img
+				src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60"></a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+					<li class="nav-item">
+						<form th:action="@{/bookSearch}" method="get" class="text-center">
+							<label for="searchTerm">도서 검색</label> <input type="text" id="searchTerm" name="term" placeholder="Input Book Title or Writer" required>
+							<button type="submit" class="btn btn-secondary">검색</button>
+						</form>
+					</li>
+					<li class="nav-item">
+						<div class="text-right">
+							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-left: 10px;">로그인</a> 
+							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="margin-left: 10px;">로그아웃</a>
+						</div>
+					</li>
+					<li class="nav-item">
+						<div class="text-right">
+							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/join}" style="margin-left: 10px;">회원가입</a>
+							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/myPage}" style="margin-left: 10px;">마이페이지</a>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+		</div>
 </nav>
