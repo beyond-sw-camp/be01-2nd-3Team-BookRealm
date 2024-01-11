@@ -1,92 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <title>Book Realm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="starter-template.css" rel="stylesheet">
+        h1 {
+            color: #333;
+        }
 
-<title>Book Realm</title>
-<style>
-body {
-	font-family: Arial, sans-serif;
-	margin-left: 20px;
-	margin-right: 20px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-h1 {
-	color: #333;
-}
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
 
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-top: 20px;
-}
+        th {
+            background-color: #f2f2f2;
+        }
 
-th, td {
-	border: 1px solid #ddd;
-	padding: 8px;
-	text-align: left;
-}
-
-th {
-	background-color: #f2f2f2;
-}
-
-div {
-	width: 100%;
-	display: inline-block;
-}
-
-</style>
+        div {
+            width: 100%;
+            display: inline-block;
+        }
+    </style>
 </head>
 <body>
 
-	<nav th:fragment="navbarFragment"
-		class="navbar navbar-expand-lg
-    navbar-light bg-light border-bottom justify-content-space-between d-flex" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" style="margin-bottom: 50px;">
-		<div class="container-fluid align-items-center">
-			<a th:href="@{/}"><img
-				src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60"></a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
-					<li class="nav-item">
-						<form th:action="@{/bookSearch}" method="get" class="text-center">
-							<label for="searchTerm">도서 검색</label> <input type="text" id="searchTerm" name="term" placeholder="Input Book Title or Writer" required>
-							<button type="submit" class="btn btn-secondary">검색</button>
-						</form>
-					</li>
-					<li class="nav-item">
-						<div class="text-right">
-							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-left: 10px;">로그인</a> 
-							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="margin-left: 10px;">로그아웃</a>
-						</div>
-					</li>
-					<li class="nav-item">
-						<div class="text-right">
-							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/join}" style="margin-left: 10px;">회원가입</a>
-							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/myPage}" style="margin-left: 10px;">마이페이지</a>
-						</div>
-					</li>
+<div>
+    <a th:href="@{/book}"><img src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2"
+                               border="0" width="60" style="float:left; margin-bottom:50px;"></a>
 
-				</ul>
-			</div>
-		</div>
-	</nav>	
-	
-	<h1>Book Detail</h1>
+    <button type="login" class="btn" style="float:right; margin-left:10px;">로그인</button>
+    <button type="register" class="btn" style="float:right; margin-left:30px;">회원가입</button>
+    <form th:action="@{/book/search}" method="get" style="float:right;">
+        <label for="searchTerm">도서 검색</label> <input type="text" id="searchTerm" name="term"
+                                                     placeholder="Input Book Title or Writer" required>
+        <button type="submit">검색</button>
+    </form>
 
-    <div>
+</div>
+
+<h1>Book Detail</h1>
+
+<div>
 
     <!-- 도서 정보 표시 -->
+    <p>ID: <span th:text="${book.id}"></span></p>
     <img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image">
     <p>Title: <span th:text="${book.title}"></span></p>
     <p>Writer: <span th:text="${book.writer}"></span></p>
@@ -95,17 +65,53 @@ div {
     <p>Publisher: <span th:text="${book.publisher}"></span></p>
     <p>PublishDate: <span th:text="${book.publishDate}"></span></p>
     <p>Stock: <span th:text="${book.stock}"></span></p>
+    <p>Sales: <span th:text="${book.sales}"></span></p>
     <p>Description: <span th:text="${book.description}"></span></p>
-    </div>
 
-	<div class="my-3  text-left">
-    	<form th:action="@{/cart/add/{bookId}(bookId=${book.id})}" method="post" style="display: inline;"  
-    		th:if="${#authorization.expression('isAuthenticated')}">
-        	<button type="submit" class="btn btn-outline-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px;">장바구니</button>
-    	</form>
-    	<button type="button" class="btn btn-primary me-auto mb-2 mb-lg-0">바로구매</button>
-	</div>
+    <form th:action="@{/book/detail/add-review}" method="post">
+        <input type="hidden" name="id" th:value="${book.id}" />
+        <label for="contents">리뷰 쓰기:</label>
+        <textarea rows="1" cols="100" id="contents" name="contents" required></textarea>
 
+        <label for="popular">Popular (별점):</label>
+        <input type="number" id="popular" name="popular" min="1" max="5" required>
+
+        <button type="submit">추가</button>
+    </form>
+    <!-- 리뷰 목록 표시 -->
+    <h2>도서 리뷰</h2>
+    <ul>
+        <!-- 도서에 대한 리뷰 목록 표시 -->
+        <li th:each="review : ${reviews}" style="list-style-type: none; margin-bottom: 20px;">
+            <!-- 작성자 이름과 작성 날짜 표시 -->
+            <p style="font-size: small;">
+                <span th:text="${review.member.username}"></span>
+                <span> | </span>
+                <span th:text="${#temporals.format(review.reportDate,'yyyy-MM-dd HH:mm')}"></span>
+            </p>
+            <!-- 리뷰 내용 표시 -->
+            <p>Contents: <span th:text="${review.contents}"></span></p>
+            <!-- Popular를 별모양으로 표시 -->
+            <p>Popular:
+                <span th:each="i : ${#numbers.sequence(1, review.popular)}">&#9733;</span>
+            </p>
+            <!-- 현재 로그인한 사용자와 리뷰 작성자가 동일한 경우에만 수정 및 삭제 링크 표시 -->
+            <div th:if="${#authentication.principal.username == review.member.email}">
+                <form th:action="@{/book/detail/edit-review}" method="post">
+                    <input type="hidden" name="reviewId" th:value="${review.id}" />
+                    <textarea rows="1" cols="100" id="contents" name="contents" th:value="${review.contents}" required></textarea>
+                    <input type="number" id="popular" name="popular" min="1" max="5" th:value="${review.popular}" required>
+                    <button type="submit">수정 완료</button>
+                </form>
+                <form th:action="@{/book/detail/delete-review}" method="post" style="display: inline;">
+                    <input type="hidden" name="reviewId" th:value="${review.id}" />
+                    <input type="hidden" name="id" th:value="${book.id}" />
+                    <button type="submit">삭제</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</div>
 
 </body>
 </html>
