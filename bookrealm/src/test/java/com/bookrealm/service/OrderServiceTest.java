@@ -2,8 +2,7 @@ package com.bookrealm.service;
 
 import com.bookrealm.model.*;
 import com.bookrealm.repository.BookRepository;
-import com.bookrealm.repository.MemberRepository;
-import com.bookrealm.repository.OrderRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,20 +14,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class OrderServiceTest {
 
-    @Autowired
-    private MemberRepository memberRepository;
+
 
     @Autowired
     private BookRepository bookRepository;
 
     @Autowired
     private OrderService orderService;
-
-    @Autowired
-    private OrderRepository orderRepository;
-
 
 
     public Book savedBook() {
