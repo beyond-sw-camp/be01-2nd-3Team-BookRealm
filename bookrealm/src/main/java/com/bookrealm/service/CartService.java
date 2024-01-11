@@ -77,8 +77,4 @@ public class CartService {
 		return cart;
 	}
 
-	public List<Cart> findByMemberId(Long memberID){
-		return cartRepository.findByMemberId(memberID);
-	}
-
 }
