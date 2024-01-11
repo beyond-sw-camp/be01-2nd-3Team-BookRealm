@@ -93,7 +93,7 @@ div {
 		</tr>
 		<tr th:each="book : ${bestSellers}">
 			<td><img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image"></td>
-			<td><a th:href="@{/bookDetail(id=${book.id})}" th:text="${book.title}"></a></td>
+			<td><a th:href="@{/detail(id=${book.id})}" th:text="${book.title}"></a></td>
 			<td th:text="${book.writer}"></td>
 			<td th:text="${book.publisher}"></td>
 		</tr>
