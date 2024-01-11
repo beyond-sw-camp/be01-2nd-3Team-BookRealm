@@ -97,7 +97,7 @@ div {
     <p>Stock: <span th:text="${book.stock}"></span></p>
     <p>Description: <span th:text="${book.description}"></span></p>
 
-    <form th:action="@{/book/detail/add-review}" method="post">
+    <form th:action="@{/detail/add-review}" method="post">
         <input type="hidden" name="id" th:value="${book.id}" />
         <label for="contents">리뷰 쓰기:</label>
         <textarea rows="1" cols="100" id="contents" name="contents" required></textarea>
@@ -126,13 +126,13 @@ div {
             </p>
             <!-- 현재 로그인한 사용자와 리뷰 작성자가 동일한 경우에만 수정 및 삭제 링크 표시 -->
             <div th:if="${#authentication.principal.username == review.member.email}">
-                <form th:action="@{/book/detail/edit-review}" method="post">
+                <form th:action="@{/detail/edit-review}" method="post">
                     <input type="hidden" name="reviewId" th:value="${review.id}" />
                     <textarea rows="1" cols="100" id="contents" name="contents" th:value="${review.contents}" required></textarea>
                     <input type="number" id="popular" name="popular" min="1" max="5" th:value="${review.popular}" required>
                     <button type="submit">수정 완료</button>
                 </form>
-                <form th:action="@{/book/detail/delete-review}" method="post" style="display: inline;">
+                <form th:action="@{/detail/delete-review}" method="post" style="display: inline;">
                     <input type="hidden" name="reviewId" th:value="${review.id}" />
                     <input type="hidden" name="id" th:value="${book.id}" />
                     <button type="submit">삭제</button>

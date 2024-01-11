@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import com.bookrealm.model.Book;
 import com.bookrealm.service.BookService;
 
-@RequestMapping("/book")
+@RequestMapping("/")
 @Controller
 public class BookController {
 
@@ -58,7 +58,7 @@ public class BookController {
         return "book-all";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/bookSearch")
     public String searchBook(Model model, @RequestParam("term") String searchTerm) {
 
         List<Book> searchResults = bookService.findBooksByTitleOrWriter(searchTerm);
@@ -101,7 +101,7 @@ public class BookController {
         }
 
         // 도서 상세 페이지로 리다이렉트
-        return "redirect:/book/detail?id=" + bookId;
+        return "redirect:/detail?id=" + bookId;
     }
 
     @PostMapping("/detail/edit-review")
@@ -112,7 +112,7 @@ public class BookController {
         reviewService.updateReview(reviewId, contents, popular);
 
         // 도서 상세 페이지로 리다이렉트
-        return "redirect:/book/detail?id=" + reviewService.findById(reviewId).getBook().getId();
+        return "redirect:/detail?id=" + reviewService.findById(reviewId).getBook().getId();
     }
 
     @PostMapping("/detail/delete-review")
@@ -122,6 +122,6 @@ public class BookController {
         reviewService.deleteReview(reviewId);
 
         // 도서 상세 페이지로 리다이렉트 또는 다른 적절한 처리 수행
-        return "redirect:/book/detail?id="+ bookId;
+        return "redirect:/detail?id="+ bookId;
     }
 }
