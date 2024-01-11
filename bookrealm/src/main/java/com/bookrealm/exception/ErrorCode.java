@@ -11,6 +11,7 @@ public enum ErrorCode {
     EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, ""),
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, ""),
     BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "");
 
 
