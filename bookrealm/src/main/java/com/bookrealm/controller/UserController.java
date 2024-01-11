@@ -1,8 +1,8 @@
 package com.bookrealm.controller;
 
 import com.bookrealm.model.Address;
-import com.bookrealm.model.Member;
 import com.bookrealm.service.MemberService;
+import com.bookrealm.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +17,18 @@ import java.security.Principal;
 public class UserController {
 
     private final MemberService memberService;
+    private final ReviewService reviewService;
 
     @Autowired
-    public UserController(MemberService memberService) {
+    public UserController(MemberService memberService, ReviewService reviewService) {
         this.memberService = memberService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping
     public String myPage(Model model, Principal principal) {
         model.addAttribute("member", memberService.getUser(principal.getName()));
+        model.addAttribute("reviews", reviewService.findByMemberId(memberService.getUserReturnId(principal.getName())));
         return "myPage";
     }
 

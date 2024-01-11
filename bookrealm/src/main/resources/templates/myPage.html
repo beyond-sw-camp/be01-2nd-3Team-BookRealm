@@ -65,7 +65,26 @@
             </div>
         </div>
     </div>
+    <h2>내가 쓴 리뷰</h2>
+    <ul>
+        <!-- 도서에 대한 리뷰 목록 표시 -->
+        <li th:each="review : ${reviews}" style="list-style-type: none; margin-bottom: 20px;">
+            <!-- 작성자 이름과 작성 날짜 표시 -->
+            <p style="font-size: small;">
+                <span th:text="${review.member.username}"></span>
+                <span> | </span>
+                <span th:text="${#temporals.format(review.reportDate,'yyyy-MM-dd HH:mm')}"></span>
+            </p>
+            <!-- 리뷰 내용 표시 -->
+            <p>Contents: <span th:text="${review.contents}"></span></p>
+            <!-- Popular를 별모양으로 표시 -->
+            <p>Popular:
+                <span th:each="i : ${#numbers.sequence(1, review.popular)}">&#9733;</span>
+            </p>
+        </li>
+    </ul>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
