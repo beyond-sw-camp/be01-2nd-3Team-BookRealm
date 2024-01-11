@@ -37,11 +37,11 @@ div {
 <body>
 	
 	<div>
-	<a th:href="@{/book}"><img src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60" style="float:left; margin-bottom:50px;"></a>
+	<a th:href="@{/}"><img src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60" style="float:left; margin-bottom:50px;"></a>
 	
 		<button type="login" class="btn" style="float:right; margin-left:10px;">로그인</button>	
 		<button type="register" class="btn" style="float:right; margin-left:30px;">회원가입</button>
-		<form th:action="@{/book/search}" method="get" style="float:right;">
+		<form th:action="@{/bookSearch}" method="get" style="float:right;">
 			<label for="searchTerm">도서 검색</label> <input type="text" id="searchTerm" name="term" placeholder="Input Book Title or Writer" required>
 			<button type="submit">검색</button>
 		</form>
@@ -62,7 +62,7 @@ div {
 		</tr>
 		<tr th:each="book : ${searchBook}">
 			<td th:text="${book.id}"></td>
-			<td><a th:href="@{/book/detail(id=${book.id})}" th:text="${book.title}"></a></td>
+			<td><a th:href="@{/detail(id=${book.id})}" th:text="${book.title}"></a></td>
 			<td th:text="${book.writer}"></td>
 			<td th:text="${book.category}"></td>
 			<td th:text="${book.price}"></td>
