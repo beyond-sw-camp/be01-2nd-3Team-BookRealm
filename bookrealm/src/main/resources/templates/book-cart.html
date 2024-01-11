@@ -7,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="starter-template.css" rel="stylesheet">
+    <link href="/static/starter-template.css" rel="stylesheet" type="text/css">
 
 <title>Book Realm</title>
 <style>
@@ -84,40 +84,40 @@ div {
 
 	<h1>Book Cart</h1>
 
-	<div class="book-item">
-		<input type="checkbox" id="book1"> <img src="도서이미지URL1"
-			alt="도서 이미지 1" width="100">
-		<div class="book-details">
-			<h3>도서 제목 1</h3>
-			<p>도서 작가: 작가명 1</p>
-			<p>도서 금액: $10.00</p>
-			<label for="quantity1">수량:</label> <input type="number"
-				id="quantity1" name="quantity1" min="1" value="1">
-			<button onclick="updateQuantity('book1')">수량 변경</button>
-		</div>
-	</div>
-
-	<div class="book-item">
-		<input type="checkbox" id="book2"> <img src="도서이미지URL2"
-			alt="도서 이미지 2" width="100">
-		<div class="book-details">
-			<h3>도서 제목 2</h3>
-			<p>도서 작가: 작가명 2</p>
-			<p>도서 금액: $15.00</p>
-			<label for="quantity2">수량:</label> <input type="number"
-				id="quantity2" name="quantity2" min="1" value="1">
-			<button onclick="updateQuantity('book2')">수량 변경</button>
-		</div>
-	</div>
-
-	<!-- 추가 도서 항목을 필요에 따라 복사하여 추가할 수 있습니다. -->
-
-	<script>
-		function updateQuantity(bookId) {
-			// 여기에 수량을 업데이트하는 JavaScript 코드를 추가할 수 있습니다.
-			// 예: 선택한 도서의 수량을 변경하고 총 가격을 업데이트하는 로직을 구현할 수 있습니다.
-		}
-	</script>
+	<table>
+  <thead>
+    <tr>
+      <th>도서 이미지</th>
+      <th>도서 제목</th>
+      <th>도서 작가</th>
+      <th>도서 가격</th>
+      <th>도서 수량</th>
+      <th>삭제</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- 예제 도서 정보 -->
+	<tr th:each="cart : ${books}">
+    	<td><img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image"></td>
+    	<td><span th:text="${book.title}"></span></td>
+    	<td><span th:text="${book.writer}"></span></td>
+    	<td><span th:text="${book.price}"></span></td>
+    	<td><input type="number" value="1" min="1" th:id="${'quantity_' + book.id}">
+    		<button th:onclick="'updateQuantity(' + ${book.id} + ')'" type="button">변경</button></td>
+    <td><button th:onclick="'updateQuantity(' + ${book.id} + ')'" type="button">삭제</button></td>
+	</tr>
+	</tbody>
+	</table>
+	<!-- <script>
+    	function updateQuantity(bookId) {
+        // 수량 가져오기
+        var quantity = document.getElementById('quantity_' + bookId).value;
+        
+        // 여기에 수량을 업데이트하는 JavaScript 코드를 추가할 수 있습니다.
+        // 예: 선택한 도서의 수량을 변경하고 총 가격을 업데이트하는 로직을 구현할 수 있습니다.
+        console.log('Updating purchase for bookId: ' + bookId + ', quantity: ' + quantity);
+    	}
+	</script> -->
 
 </body>
 </html>

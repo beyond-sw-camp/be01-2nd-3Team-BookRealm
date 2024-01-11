@@ -29,20 +29,12 @@ public class BookService {
         return bookRepository.findAll(pageable);
     }
 	
-//	// 제목 또는 작가에 특정 키워드를 포함하는 도서 조회
-//	public List<Book> findBooksByTitleOrWriter(String searchTerm) {
-//		return bookRepository.findByTitleAndWriter(searchTerm);
-//	}
-	
 	// 제목 또는 작가에 특정 키워드를 포함하는 도서 조회
     public List<Book> findBooksByTitleOrWriter(String searchTerm) {
         List<Book> searchResults = bookRepository.findByTitleAndWriter(searchTerm);
 
         // 검색 결과 없음
         if (searchResults.isEmpty()) {  
-            // 검색 결과가 없을 때의 동작을 처리 (예: 로깅, 특정 메시지를 모델에 추가 등)
-            // 예외를 던지지 않고, 검색 결과가 없을 때의 특별한 동작을 수행하도록 처리
-            // 여기에서는 아무 동작도 수행하지 않고 그대로 빈 결과를 반환
         }
 
         return searchResults;

@@ -7,10 +7,18 @@ import com.bookrealm.repository.BookRepository;
 import com.bookrealm.service.BookService;
 import com.bookrealm.service.CartService;
 import com.bookrealm.service.MemberService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -32,49 +40,70 @@ public class CartController {
 		this.bookService = bookService;
 		this.bookRepository = bookRepository;
     }
+    
+    // 장바구니에 책 추가
+    @PostMapping("/cart/add/{bookId}")
+    public String addToCart(@PathVariable Long bookId, Principal principal) {
+     
+            Member member = memberService.getUser(principal.getName());
+            Book book = bookRepository.findById(bookId).orElse(null);
 
+            if (book != null) {
+                cartService.addCart(member, book, 1);  // 장바구니에 1권 추가 (수량 조절 가능)
+            }
+        
+        return "redirect:/cart/id=" + bookId;
+    }
+    
+    
+    
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/cart")
+    public String viewCart(Model model, Principal principal) {
+        if (principal != null) {
+            Member member = memberService.getUser(principal.getName());
+            List<Cart> carts = member.getCarts();
+
+            List<Cart> cartBooks = cartService.memberCartView(carts);
+
+            int totalPrice = 0;
+            for (Cart cartBook : cartBooks) {
+                totalPrice += (cartBook.getBook().getPrice() * cartBook.getPurchase());
+            }
+
+            model.addAttribute("cartBooks", cartBooks);
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("member", member);
+
+            return "book-cart";
+        } else {
+            return "redirect:/";
+        }
+    }
+    
 //    @GetMapping("/user/{id}/cart")
 //    public String myCartPage(@PathVariable("id") Long memberId, Model model, @AuthenticationPrincipal Principal principal) {
-//        // 로그인 User == 접속 User
-//        if (principal.getName().equals(memberId.toString())) {
-//            // User의 장바구니를 가져온다.
+//        if (member.principal.getName().equals(memberId.toString())) {
 //            Member member = memberService.getUser(principal.getName());
 //            List<Cart> carts = member.getCarts();
 //
-//            // 장바구니의 아이템을 가져온다.
 //            List<Cart> cartBooks = cartService.memberCartView(carts);
 //
 //            int totalPrice = 0;
 //            for (Cart cartBook : cartBooks) {
-//                // 각 카트 아이템에 대한 가격 계산 로직을 추가할 수 있습니다.
-//                // totalPrice += (cartItem.getItem().getPrice() * cartItem.getCount());
+//                // 각 카트 아이템에 대한 가격 계산 로직을 추가
+//                totalPrice += (cartBook.getBook().getPrice() * cartBook.getQuantity());
 //            }
 //
 //            model.addAttribute("cartBooks", cartBooks);
 //            model.addAttribute("totalPrice", totalPrice);
 //            model.addAttribute("member", member);
 //
-//            return "/index";
+//            return "book-cart"; // 원하는 페이지로 수정
 //        } else {
 //            return "redirect:/";
 //        }
 //    }
-	
-    // 특정 상품 장바구니에 추가
-    @PostMapping("/cart/add/{bookId}")
-    public String addToCart(@PathVariable Long bookId, Principal principal) {
-        if (principal != null) {
-            String memberId = principal.getName();
-            Member member = memberService.getUser(memberId);
-            Book book = bookRepository.findById(bookId).orElse(null);
-
-            if (book != null) {
-                cartService.addCart(member, book, 1);  // 장바구니에 1권 추가 (수량 조절 가능)
-            }
-        }
-        return "redirect:/book-detail/" + bookId;
-    }
-
 	
 //	@PreAuthorize("isAuthenticated()")
 //	@PostMapping("/user/{id}/cart")
@@ -94,10 +123,15 @@ public class CartController {
 //		Long cartId;
 //		
 //		try {
-//			Cart savedCart = cartService.addCart(member, book, purchase);
-//			return new ResponseEntity<Long>(savedCart.getId(), HttpStatus.OK);
-//	    	} catch (Exception e) {
+//		    Long bookId = cart.getBook();
+//		    Book book = bookRepository.findById(bookId).orElse(null);
+//
+//	        // 장바구니에 0권 추가 (수량 조절 가능)
+//	        Cart savedCart = cartService.addCart(member, book, 0);
+//
+//	        return new ResponseEntity<Long>(savedCart.getId(), HttpStatus.OK);
+//	    } catch (Exception e) {
 //	        return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-//	    	}
+//	    }	
 //	}
 }
