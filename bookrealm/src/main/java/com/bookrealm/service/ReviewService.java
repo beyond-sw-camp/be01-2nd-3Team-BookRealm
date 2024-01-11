@@ -43,9 +43,6 @@ public class ReviewService {
 
         List<Review> searchResults = reviewRepository.findByBookIdOrderByReportDateDesc(bookID);
 
-        if (searchResults.isEmpty()) {
-            throw new AppException(ErrorCode.BOOK_NOT_FOUND, "검색 결과가 없습니다");
-        }
         return searchResults;
     }
 
