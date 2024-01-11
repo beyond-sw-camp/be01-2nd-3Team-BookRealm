@@ -1,12 +1,10 @@
 package com.bookrealm.controller;
 
 import com.bookrealm.model.Book;
-import com.bookrealm.model.Member;
 import com.bookrealm.naver.NaverBookClient;
 import com.bookrealm.naver.dto.SearchBookReq;
 import com.bookrealm.naver.dto.SearchBookRes;
 import com.bookrealm.service.AdminService;
-import com.bookrealm.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -23,16 +21,11 @@ public class AdminController {
     private final NaverBookClient naverBookClient;
     private final AdminService adminService;
 
-    private final MemberService memberService;
-
     @Autowired
-    AdminController(NaverBookClient naverBookClient,
-                    AdminService adminService,
-                    MemberService memberService){
+    AdminController(NaverBookClient naverBookClient, AdminService adminService){
 
         this.naverBookClient = naverBookClient;
         this.adminService = adminService;
-        this.memberService = memberService;
     }
 
     // 관리자 홈 화면
@@ -84,12 +77,35 @@ public class AdminController {
         return mav;
     }
 
-    @GetMapping("/member")
-    public ModelAndView members(){
-        ModelAndView mav = new ModelAndView("admin/user/users");
-        List<Member> members = memberService.findAllUsers();
-        System.out.println(members);
-        mav.addObject("members", members);
-        return mav;
-    }
+    /*@PostMapping("/book/save")
+    public String saveBook(@RequestParam(value = "selections") List<String> selections) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        List<Book> books = new ArrayList<>();
+
+        StringBuilder sb;
+        for(String selection : selections){
+            HashMap<String, String> map = new HashMap<String, String>();
+            System.out.println(selection);
+            map = mapper.readValue(selection, new TypeReference<HashMap<String, String>>() {});
+            System.out.println(map);
+            Book book = new Book();
+            book.setTitle(map.get("title"));
+            book.setPrice(Integer.parseInt(map.get("discount")));
+            book.setImage(map.get("image"));
+            book.setWriter(map.get("author"));
+            book.setPublisher(map.get("publisher"));
+            book.setIsbn(Long.parseLong(map.get("isbn")));
+            book.setDescription(map.get("description"));
+            sb = new StringBuilder(map.get("pubdate"));
+            sb.insert(4,'-').insert(7,'-');
+            book.setPublishDate(LocalDate.parse(sb));
+
+            books.add(book);
+        }
+
+        adminService.saveAll(books);
+        return "redirect:/admin/book/search";
+
+    }*/
 }

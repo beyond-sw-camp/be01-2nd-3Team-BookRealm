@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.bookrealm.model.Role.USER;
@@ -79,10 +78,6 @@ public class MemberService {
         }
     }
 
-<<<<<<< HEAD
-    public List<Member> findAllUsers(){
-        return memberRepository.findAll();
-=======
     public Long getUserReturnId(String email) {
         Optional<Member> siteUser = this.memberRepository.findByEmail(email);
         if (siteUser.isPresent()) {
@@ -90,7 +85,6 @@ public class MemberService {
         } else {
             throw new AppException(ErrorCode.MEMBER_NOT_FOUND, "siteuser not found");
         }
->>>>>>> 35e161041e8ef8705bc2dfa851f5a9e0b96a84eb
     }
 
 }
