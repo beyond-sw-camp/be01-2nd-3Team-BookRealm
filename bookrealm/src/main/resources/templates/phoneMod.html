@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/myPage/changePhone}" method="post">
+        <div class="form-group">
+            <label for="phoneNumber">새 전화번호</label>
+            <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="새 전화번호를 입력하세요">
+        </div>
+        <button type="submit" class="btn btn-primary">전화번호 변경</button>
+    </form>
+</div>
+</body>
+</html>

@@ -11,42 +11,58 @@
 <div class="container mt-5">
     <h2>마이페이지</h2>
 
+    <!-- Two-column layout using Bootstrap's Grid System -->
     <div class="row mt-4">
+        <!-- Left Column for Personal Information and Address -->
         <div class="col-md-6">
-            <h4>개인 정보</h4>
-            <p><strong>이메일:</strong> <span th:text="${member.email}"></span></p>
-            <p><strong>이름:</strong> <span th:text="${member.username}"></span></p>
+            <!-- Display Personal Information -->
+            <div style="margin-bottom: 50px">
+                <h4>개인 정보</h4>
+                <p><strong>이메일:</strong> <span th:text="${member.email}"></span></p>
+                <p><strong>이름:</strong> <span th:text="${member.username}"></span></p>
+            </div>
+
+            <!-- Display Address with Edit Button -->
+            <div class="mt-4">
+                <h4>주소</h4>
+                <p><strong>우편번호:</strong> <span th:text="${member.address.postcode}"></span></p>
+                <p><strong>주소:</strong> <span th:text="${member.address.address}"></span></p>
+                <p><strong>상세주소:</strong> <span th:text="${member.address.detailAddress}"></span></p>
+                <p><strong>참고사항:</strong> <span th:text="${member.address.extraAddress}"></span></p>
+                <!-- Add Edit button for Address -->
+                <a class="btn btn-secondary" th:href="@{/myPage/address}">주소 수정</a>
+            </div>
         </div>
 
+        <!-- Right Column for Password Change and Phone Number Change -->
         <div class="col-md-6">
-            <h4>비밀번호 변경</h4>
-            <!-- 비밀번호 변경 폼 -->
-            <form th:action="@{/changePassword}" method="post">
-                <div class="form-group">
-                    <label for="newPassword">새로운 비밀번호</label>
-                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
-                </div>
-                <button type="submit" class="btn btn-primary">변경</button>
-            </form>
-        </div>
-    </div>
+            <!-- Change Password Form -->
+            <div style="margin-bottom: 50px">
+                <h4>비밀번호 변경</h4>
+                <form th:action="@{/myPage/changePassword}" method="post">
+                    <!-- 현재 비밀번호 입력 -->
+                    <div class="form-group">
+                        <label for="currentPassword">현재 비밀번호</label>
+                        <input type="password" class="form-control" id="currentPassword" name="currentPassword" required>
+                    </div>
+                    <!-- 새로운 비밀번호 입력 -->
+                    <div class="form-group">
+                        <label for="newPassword">새로운 비밀번호</label>
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                    </div>
+                    <!-- 비밀번호 불일치 에러 메시지 -->
+                    <p th:if="${param.error}" class="text-danger">비밀번호가 일치하지 않습니다.</p>
+                    <button type="submit" class="btn btn-primary">변경</button>
+                </form>
+            </div>
 
-    <div class="row mt-4">
-        <div class="col-md-6">
-            <h4>주소</h4>
-            <p><strong>주소:</strong> <span th:text="${member.address}"></span></p>
-        </div>
-
-        <div class="col-md-6">
-            <h4>전화번호 변경</h4>
-            <!-- 전화번호 변경 폼 -->
-            <form th:action="@{/changePhoneNumber}" method="post">
-                <div class="form-group">
-                    <label for="newPhoneNumber">새로운 전화번호</label>
-                    <input type="text" class="form-control" id="newPhoneNumber" name="newPhoneNumber" required>
-                </div>
-                <button type="submit" class="btn btn-primary">변경</button>
-            </form>
+            <!-- Display Phone Number with Edit Button -->
+            <div class="mt-4">
+                <h4>전화번호 변경</h4>
+                <p><strong>전화번호:</strong> <span th:text="${member.phone}"></span></p>
+                <!-- Add Edit button for Phone Number -->
+                <a class="btn btn-secondary" th:href="@{/myPage/phone}">번호 수정</a>
+            </div>
         </div>
     </div>
 </div>
