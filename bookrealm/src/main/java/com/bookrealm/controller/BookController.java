@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bookrealm.model.Book;
 import com.bookrealm.service.BookService;
 
-@RequestMapping("/book")
+//@RequestMapping("/")
 @Controller
 public class BookController {
 
@@ -34,7 +34,7 @@ public class BookController {
 //        return "index";  
 //    }
 
-	@GetMapping("/all")
+	@GetMapping("/bookAll")
 	public String getAll(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
 		@RequestParam(name = "size", defaultValue = "20") int size) {  // page : 현재 페이지 번호, size : 한 페이지에 보여질 항목 수
 		// 페이징 정보를 생성하여 BookService의 findAll 메서드에 전달
@@ -48,7 +48,7 @@ public class BookController {
 		return "book-all";
 	}
 
-	@GetMapping("/search")
+	@GetMapping("/bookSearch")
 	public String searchBook(Model model, @RequestParam("term") String searchTerm) {
 		
 		List<Book> searchResults = bookService.findBooksByTitleOrWriter(searchTerm);
@@ -67,7 +67,7 @@ public class BookController {
 		return "index";
 	}
 	
-	@GetMapping("/detail")
+	@GetMapping("/bookDetail")
 	public String getBookDetail(Model model, @RequestParam("id") Long id) {
 		
 	    Optional<Book> bookDetail = bookService.findBookById(id);
