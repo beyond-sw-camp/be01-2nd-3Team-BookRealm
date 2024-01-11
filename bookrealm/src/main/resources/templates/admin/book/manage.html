@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head>
     <meta charset="UTF-8">
     <title>Book Manage</title>
@@ -113,6 +115,11 @@
                     type : "POST",
                     url : "/admin/book/delete",
                     data : {"ids": arr},
+                    beforeSend: function (jqXHR, settings) {
+                        var header = $("meta[name='_csrf_header']").attr("content");
+                        var token = $("meta[name='_csrf']").attr("content");
+                        jqXHR.setRequestHeader(header, token);
+                    },
                     success : function(data) {
                         alert("삭제가 완료되었습니다.");
                         location.reload();

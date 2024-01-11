@@ -1,7 +1,6 @@
 package com.bookrealm.service;
 
 import com.bookrealm.model.Book;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,4 +14,6 @@ public interface AdminService {
     Book save(Book book);
 
     void deleteByIdIn(List<Long> ids);
+
+    void deleteMemberById(Long id);
 }
