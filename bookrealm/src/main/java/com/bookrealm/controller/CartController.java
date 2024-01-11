@@ -63,7 +63,6 @@ public class CartController {
     // 특정 상품 장바구니에 추가
     @PostMapping("/cart/add/{bookId}")
     public String addToCart(@PathVariable Long bookId, Principal principal) {
-    	System.out.println("Add to Cart - Book ID: " + bookId);
         if (principal != null) {
             String memberId = principal.getName();
             Member member = memberService.getUser(memberId);

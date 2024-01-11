@@ -42,10 +42,6 @@ div {
 	display: inline-block;
 }
 
-nav {
-	width: 100%;
-}
-
 </style>
 </head>
 <body>
@@ -77,6 +73,7 @@ nav {
 					<li class="nav-item">
 						<div class="text-right">
 							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/join}" style="margin-left: 10px;">회원가입</a>
+							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/myPage}" style="margin-left: 10px;">마이페이지</a>
 						</div>
 					</li>
 
@@ -102,7 +99,8 @@ nav {
     </div>
 
 	<div class="my-3  text-left">
-    	<form th:action="@{/cart/add/{bookId}(bookId=${book.id})}" method="post" style="display: inline;">
+    	<form th:action="@{/cart/add/{bookId}(bookId=${book.id})}" method="post" style="display: inline;"  
+    		th:if="${#authorization.expression('isAuthenticated')}">
         	<button type="submit" class="btn btn-outline-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px;">장바구니</button>
     	</form>
     	<button type="button" class="btn btn-primary me-auto mb-2 mb-lg-0">바로구매</button>
