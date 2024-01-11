@@ -105,10 +105,10 @@
                 </form>
                 <form th:action="@{/book/detail/delete-review}" method="post" style="display: inline;">
                     <input type="hidden" name="reviewId" th:value="${review.id}" />
-                    <input type="hidden" name="id" th:value="${book.id}" />
-                    <button type="submit">삭제</button>
-                </form>
-            </div>
+			<input type="hidden" name="id" th:value="${book.id}" />
+			<button type="submit">삭제</button>
+			</form>
+</div>
         </li>
     </ul>
 </div>
