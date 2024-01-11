@@ -51,36 +51,37 @@ div {
 </head>
 <body>
 
-	<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg
-    navbar-light bg-light border-bottom justify-content-space-between" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" style="display:flex; justify-content: space-between;">
-    <div class="container-fluid">
-        <a th:href="@{/book}"><img src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60" style="margin-bottom:50px;"></a>
+<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg
+    navbar-light bg-light border-bottom justify-content-space-between d-flex" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" style="margin-bottom:50px;">
+    <div class="container-fluid align-items-center">
+        <a th:href="@{/book}"><img src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60"></a>
         <button class="navbar-toggler" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
                 <li class="nav-item">
-                    <!--추가된 부분-->
-                    <div class="collapse navbar-collapse float-right">
-                    <a class="btn float-right" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-bottom:50px;">로그인</a>
-                    <a class="btn float-right" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="margin-bottom:50px;">로그아웃</a>
-                    <form th:action="@{/book/search}" method="get" style="float:right;">
-					<label for="searchTerm">도서 검색</label> <input type="text" id="searchTerm" name="term" placeholder="Input Book Title or Writer" required>
-						<button type="submit">검색</button>
-					</form>
-					</div>
-                    <!--추가된 부분 end-->
+                    <form th:action="@{/book/search}" method="get" class="text-center">
+                        <label for="searchTerm">도서 검색</label> <input type="text" id="searchTerm" name="term" placeholder="Input Book Title or Writer" required>
+                        <button type="submit" class="btn btn-secondary">검색</button>
+                    </form>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/join}">회원가입</a>
+                    <div class="text-right">
+                        <a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-left:10px;">로그인</a>
+                        <a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="margin-left:10px;">로그아웃</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/join}" style="margin-left:10px;">회원가입</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
 
 	<h1>Best Sellers</h1>
 	
