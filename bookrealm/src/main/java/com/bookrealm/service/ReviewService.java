@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReviewService {
     private final ReviewRepository reviewRepository;
+
 
     @Autowired
     public ReviewService(ReviewRepository reviewRepository) {
@@ -34,17 +36,45 @@ public class ReviewService {
     }
 
     public List<Review> findByMemberId(Long memberID){
-        return reviewRepository.findByMemberId(memberID);
+        return reviewRepository.findByMemberIdOrderByReportDateDesc(memberID);
     }
 
     public List<Review> findByBookId(Long bookID){
 
-        List<Review> searchResults = reviewRepository.findByBookId(bookID);
+        List<Review> searchResults = reviewRepository.findByBookIdOrderByReportDateDesc(bookID);
 
-        if (searchResults.isEmpty()) {
-            throw new AppException(ErrorCode.BOOK_NOT_FOUND, "검색 결과가 없습니다");
-        }
         return searchResults;
     }
 
+    public void updateReview(Long reviewId, String contents, int popular){
+        Optional<Review> optionalReview = reviewRepository.findById(reviewId);
+
+        if(optionalReview.isPresent()){
+            Review review = optionalReview.get();
+            review.setContents(contents);
+            review.setPopular(popular);
+            review.setReportDate(LocalDateTime.now());
+
+            reviewRepository.save(review);
+        } else {
+            throw new AppException(ErrorCode.REVIEW_NOT_FOUND,"리뷰ID가 없습니다.");
+        }
+
+    }
+    public void deleteReview(Long reviewId){
+        Optional<Review> optionalReview = reviewRepository.findById(reviewId);
+
+        if(optionalReview.isPresent()){
+            Review review = optionalReview.get();
+            reviewRepository.delete(review);
+        } else {
+            throw new AppException(ErrorCode.REVIEW_NOT_FOUND,"리뷰ID가 없습니다.");
+
+        }
+
+    }
+
+    public Review findById(Long id) {
+        return reviewRepository.findById(id).orElse(null);
+    }
 }

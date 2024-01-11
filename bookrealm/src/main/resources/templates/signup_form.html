@@ -7,7 +7,11 @@
         </div>
     </div>
     <form th:action="@{/join}" th:object="${JoinDto}" method="post">
-        <div th:replace="form_errors :: formErrorsFragment"></div>
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">
+                이미 존재하는 이메일 입니다
+            </div>
+        </div>
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
             <input type="email" th:field="*{email}" class="form-control">

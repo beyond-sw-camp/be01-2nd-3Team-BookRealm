@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequestMapping("/admin")
 public class AdminController {
 
+
     private final NaverBookClient naverBookClient;
     private final AdminService adminService;
 

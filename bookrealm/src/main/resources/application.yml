@@ -11,6 +11,13 @@ spring:
     password: maria
   thymeleaf:
     cache: false
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+  mvc:
+    tatic-path-pattern: /static/**
   #JPA
   jpa:
     hibernate:

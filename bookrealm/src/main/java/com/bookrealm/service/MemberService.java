@@ -70,8 +70,8 @@ public class MemberService {
         return null;
     }
 
-    public Member getUser(String username) {
-        Optional<Member> siteUser = this.memberRepository.findByEmail(username);
+    public Member getUser(String email) {
+        Optional<Member> siteUser = this.memberRepository.findByEmail(email);
         if (siteUser.isPresent()) {
             return siteUser.get();
         } else {
@@ -79,8 +79,18 @@ public class MemberService {
         }
     }
 
+<<<<<<< HEAD
     public List<Member> findAllUsers(){
         return memberRepository.findAll();
+=======
+    public Long getUserReturnId(String email) {
+        Optional<Member> siteUser = this.memberRepository.findByEmail(email);
+        if (siteUser.isPresent()) {
+            return siteUser.get().getId();
+        } else {
+            throw new AppException(ErrorCode.MEMBER_NOT_FOUND, "siteuser not found");
+        }
+>>>>>>> 35e161041e8ef8705bc2dfa851f5a9e0b96a84eb
     }
 
 }
