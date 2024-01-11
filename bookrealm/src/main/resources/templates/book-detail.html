@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -125,7 +125,7 @@ div {
                 <span th:each="i : ${#numbers.sequence(1, review.popular)}">&#9733;</span>
             </p>
             <!-- 현재 로그인한 사용자와 리뷰 작성자가 동일한 경우에만 수정 및 삭제 링크 표시 -->
-            <div th:if="${#authentication.principal.username == review.member.email}">
+            <div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.username == review.member.email}">
                 <form th:action="@{/detail/edit-review}" method="post">
                     <input type="hidden" name="reviewId" th:value="${review.id}" />
                     <textarea rows="1" cols="100" id="contents" name="contents" th:value="${review.contents}" required></textarea>
