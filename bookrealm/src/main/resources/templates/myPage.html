@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>마이페이지</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>마이페이지</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4>개인 정보</h4>
+            <p><strong>이메일:</strong> <span th:text="${member.email}"></span></p>
+            <p><strong>이름:</strong> <span th:text="${member.username}"></span></p>
+        </div>
+
+        <div class="col-md-6">
+            <h4>비밀번호 변경</h4>
+            <!-- 비밀번호 변경 폼 -->
+            <form th:action="@{/changePassword}" method="post">
+                <div class="form-group">
+                    <label for="newPassword">새로운 비밀번호</label>
+                    <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">변경</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4>주소</h4>
+            <p><strong>주소:</strong> <span th:text="${member.address}"></span></p>
+        </div>
+
+        <div class="col-md-6">
+            <h4>전화번호 변경</h4>
+            <!-- 전화번호 변경 폼 -->
+            <form th:action="@{/changePhoneNumber}" method="post">
+                <div class="form-group">
+                    <label for="newPhoneNumber">새로운 전화번호</label>
+                    <input type="text" class="form-control" id="newPhoneNumber" name="newPhoneNumber" required>
+                </div>
+                <button type="submit" class="btn btn-primary">변경</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
