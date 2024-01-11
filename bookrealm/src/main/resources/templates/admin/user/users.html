@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head>
     <meta charset="UTF-8">
     <title>User List</title>
@@ -35,9 +37,33 @@
     <td th:text="${member.address.address} + ' ' + ${member.address.detailAddress} + ' ' + ${member.address.extraAddress}"></td>
     <td th:text="${member.phone}"></td>
     <td th:text="${member.role}"></td>
-    <td>수정/주문관리</td>
-    <td>삭제</td>
+    <td><button type="button" style="display: inline-block">수정/주문관리</button></td>
+    <td><button type="button" style="display: inline-block" th:onclick="|onClickDelete(${member.id})|">삭제</button></td>
   </tr>
 </table>
 </body>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script th:inline="javascript">
+  function onClickDelete(id) {
+    if(confirm("정말 삭제하시겠습니까?")){
+      $.ajax({
+        type : "POST",
+        url : "/admin/user/delete",
+        data : {"id": id},
+        beforeSend: function (jqXHR, settings) {
+          var header = $("meta[name='_csrf_header']").attr("content");
+          var token = $("meta[name='_csrf']").attr("content");
+          jqXHR.setRequestHeader(header, token);
+        },
+        success : function(data) {
+          alert("삭제가 완료되었습니다.");
+          location.reload();
+        },
+        error : function(e) {
+          alert("삭제 실패");
+        }
+      });
+    }
+  }
+</script>
 </html>
