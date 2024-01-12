@@ -56,10 +56,9 @@ public class CartController {
             cartService.addCart(member, book, 1);  // 장바구니에 1권 추가 (수량 조절 가능)
         }
 
-        return "book-cart";
+        return "redirect:/cart/add";
     }
 
-    @PreAuthorize("isAuthenticated()")
     @GetMapping("/cart/add")
     public String viewCart(Model model, Principal principal) {
         if (principal != null) {
