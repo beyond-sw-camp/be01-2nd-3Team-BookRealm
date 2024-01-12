@@ -158,6 +158,7 @@
     <form th:action="@{/cart/add}" method="post" style="display: inline;"
           th:if="${#authorization.expression('isAuthenticated')}">
         <input type="hidden" name="bookId" th:value="${book.id}"/>
+        <input type="hidden" name="quantity" value="1"/> <!-- 수량 기본값은 1로 설정 -->
         <button type="submit" class="btn btn-outline-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px;">
             장바구니
         </button>

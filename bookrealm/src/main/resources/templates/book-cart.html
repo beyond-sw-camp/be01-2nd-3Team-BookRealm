@@ -42,6 +42,15 @@ div {
 	display: inline-block;
 }
 
+.total-amount {
+	margin-top: 20px;
+	font-weight: bold;
+}
+
+.checkout-button {
+	margin-top: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -102,22 +111,27 @@ div {
     	<td><span th:text="${cart.book.title}"></span></td>
     	<td><span th:text="${cart.book.writer}"></span></td>
     	<td><span th:text="${cart.book.price}"></span></td>
-    	<td><input type="number" value="1" min="1" th:id="${'quantity_' + cart.book.id}">
-    		<button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">변경</button></td>
-    <td><button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">삭제</button></td>
+		<td>
+			<form th:action="@{/cart/update}" method="post">
+				<input type="hidden" name="bookId" th:value="${cart.book.id}">
+				<input type="number" name="purchase" th:value="${cart.purchase}" min="1" th:id="${'quantity_' + cart.book.id}">
+				<button type="submit">변경</button>
+			</form>
+		</td>
+		<td><button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">삭제</button></td>
 	</tr>
 	</tbody>
 	</table>
-	<!-- <script>
-    	function updateQuantity(bookId) {
-        // 수량 가져오기
-        var quantity = document.getElementById('quantity_' + bookId).value;
+	<!-- 총액 표시 -->
+	<div class="total-amount">
+		<p>총액: $<span th:text="${totalPrice}"></span></p>
+	</div>
 
-        // 여기에 수량을 업데이트하는 JavaScript 코드를 추가할 수 있습니다.
-        // 예: 선택한 도서의 수량을 변경하고 총 가격을 업데이트하는 로직을 구현할 수 있습니다.
-        console.log('Updating purchase for bookId: ' + bookId + ', quantity: ' + quantity);
-    	}
-	</script> -->
+	<!-- 결제하기 버튼 -->
+	<div class="checkout-button">
+		<button onclick="checkout()">결제하기</button>
+	</div>
+
 
 </body>
 </html>

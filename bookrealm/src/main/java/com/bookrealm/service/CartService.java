@@ -2,6 +2,7 @@ package com.bookrealm.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.bookrealm.model.Member;
 import com.bookrealm.repository.MemberRepository;
@@ -75,6 +76,16 @@ public class CartService {
 		}
 
 		return cart;
+	}
+
+	public void updateCartQuantity(String email, Long bookId, int purchase) {
+		Optional<Cart> cartOptional = cartRepository.findByMemberEmailAndBookId(email, bookId);
+
+		if (cartOptional.isPresent()) {
+			Cart cart = cartOptional.get();
+			cart.setPurchase(purchase);
+			cartRepository.save(cart);
+		}
 	}
 
 }
