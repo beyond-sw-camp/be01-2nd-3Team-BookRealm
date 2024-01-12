@@ -1,7 +1,9 @@
 package com.bookrealm.service;
 
 import com.bookrealm.model.Book;
+import com.bookrealm.model.Member;
 import com.bookrealm.repository.BookRepository;
+import com.bookrealm.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +14,16 @@ import java.util.Optional;
 public class AdminServiceImpl implements AdminService{
 
     private final BookRepository bookRepository;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public AdminServiceImpl(BookRepository bookRepository) {
+    public AdminServiceImpl(BookRepository bookRepository, MemberRepository memberRepository) {
+
         this.bookRepository = bookRepository;
+        this.memberRepository = memberRepository;
     }
 
-    /* @Autowired
-     public AdminServiceImpl(BookRepository bookRepository){
-         this.bookRepository = bookRepository;
-     }
- */
+
     @Override
     public List<Book> saveAll(List<Book> books) {
         return bookRepository.saveAll(books);
@@ -48,4 +49,11 @@ public class AdminServiceImpl implements AdminService{
     public void deleteByIdIn(List<Long> ids) {
         bookRepository.deleteAllById(ids);
     }
+
+    @Override
+    public void deleteMemberById(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+
 }

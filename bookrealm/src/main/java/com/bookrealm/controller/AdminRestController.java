@@ -53,10 +53,16 @@ public class AdminRestController {
         return new ResponseEntity<List<Book>>(adminService.saveAll(books), HttpStatus.OK);
     }
 
-    @PostMapping("book/delete")
+    @PostMapping("/book/delete")
     public ResponseEntity<Void> deleteBooks(@RequestParam(value = "ids[]") List<Long> ids){
-        System.out.println(ids);
         adminService.deleteByIdIn(ids);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PostMapping("/user/delete")
+    public ResponseEntity<Void> deleteUsers(@RequestParam Long id){
+        adminService.deleteMemberById(id);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+
     }
 }
