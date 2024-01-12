@@ -66,7 +66,7 @@ div {
 					</li>
 					<li class="nav-item">
 						<div class="text-right">
-							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-left: 10px;">로그인</a> 
+							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-left: 10px;">로그인</a>
 							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="margin-left: 10px;">로그아웃</a>
 						</div>
 					</li>
@@ -80,7 +80,7 @@ div {
 				</ul>
 			</div>
 		</div>
-	</nav>	
+	</nav>
 
 	<h1>Book Cart</h1>
 
@@ -97,14 +97,14 @@ div {
   </thead>
   <tbody>
     <!-- 예제 도서 정보 -->
-	<tr th:each="cart : ${books}">
-    	<td><img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image"></td>
-    	<td><span th:text="${book.title}"></span></td>
-    	<td><span th:text="${book.writer}"></span></td>
-    	<td><span th:text="${book.price}"></span></td>
-    	<td><input type="number" value="1" min="1" th:id="${'quantity_' + book.id}">
-    		<button th:onclick="'updateQuantity(' + ${book.id} + ')'" type="button">변경</button></td>
-    <td><button th:onclick="'updateQuantity(' + ${book.id} + ')'" type="button">삭제</button></td>
+	<tr th:each="cart : ${cartBooks}">
+    	<td><img th:if="${cart.book.image != null}" th:src="${cart.book.image}" alt="Book Image"></td>
+    	<td><span th:text="${cart.book.title}"></span></td>
+    	<td><span th:text="${cart.book.writer}"></span></td>
+    	<td><span th:text="${cart.book.price}"></span></td>
+    	<td><input type="number" value="1" min="1" th:id="${'quantity_' + cart.book.id}">
+    		<button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">변경</button></td>
+    <td><button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">삭제</button></td>
 	</tr>
 	</tbody>
 	</table>
@@ -112,7 +112,7 @@ div {
     	function updateQuantity(bookId) {
         // 수량 가져오기
         var quantity = document.getElementById('quantity_' + bookId).value;
-        
+
         // 여기에 수량을 업데이트하는 JavaScript 코드를 추가할 수 있습니다.
         // 예: 선택한 도서의 수량을 변경하고 총 가격을 업데이트하는 로직을 구현할 수 있습니다.
         console.log('Updating purchase for bookId: ' + bookId + ', quantity: ' + quantity);
