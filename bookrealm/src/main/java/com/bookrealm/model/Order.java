@@ -28,7 +28,7 @@ public class Order {
     private Payment payment;
 
     @Embedded
-    private Address desination;
+    private Address destination;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
