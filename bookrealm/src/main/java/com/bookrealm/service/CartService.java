@@ -35,21 +35,21 @@ public class CartService {
 	}
 	
 	// 장바구니에 book 추가
-	@Transactional 
+	@Transactional
 	public Cart addCart(Member member, Book book, int purchase) {
-		
-		Cart cart = cartRepository.findByIdAndBookId(member.getId(), book.getId()).orElse(null);
-		
-		// 상품이 장바구니에 존재하지 않는다면 카트상품 생성
-		if (cart == null) {
-			cart = Cart.createCartBook(member, book, purchase);
-		}
-		
-		// 상품이 장바구니에 이미 존재한다면 수량만 증가
-		else {
+		// 이미 장바구니에 있는 도서인지 확인
+		Optional<Cart> existingCartItem = cartRepository.findByMemberIdAndBookId(member.getId(), book.getId());
+
+		// 기존에 있는 항목이 있으면 수량만 증가
+		if (existingCartItem.isPresent()) {
+			Cart cart = existingCartItem.get();
 			cart.addPurchase(purchase);
+			return cartRepository.save(cart);
 		}
-		return cartRepository.save(cart);
+
+		// 없으면 새로운 장바구니 항목 생성
+		Cart newCartItem = Cart.createCartBook(member, book, purchase);
+		return cartRepository.save(newCartItem);
 	}
 	
 	// 장바구니 조회하기

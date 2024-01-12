@@ -48,13 +48,13 @@ public class CartController {
 
     // 장바구니에 책 추가
         @PostMapping("/cart/add")
-        public String addToCart(@RequestParam("bookId") Long bookId, @RequestParam("quantity") int quantity, Principal principal) {
+        public String addToCart(@RequestParam("bookId") Long bookId, @RequestParam("purchase") int purchase, Principal principal) {
 
             Member member = memberService.getUser(principal.getName());
             Book book = bookRepository.findById(bookId).orElse(null);
 
             if (book != null) {
-                cartService.addCart(member, book, quantity);  // 장바구니에 1권 추가 (수량 조절 가능)
+                cartService.addCart(member, book, purchase);  // 장바구니에 1권 추가 (수량 조절 가능)
             }
 
             return "redirect:/cart/add";
@@ -87,8 +87,17 @@ public class CartController {
         if (principal != null) {
             Member member = memberService.getUser(principal.getName());
 
+            // Remove the specific item from the cart
             cartRepository.deleteByIdAndMemberId(cartId, member.getId());
+
+            // Check if the cart is empty after removal
+            List<Cart> remainingItems = cartRepository.findByMemberId(member.getId());
+            if (remainingItems.isEmpty()) {
+                // Redirect to book-detail if the cart is empty
+                return "redirect:/";
+            }
         }
+        // Redirect to cart page in any other case
         return "redirect:/cart/add";
     }
 
