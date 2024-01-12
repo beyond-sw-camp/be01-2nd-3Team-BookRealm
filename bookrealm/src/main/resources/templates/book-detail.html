@@ -9,16 +9,16 @@
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="starter-template.css" rel="stylesheet">
 
-    <title>Book Realm</title>
-    <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
+<title>Book Realm</title>
+<style>
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+    margin-left: 20px;
+    margin-right: 20px;
+    }
 
-        h1 {
-            color: #333;
+    h1 {
+       color: #333;
         }
 
         table {
@@ -52,6 +52,9 @@
         nav a {
             color: white;
         }
+        .navbar {
+    	margin: 0;
+		}
 
         /* Book Detail 스타일링 */
         img {
@@ -104,41 +107,7 @@
 <body>
 
 <!-- Navbar -->
-<nav th:fragment="navbarFragment"
-     class="navbar navbar-expand-lg navbar-light bg-light border-bottom justify-content-space-between d-flex">
-    <div class="container-fluid align-items-center">
-        <a th:href="@{/}" class="navbar-brand"><img
-                src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0"
-                width="60"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <form th:action="@{/bookSearch}" method="get" class="form-inline">
-                        <label for="searchTerm" class="mr-sm-2">도서 검색</label>
-                        <input type="text" id="searchTerm" name="term" class="form-control mr-sm-2" placeholder="도서 제목 또는 작가 입력" required>
-                        <button type="submit" class="btn btn-secondary">검색</button>
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <div class="text-right">
-                        <a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-left: 10px;">로그인</a>
-                        <a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="margin-left: 10px;">로그아웃</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="text-right">
-                        <a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/join}" style="margin-left: 10px;">회원가입</a>
-                        <a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/myPage}" style="margin-left: 10px;">마이페이지</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
 
 <h1>Book Detail</h1>
 
