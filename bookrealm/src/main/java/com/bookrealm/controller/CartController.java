@@ -9,6 +9,7 @@ import com.bookrealm.service.BookService;
 import com.bookrealm.service.CartService;
 import com.bookrealm.service.MemberService;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,17 @@ public class CartController {
         } else {
             return "redirect:/";
         }
+    }
+    
+    @PostMapping("/cart/delete")
+    @Transactional
+    public String removeFromCart(@RequestParam("cartId") Long cartId, Principal principal) {
+        if (principal != null) {
+            Member member = memberService.getUser(principal.getName());
+
+            cartRepository.deleteByIdAndMemberId(cartId, member.getId());
+        }
+        return "redirect:/cart/add";
     }
 
     @PostMapping("/cart/update")

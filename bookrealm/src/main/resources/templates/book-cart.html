@@ -51,6 +51,15 @@ div {
 	margin-top: 10px;
 }
 
+.total-amount {
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.checkout-button {
+    margin-top: 10px;
+}
+
 </style>
 </head>
 <body>
@@ -118,20 +127,31 @@ div {
 				<button type="submit">변경</button>
 			</form>
 		</td>
-		<td><button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">삭제</button></td>
+		<td><form th:action="@{/cart/delete}" method="post" style="display: inline;">
+			<input type="hidden" name="cartId" th:value="${cart.id}"/>
+			<button type="submit" class="btn btn-primary">삭제</button>
+		</form></td>
 	</tr>
 	</tbody>
 	</table>
-	<!-- 총액 표시 -->
-	<div class="total-amount">
-		<p>총액: $<span th:text="${totalPrice}"></span></p>
-	</div>
+    </tbody>
+    </table>
+    <!-- 총액 표시 -->
+    <div class="total-amount">
+       <p>총액: $<span th:text="${totalPrice}"></span></p>
+    </div>
 
-	<!-- 결제하기 버튼 -->
-	<div class="checkout-button">
-		<button onclick="checkout()">결제하기</button>
-	</div>
+    <!-- 결제하기 버튼 -->
+    <div class="checkout-button">
+       <button onclick="checkout()">주문하기</button>
+    </div>
 
+    <script>
+       function checkout() {
+          // 결제하기 버튼을 클릭했을 때 수행할 작업을 여기에 추가하세요.
+          console.log('결제하기 버튼 클릭됨');
+       }
+    </script>
 
 </body>
 </html>
