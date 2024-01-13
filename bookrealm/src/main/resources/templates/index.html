@@ -9,9 +9,8 @@
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="starter-template.css" rel="stylesheet">
     
-   
-
 <title>Book Realm</title>
+
 <style>
 nav {
 	position: fixed;
@@ -19,11 +18,6 @@ nav {
   /* width: 100% */
   left: 0;
   right: 0;
-}
-body {
-	font-family: Arial, sans-serif;
-	margin-left: 20px;
-	margin-right: 20px;
 }
 
 h1 {
@@ -72,18 +66,6 @@ div {
 			<td th:text="${book.publisher}"></td>
 		</tr>
 	</table>
-	
-	
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" onclick="ok()">
-    Dropdown button
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-  </ul>
-</div>
 
 <script th:inline="javascript" type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
 <script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
