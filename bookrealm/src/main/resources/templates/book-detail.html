@@ -6,163 +6,175 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="starter-template.css" rel="stylesheet">
-
+    
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;200;400;500&display=swap" rel="stylesheet">
 <title>Book Realm</title>
 <style>
+* {
+	font-family: 'Noto Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
 body {
-	font-family: 'Noto Sans KR', sans-serif;
-    margin-left: 20px;
-    margin-right: 20px;
-    }
+	margin: 0;
+}
 
-    h1 {
-       color: #333;
-        }
+.contents {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+	overflow: auto;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
+.container {
+	max-width: 1000px;
+	margin: 0 auto; 
+}
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
 
-        th {
-            background-color: #f2f2f2;
-        }
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
 
-        div {
-            width: 100%;
-            display: inline-block;
-        }
+th {
+	background-color: #f2f2f2;
+}
 
-        /* Bootstrap 스타일링 추가 */
+div {
+	width: 100%;
+}
 
-        /* Navbar 스타일링 */
-        nav {
-            background-color: #007bff;
-        }
+h3.mt-4 {
+    margin-top: 100px !important;
+}
 
-        nav a {
-            color: white;
-        }
-        .navbar {
-    	margin: 0;
-		}
+/* Book Detail 스타일링 */
+.book-info-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
-        /* Book Detail 스타일링 */
-        img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 20px;
-        }
+.book-info {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	margin-top: 20px;
+}
 
-        .my-3 {
-            margin-top: 20px;
-        }
+.book-info img {
+	width: 300px; 
+	object-fit: cover;
+}
 
-        .btn-outline-primary {
-            color: #007bff;
-            border-color: #007bff;
-        }
+textarea {
+	width: 100%;
+	margin-top: 10px;
+}
 
-        .btn-outline-primary:hover {
-            background-color: #007bff;
-            color: white;
-        }
+ul {
+	padding: 0;
+	list-style-type: none;
+}
 
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        textarea {
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        ul {
-            padding: 0;
-            list-style-type: none;
-        }
-
-        li {
-            margin-bottom: 20px;
-        }
-
-        /* 필요한 경우 추가적인 스타일링을 추가하세요. */
-    </style>
+</style>
 </head>
 <body>
 
 <!-- Navbar -->
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 
-<h1>Book Detail</h1>
+<div class="contents container">
+<h2 style="font-weight:bold;"><p class="mt-3"><span th:text="${book.title}"></span></p></h2>
+ <p style="margin-top: -10px;"><span th:text="${book.writer}"></span></p><hr>
 
 <!-- 도서 정보 표시 -->
-<img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image" class="img-fluid">
-<p class="mt-3">제목: <span th:text="${book.title}"></span></p>
-<p>작가: <span th:text="${book.writer}"></span></p>
-<p>카테고리: <span th:text="${book.category}"></span></p>
-<p>가격: <span th:text="${book.price}"></span></p>
-<p>출판사: <span th:text="${book.publisher}"></span></p>
-<p>출판일: <span th:text="${book.publishDate}"></span></p>
-<p>재고: <span th:text="${book.stock}"></span></p>
-<p>설명: <span th:text="${book.description}"></span></p>
+<div class="book-info-container">
+<div class="book-info">
+    <div class="d-flex align-items-start">
+        <!-- 도서 이미지 -->
+		<div style="margin-right: -100px; position: relative;">
+		    <div style="width: 380px; height: 554px; overflow: hidden; border: 1px solid #ddd;">
+		        <img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+		    </div>
+		</div>
 
-<!-- 도서 구매 및 리뷰 폼 -->
-<div class="my-3 text-left">
-    <form th:action="@{/cart/add}" method="post" style="display: inline;"
-          th:if="${#authorization.expression('isAuthenticated')}">
-        <input type="hidden" name="bookId" th:value="${book.id}"/>
-        <input type="hidden" name="purchase" value="1"/> <!-- 수량 기본값은 1로 설정 -->
-        <button type="submit" class="btn btn-outline-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px;">
-            장바구니
-        </button>
-    </form>
-    <button type="button" class="btn btn-primary me-auto mb-2 mb-lg-0">바로구매</button>
+        <!-- 도서 상세 정보 및 버튼들 -->
+        <div class="d-flex flex-column">
+
+            <!-- 도서 상세 정보 -->
+            <div class="book-details" style="margin-top: 20px;">
+                <p>출판사 : <span th:text="${book.publisher}"></span></p>
+                <p>출판일 : <span th:text="${book.publishDate}"></span></p>
+                <p>재고 : <span th:text="${book.stock}"></span></p>
+                <p>설명 : <br><span th:text="${book.description}"></span></p>
+                <p style="font-size:32px; margin-top: 30px;"><span th:text="${book.price}" style="font-weight:bold;"></span>원</p>
+            </div>
+
+            <!-- 도서 구매 및 리뷰 폼 -->
+            <div class="my-3 text-left" style="display: flex;">
+                <form th:action="@{/cart/add}" method="post" style="display: inline;"
+                      th:if="${#authorization.expression('isAuthenticated')}">
+                    <input type="hidden" name="bookId" th:value="${book.id}"/>
+                    <input type="hidden" name="purchase" value="1"/> <!-- 수량 기본값은 1로 설정 -->
+                    <button type="submit" class="btn btn-outline-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px; width: 200px;">
+                        장바구니
+                    </button>
+                </form>
+                <button type="button" class="btn btn-primary me-auto mb-2 mb-lg-0" style="width: 200px;">바로구매</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 </div>
 
 <!-- 리뷰 작성 폼 -->
 <form th:action="@{/detail/add-review}" method="post" class="mt-3">
     <input type="hidden" name="id" th:value="${book.id}"/>
-    <div class="form-group">
-        <label for="contents">리뷰 쓰기:</label>
+    <div class="form-group" style="margin-top: 20px;">
+        <label for="contents">리뷰 쓰기 :</label>
         <textarea rows="3" id="contents" name="contents" class="form-control" required></textarea>
     </div>
     <div class="form-group">
-        <label for="popular">별점:</label>
+        <label for="popular">별점 :</label>
         <input type="number" id="popular" name="popular" min="1" max="5" class="form-control" required>
     </div>
     <button type="submit" class="btn btn-primary">추가</button>
 </form>
 
 <!-- 리뷰 목록 표시 -->
-<h2 class="mt-4">도서 리뷰</h2>
+<h3 class="mt-4" style="font-weight:bold; margin-bottom: 30px;">도서 리뷰</h3>
 <ul>
     <li th:each="review : ${reviews}" style="list-style-type: none; margin-bottom: 20px;">
         <!-- 작성자 이름과 작성 날짜 표시 -->
-        <p style="font-size: small;">
+        <p style="font-size: medium;">
             <span th:text="${review.member.username}"></span>
             <span> | </span>
             <span th:text="${#temporals.format(review.reportDate,'yyyy-MM-dd HH:mm')}"></span>
         </p>
         <!-- 리뷰 내용 표시 -->
-        <p>내용: <span th:text="${review.contents}"></span></p>
+        <p>내용 : <span th:text="${review.contents}"></span></p>
         <!-- Popular를 별모양으로 표시 -->
-        <p>별점:
+        <p>별점 :
             <span th:each="i : ${#numbers.sequence(1, review.popular)}">&#9733;</span>
         </p>
         <!-- 현재 로그인한 사용자와 리뷰 작성자가 동일한 경우에만 수정 및 삭제 링크 표시 -->
@@ -170,25 +182,29 @@ body {
             <form th:action="@{/detail/edit-review}" method="post">
                 <input type="hidden" name="reviewId" th:value="${review.id}"/>
                 <div class="form-group">
-                    <label for="contents">리뷰 수정:</label>
+                    <label for="contents">리뷰 수정 :</label>
                     <textarea rows="3" id="contents" name="contents" class="form-control"
                               th:value="${review.contents}" required></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="popular">별점 수정:</label>
+                    <label for="popular">별점 수정 :</label>
                     <input type="number" id="popular" name="popular" min="1" max="5" class="form-control"
                            th:value="${review.popular}" required>
                 </div>
-                <button type="submit" class="btn btn-primary">수정 완료</button>
+                <button type="submit" class="btn btn-primary" style="margin-bottom: 10px;">수정 완료</button>
             </form>
             <form th:action="@{/detail/delete-review}" method="post" style="display: inline;">
                 <input type="hidden" name="reviewId" th:value="${review.id}"/>
                 <input type="hidden" name="id" th:value="${book.id}"/>
-                <button type="submit" class="btn btn-danger">삭제</button>
+                <button type="submit" class="btn btn-secondary">삭제</button>
             </form>
         </div>
     </li>
 </ul>
+</div>
+<script th:inline="javascript" type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js}" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 
 </body>
 </html>
