@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
-<div layout:fragment="content" class="container my-3">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="starter-template.css" rel="stylesheet">
+
+<title>Book Realm</title>
+<style>
+.container {
+	max-width: 460px;
+	margin: 0 auto;
+	padding-top: 10px;
+	padding-bottom: 50px;
+}
+
+.btn {
+	width: 200px;
+}
+
+</style>
+<body>
+<div class="text-center" style="margin-top: 100px;">
+<a th:href="@{/}"><img src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="80"></a>
+<h2 style="margin-top: 20px; font-weight:bold;">회원가입</h2>
+</div>
+<div class="contents container">
+<div layout:fragment="content" class="container">
     <div class="my-3 border-bottom">
-        <div>
-            <h4>회원가입</h4>
-        </div>
     </div>
     <form th:action="@{/join}" th:object="${JoinDto}" method="post">
         <div th:if="${param.error}">
@@ -28,10 +55,10 @@
             <label for="username" class="form-label">이름</label>
             <input type="text" th:field="*{username}" class="form-control">
         </div>
-        <div class="mb-3">
+        <div class="mb-3 post-button">
             <label for="postcode" class="form-label">우편번호</label>
             <input type="text" id="sample6_postcode" th:field="*{postcode}" class="form-control">
-            <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+            <input type="button" class="btn btn-sm btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="margin-top: 10px; 	width: 110px;">
         </div>
         <div class="mb-3">
             <label for="address" class="form-label">주소</label>
@@ -100,7 +127,12 @@
             <label for="phone" class="form-label">핸드폰 번호</label>
             <input type="text" th:field="*{phone}" class="form-control">
         </div>
-        <button type="submit" class="btn btn-primary">회원가입</button>
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary"  style="margin-top: 30px;">회원가입</button>
+        </div>
     </form>
+</div>    
 </div>
+</body>
+</head>
 </html>

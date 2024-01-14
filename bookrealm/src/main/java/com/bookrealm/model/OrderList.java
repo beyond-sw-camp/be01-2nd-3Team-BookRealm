@@ -28,5 +28,5 @@ public class OrderList {
     @Column(nullable = false)
     private int purchase;
 
-    private String status;
+    private Status status; //ORDER_COMPLETE, DELIVERY, DELIVERY_COMPLETE
 }
