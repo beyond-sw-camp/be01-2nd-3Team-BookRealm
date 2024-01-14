@@ -87,7 +87,7 @@ class OrderServiceTest {
         int totalPrice = orderService.totalPrice(order);
 
         // then
-        assertEquals(24000, totalPrice);
+        assertEquals(54000, totalPrice);
 
     }
     @Test
