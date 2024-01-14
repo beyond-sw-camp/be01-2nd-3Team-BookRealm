@@ -2,6 +2,7 @@ package com.bookrealm.service;
 
 import com.bookrealm.model.Book;
 import com.bookrealm.model.Member;
+import com.bookrealm.model.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,4 +24,6 @@ public interface AdminService {
     void saveMember(Member member);
 
     void deleteMemberById(Long id);
+
+    void updateRole(Role role, Long id);
 }

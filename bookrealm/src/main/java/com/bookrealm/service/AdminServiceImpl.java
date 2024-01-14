@@ -2,6 +2,7 @@ package com.bookrealm.service;
 
 import com.bookrealm.model.Book;
 import com.bookrealm.model.Member;
+import com.bookrealm.model.Role;
 import com.bookrealm.repository.BookRepository;
 import com.bookrealm.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,11 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void deleteMemberById(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateRole(Role role, Long id) {
+        memberRepository.updateMemberRoleById(role,id);
     }
 
 
