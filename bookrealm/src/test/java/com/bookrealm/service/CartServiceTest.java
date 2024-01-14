@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import com.bookrealm.model.Member;
 import com.bookrealm.repository.MemberRepository;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -92,6 +94,25 @@ class CartServiceTest {
 		//then
 		Cart updateCart = cartRepository.findById(member.getId()).orElse(null);
 		assertNull(updateCart, "장바구니에서 상품이 올바르게 제거되었는지 확인");
+
+	}
+
+	@Test
+	public void 장바구니_수량업데이트(){
+
+		//given
+		Member member = savedMember();
+		Book book = savedBook();
+		cartService.addCart(member,book,1);
+
+		//when
+		int purchase = 5;
+		cartService.updateCartQuantity(member.getEmail(),book.getId(),purchase);
+
+
+		//then
+		Cart newcart = cartRepository.findByMemberEmailAndBookId(member.getEmail(), book.getId()).orElse(null);
+		assertEquals(purchase, newcart.getPurchase());
 
 	}
 
