@@ -94,7 +94,7 @@ public class CartController {
             List<Cart> remainingItems = cartRepository.findByMemberId(member.getId());
             if (remainingItems.isEmpty()) {
                 // Redirect to book-detail if the cart is empty
-                return "redirect:/";
+                return "redirect:/cart/add";
             }
         }
         // Redirect to cart page in any other case
