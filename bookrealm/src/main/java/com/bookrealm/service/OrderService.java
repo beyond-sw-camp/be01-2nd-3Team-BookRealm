@@ -1,26 +1,41 @@
 package com.bookrealm.service;
 
-import com.bookrealm.model.Order;
-import com.bookrealm.model.OrderList;
-import com.bookrealm.model.Payment;
-import com.bookrealm.repository.OrderRepository;
+import com.bookrealm.model.*;
+import com.bookrealm.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
+    private final BookRepository bookRepository;
+    private final OrderListRepository orderListRepository;
 
     @Autowired
-    public OrderService(OrderRepository orderRepository) {
+    public OrderService(OrderRepository orderRepository, CartRepository cartRepository, BookRepository bookRepository, OrderListRepository orderListRepository) {
         this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+        this.bookRepository = bookRepository;
+        this.orderListRepository = orderListRepository;
+    }
+
+    public Order findById(Long id) {
+        Order order = orderRepository.findById(id).orElseThrow();
+        return order;
     }
 
     public int totalPrice(Order order){  // 총가격 메서드
         int total = 0;
-        for (int i = 0; i < order.getOrderLists().size(); i++) {
-            OrderList orderList = order.getOrderLists().get(i);
+        List<OrderList> orderLists= orderListRepository.findByOrderId(order.getId());
+
+        for (int i = 0; i < orderLists.size(); i++) {
+            OrderList orderList = orderLists.get(i);
             int bookPrice = orderList.getBook().getPrice();
             int purchase = orderList.getPurchase();
             total += purchase*bookPrice;
@@ -56,6 +71,27 @@ public class OrderService {
         System.out.println("계좌이체 결제 완료. 총액: " + totalPrice);
     }
 
+    @Transactional
+    public Order cartOrder(Order order) {
+        order = orderRepository.save(order);
+        List<Cart> carts = cartRepository.findByMemberId(order.getMember().getId());
+        for(Cart cart : carts) {
+            OrderList orderList = new OrderList();
+            Book book = cart.getBook();
+            orderList.setBook(book);
+            orderList.setOrder(order);
+            orderList.setPurchase(cart.getPurchase());
+            orderList.setStatus(Status.ORDER_COMPLETE);
+
+            book.setStock(book.getStock() - cart.getPurchase());
+            book.setSales(book.getSales() + cart.getPurchase());
+            bookRepository.save(book);
+            orderListRepository.save(orderList);
+        }
+
+        selectPayment(order, order.getPayment());
+        return order;
+    }
 }
 
 

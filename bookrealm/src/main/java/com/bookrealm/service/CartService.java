@@ -3,13 +3,11 @@ package com.bookrealm.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bookrealm.model.Member;
+import com.bookrealm.model.*;
 import com.bookrealm.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookrealm.model.Book;
-import com.bookrealm.model.Cart;
 import com.bookrealm.repository.BookRepository;
 import com.bookrealm.repository.CartRepository;
 
@@ -50,6 +48,18 @@ public class CartService {
 		}
 		return cartRepository.save(cart);
 	}
+
+	public int totalPrice(Member member){  // 총가격 메서드
+		int total = 0;
+		List<Cart> carts = cartRepository.findByMemberId(member.getId());
+
+		for(Cart cart : carts) {
+			Book book = cart.getBook();
+			total += book.getPrice() * cart.getPurchase();
+		}
+
+		return total;
+	}
 	
 	// 장바구니 조회하기
 	@Transactional  // 읽기 전용 트랜잭션
@@ -64,6 +74,13 @@ public class CartService {
         }
 
         return member_books;
+	}
+
+
+	@Transactional
+	public List<Cart> getCartByMember(Member member) {
+		List<Cart> carts = cartRepository.findByMemberId(member.getId());
+		return carts;
 	}
 
 	@Transactional 
