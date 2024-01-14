@@ -71,8 +71,8 @@ div {
 			<th>Title</th>
 			<th>Writer</th>
 			<th>Price</th>
-			<th>publisher</th>
-			<th>publishDate</th>
+			<th>Publisher</th>
+			<th>Publish Date</th>
 		</tr>
 		<tr th:each="book : ${searchBook}">
 			<td class="text-center"><img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image" style="width: 100px;"></td>

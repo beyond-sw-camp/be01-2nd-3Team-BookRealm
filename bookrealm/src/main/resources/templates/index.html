@@ -66,7 +66,7 @@ th {
 			<th>Image</th>
 			<th>Title</th>
 			<th>Writer</th>
-			<th>publisher</th>
+			<th>Publisher</th>
 		</tr>
 		<tr th:each="book : ${bestSellers}">
 			<td class="text-center"><img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image" style="width: 100px;"></td>

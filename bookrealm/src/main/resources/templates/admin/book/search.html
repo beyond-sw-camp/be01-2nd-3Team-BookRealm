@@ -25,10 +25,15 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            margin-top: 20px; /* 선택적으로 간격 조절 */
+        }
+
+        .form-control {
+            width: 60%; /* 조절 가능한 가로 너비 */
         }
 
         .btn-outline-success {
-            margin-right: 10px;
+            margin-left: 10px; /* 선택적으로 간격 조절 */
         }
     </style>
 </head>
@@ -41,7 +46,7 @@
     <div class="text-center" style="margin-top: 100px;">
         <form th:action="@{/admin/book/search/result}" method="get" class="form-inline">
             <label for="query" class="mr-sm-2"></label>
-            <input class="form-control mr-sm-2" type="text" id="query" name="query" placeholder="도서 제목이나 작가 입력" required style="width: 30%;">
+			<input class="form-control mr-sm-2" type="text" id="query" name="query" placeholder="도서 제목이나 작가 입력" required style="width: 30%;">
             <button type="submit" class="btn btn-outline-success my-2 my-sm-0">검색</button>
         </form>
     </div>
