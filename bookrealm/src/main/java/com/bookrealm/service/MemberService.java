@@ -57,15 +57,20 @@ public class MemberService {
         return member.getId();
     }
 
-    public String login(String email, String password) {
+    public String passwordMod(String email, String currentPassword, String newPassword) {
         //email 없음
         Member selectedUser = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND, "이메일이 존재하지 않습니다"));
 
         //password 틀림
-        if(!encoder.matches(password, selectedUser.getPasswd())) {
-            throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드가 잘못 입력 했습니다.");
+        if(!encoder.matches(currentPassword, selectedUser.getPasswd())) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD, "패스워드가 잘못 입력 되었습니다.");
         }
+
+        selectedUser.setPasswd(encoder.encode(newPassword));
+
+        memberRepository.save(selectedUser);
+
         return null;
     }
 
@@ -87,4 +92,17 @@ public class MemberService {
         }
     }
 
+    public void addressMod(String email, Address address) {
+        Member selectedUser = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND, "이메일이 존재하지 않습니다"));
+        selectedUser.setAddress(address);
+        memberRepository.save(selectedUser);
+    }
+
+    public void phoneMod(String email, String phone) {
+        Member selectedUser = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.EMAIL_NOT_FOUND, "이메일이 존재하지 않습니다"));
+        selectedUser.setPhone(phone);
+        memberRepository.save(selectedUser);
+    }
 }

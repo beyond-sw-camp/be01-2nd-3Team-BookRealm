@@ -51,6 +51,21 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public List<Member> findAllMember() {
+        return memberRepository.findAll();
+    }
+
+    @Override
+    public Optional<Member> findMemberById(Long id) {
+        return memberRepository.findById(id);
+    }
+
+    @Override
+    public void saveMember(Member member) {
+        memberRepository.save(member);
+    }
+
+    @Override
     public void deleteMemberById(Long id) {
         memberRepository.deleteById(id);
     }

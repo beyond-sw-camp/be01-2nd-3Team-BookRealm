@@ -1,6 +1,8 @@
 package com.bookrealm.controller;
 
 import com.bookrealm.model.Book;
+import com.bookrealm.model.Member;
+import com.bookrealm.model.Role;
 import com.bookrealm.naver.NaverBookClient;
 import com.bookrealm.naver.dto.SearchBookReq;
 import com.bookrealm.naver.dto.SearchBookRes;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,35 +80,33 @@ public class AdminController {
         return mav;
     }
 
-    /*@PostMapping("/book/save")
-    public String saveBook(@RequestParam(value = "selections") List<String> selections) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
+    /*
+        회원 관리 관련
+     */
+    @GetMapping("/member")
+    public ModelAndView manageMembers(){
+        ModelAndView mav = new ModelAndView("/admin/user/users");
+        List<Member> members = adminService.findAllMember();
 
-        List<Book> books = new ArrayList<>();
+        mav.addObject("members", members);
+        return mav;
+    }
 
-        StringBuilder sb;
-        for(String selection : selections){
-            HashMap<String, String> map = new HashMap<String, String>();
-            System.out.println(selection);
-            map = mapper.readValue(selection, new TypeReference<HashMap<String, String>>() {});
-            System.out.println(map);
-            Book book = new Book();
-            book.setTitle(map.get("title"));
-            book.setPrice(Integer.parseInt(map.get("discount")));
-            book.setImage(map.get("image"));
-            book.setWriter(map.get("author"));
-            book.setPublisher(map.get("publisher"));
-            book.setIsbn(Long.parseLong(map.get("isbn")));
-            book.setDescription(map.get("description"));
-            sb = new StringBuilder(map.get("pubdate"));
-            sb.insert(4,'-').insert(7,'-');
-            book.setPublishDate(LocalDate.parse(sb));
+    // 수정 폼
+    @GetMapping("/member/manage")
+    public ModelAndView editMemberView(@RequestParam Long id){
+        ModelAndView mav = new ModelAndView("/admin/user/manage");
+        Optional<Member> member = adminService.findMemberById(id);
+        mav.addObject("member", member.get());
+        mav.addObject("roles", Role.values());
+        return mav;
+    }
 
-            books.add(book);
-        }
+    // 수정 요청
+    @PostMapping("/member/edit")
+    public String editMember(Book editbook){
+        adminService.save(editbook);
 
-        adminService.saveAll(books);
-        return "redirect:/admin/book/search";
-
-    }*/
+        return "redirect:/admin/member";
+    }
 }

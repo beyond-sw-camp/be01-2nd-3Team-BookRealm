@@ -1,6 +1,8 @@
 package com.bookrealm.controller;
 
+import com.bookrealm.model.Address;
 import com.bookrealm.service.MemberService;
+import com.bookrealm.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,31 +17,48 @@ import java.security.Principal;
 public class UserController {
 
     private final MemberService memberService;
+    private final ReviewService reviewService;
 
     @Autowired
-    public UserController(MemberService memberService) {
+    public UserController(MemberService memberService, ReviewService reviewService) {
         this.memberService = memberService;
+        this.reviewService = reviewService;
     }
 
     @GetMapping
     public String myPage(Model model, Principal principal) {
         model.addAttribute("member", memberService.getUser(principal.getName()));
+        model.addAttribute("reviews", reviewService.findByMemberId(memberService.getUserReturnId(principal.getName())));
         return "myPage";
     }
 
-    @PostMapping("/changePassword")
-    public String changePassword(Model model, String newPassword) {
-        // 비밀번호 변경 로직을 수행하고 결과를 처리하는 코드를 추가해야 합니다.
-        // newPassword 파라미터를 이용하여 변경 작업을 수행합니다.
-        // 성공 시 적절한 응답을, 실패 시 에러 메시지를 처리합니다.
+    @GetMapping("/address")
+    public String addressMod(Model model, Principal principal) {
+        model.addAttribute("address", memberService.getUser(principal.getName()).getAddress());
+        return "addressMod";
+    }
+
+    @PostMapping("/changeAddress")
+    public String changeAddress(Model model, Address address, Principal principal) {
+        memberService.addressMod(principal.getName(), address);
         return "redirect:/myPage";
     }
 
-    @PostMapping("/changePhoneNumber")
-    public String changePhoneNumber(Model model, String newPhoneNumber) {
-        // 전화번호 변경 로직을 수행하고 결과를 처리하는 코드를 추가해야 합니다.
-        // newPhoneNumber 파라미터를 이용하여 변경 작업을 수행합니다.
-        // 성공 시 적절한 응답을, 실패 시 에러 메시지를 처리합니다.
+    @GetMapping("/phone")
+    public String phoneMod(Model model, Principal principal) {
+        return "phoneMod";
+    }
+
+    @PostMapping("/changePhone")
+    public String changePhone(Model model, String phoneNumber, Principal principal) {
+        memberService.phoneMod(principal.getName(), phoneNumber);
         return "redirect:/myPage";
     }
+    @PostMapping("/changePassword")
+    public String changePassword(Model model,String currentPassword, String newPassword, Principal principal) {
+
+        memberService.passwordMod(principal.getName(), currentPassword, newPassword);
+        return "redirect:/myPage";
+    }
+
 }

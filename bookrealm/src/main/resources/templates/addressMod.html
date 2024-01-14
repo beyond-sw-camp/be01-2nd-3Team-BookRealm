@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>주소 수정</title>
+</head>
+<body>
+<div class="container mt-5">
+    <form th:action="@{/myPage/changeAddress}" method="post">
+        <div class="form-group row">
+            <label for="sample6_postcode" class="col-sm-2 col-form-label">우편번호</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="sample6_postcode" placeholder="우편번호" th:field="*{address.postcode}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+                <input type="button" class="btn btn-primary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sample6_address" class="col-sm-2 col-form-label">주소</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="sample6_address" placeholder="주소" th:field="*{address.address}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sample6_detailAddress" class="col-sm-2 col-form-label">상세주소</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소" th:field="*{address.detailAddress}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="sample6_extraAddress" class="col-sm-2 col-form-label">참고항목</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목" th:field="*{address.extraAddress}">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">변경</button>
+    </form>
+</div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 주소 정보를 가져와서 각 필드에 채워넣기
+                document.getElementById('sample6_postcode').value = data.zonecode;
+                document.getElementById('sample6_address').value = data.address;
+                document.getElementById('sample6_detailAddress').value = '';
+                document.getElementById('sample6_extraAddress').value = '';
+                // 주소 입력 후 상세주소 필드로 커서 이동
+                document.getElementById('sample6_detailAddress').focus();
+            }
+        }).open();
+    }
+</script>
+</body>
+</html>

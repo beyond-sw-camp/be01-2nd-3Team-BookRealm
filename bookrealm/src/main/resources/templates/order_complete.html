@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문 완료</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-success">주문이 완료되었습니다!</h2>
+        </div>
+        <div class="card-body">
+            <p>주문이 성공적으로 처리되었습니다. 감사합니다!</p>
+            <p th:text="${'주문 번호: ' + orderNumber}"></p>
+            <p th:text="${'총 가격: ' + orderTotalAmount}"></p>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 스크립트 로드 -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
