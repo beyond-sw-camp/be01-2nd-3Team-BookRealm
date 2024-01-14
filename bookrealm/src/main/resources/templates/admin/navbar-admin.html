@@ -1,0 +1,19 @@
+<!-- navbar.html 파일 -->
+
+<nav th:fragment="navbarFragment-admin" class="navbar navbar-expand-lg navbar-light bg-light border-bottom justify-content-space-between d-flex" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" style="margin-bottom: 50px;">
+    <div class="container-fluid align-items-center">
+        <a th:href="@{/admin}" style="margin-right: 30px;"><img src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
+                <li class="nav-item">
+                    <div class="text-right">
+                        <a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/}" style="margin-left: 10px;">회원페이지</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
