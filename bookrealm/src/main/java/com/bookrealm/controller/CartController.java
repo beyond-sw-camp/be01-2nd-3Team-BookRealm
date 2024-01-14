@@ -9,6 +9,7 @@ import com.bookrealm.service.BookService;
 import com.bookrealm.service.CartService;
 import com.bookrealm.service.MemberService;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,18 +47,18 @@ public class CartController {
     }
 
     // 장바구니에 책 추가
-    @PostMapping("/cart/add")
-    public String addToCart(@RequestParam("bookId") Long bookId, Principal principal) {
+        @PostMapping("/cart/add")
+        public String addToCart(@RequestParam("bookId") Long bookId, @RequestParam("purchase") int purchase, Principal principal) {
 
-        Member member = memberService.getUser(principal.getName());
-        Book book = bookRepository.findById(bookId).orElse(null);
+            Member member = memberService.getUser(principal.getName());
+            Book book = bookRepository.findById(bookId).orElse(null);
 
-        if (book != null) {
-            cartService.addCart(member, book, 1);  // 장바구니에 1권 추가 (수량 조절 가능)
+            if (book != null) {
+                cartService.addCart(member, book, purchase);  // 장바구니에 1권 추가 (수량 조절 가능)
+            }
+
+            return "redirect:/cart/add";
         }
-
-        return "redirect:/cart/add";
-    }
 
     @GetMapping("/cart/add")
     public String viewCart(Model model, Principal principal) {
@@ -78,6 +79,34 @@ public class CartController {
         } else {
             return "redirect:/";
         }
+    }
+    
+    @PostMapping("/cart/delete")
+    @Transactional
+    public String removeFromCart(@RequestParam("cartId") Long cartId, Principal principal) {
+        if (principal != null) {
+            Member member = memberService.getUser(principal.getName());
+
+            // Remove the specific item from the cart
+            cartRepository.deleteByIdAndMemberId(cartId, member.getId());
+
+            // Check if the cart is empty after removal
+            List<Cart> remainingItems = cartRepository.findByMemberId(member.getId());
+            if (remainingItems.isEmpty()) {
+                // Redirect to book-detail if the cart is empty
+                return "redirect:/cart/add";
+            }
+        }
+        // Redirect to cart page in any other case
+        return "redirect:/cart/add";
+    }
+
+    @PostMapping("/cart/update")
+    public String updateQuantity(@RequestParam("bookId") Long cartId,
+                                 @RequestParam("purchase") int purchase,
+                                 Principal principal) {
+        cartService.updateCartQuantity(principal.getName(), cartId, purchase);
+        return "redirect:/cart/add";
     }
 
 }

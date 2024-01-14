@@ -7,18 +7,34 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="/static/starter-template.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="starter-template.css" rel="stylesheet">
 
 <title>Book Realm</title>
 <style>
-body {
-	font-family: Arial, sans-serif;
-	margin-left: 20px;
-	margin-right: 20px;
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
-h1 {
-	color: #333;
+body {
+	margin: 0;
+}
+
+.contents {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+	overflow: auto;
+}
+
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	margin-top: 50px !important;
 }
 
 table {
@@ -39,50 +55,42 @@ th {
 
 div {
 	width: 100%;
-	display: inline-block;
 }
+
+.total-amount, .checkout-button {
+	margin-top: 10px;
+	text-align: right;
+}
+
+.total-amount {
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+/* 수정 부분 시작 */
+.contents table td div {
+    display: flex;
+    align-items: center;
+}
+
+.contents table td div form {
+    display: flex;
+    align-items: center;
+}
+
+.contents table td div input {
+    width: 100px;
+    margin-right: 10px;
+}
+/* 수정 부분 끝 */
 
 </style>
 </head>
 <body>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="contents container">
 
-	<nav th:fragment="navbarFragment"
-		class="navbar navbar-expand-lg
-    navbar-light bg-light border-bottom justify-content-space-between d-flex" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" style="margin-bottom: 50px;">
-		<div class="container-fluid align-items-center">
-			<a th:href="@{/}"><img
-				src="https://i.ibb.co/rpKj9X9/Book-Realm-logo-ver2.png" alt="Book-Realm-logo-ver2" border="0" width="60"></a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
-					<li class="nav-item">
-						<form th:action="@{/bookSearch}" method="get" class="text-center">
-							<label for="searchTerm">도서 검색</label> <input type="text" id="searchTerm" name="term" placeholder="Input Book Title or Writer" required>
-							<button type="submit" class="btn btn-secondary">검색</button>
-						</form>
-					</li>
-					<li class="nav-item">
-						<div class="text-right">
-							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/login}" style="margin-left: 10px;">로그인</a>
-							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/logout}" style="margin-left: 10px;">로그아웃</a>
-						</div>
-					</li>
-					<li class="nav-item">
-						<div class="text-right">
-							<a class="btn btn-primary" sec:authorize="isAnonymous()" th:href="@{/join}" style="margin-left: 10px;">회원가입</a>
-							<a class="btn btn-primary" sec:authorize="isAuthenticated()" th:href="@{/myPage}" style="margin-left: 10px;">마이페이지</a>
-						</div>
-					</li>
-
-				</ul>
-			</div>
-		</div>
-	</nav>
-
-	<h1>Book Cart</h1>
+	<h2>Book Cart</h2>
 
 	<table>
   <thead>
@@ -102,22 +110,44 @@ div {
     	<td><span th:text="${cart.book.title}"></span></td>
     	<td><span th:text="${cart.book.writer}"></span></td>
     	<td><span th:text="${cart.book.price}"></span></td>
-    	<td><input type="number" value="1" min="1" th:id="${'quantity_' + cart.book.id}">
-    		<button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">변경</button></td>
-    <td><button th:onclick="'updateQuantity(' + ${cart.book.id} + ')'" type="button">삭제</button></td>
+		<td>
+			<div class="text-left" style="display: flex;">
+			<form th:action="@{/cart/update}" method="post">
+				<input type="hidden" name="bookId" th:value="${cart.book.id}">
+				<input type="number" name="purchase" th:value="${cart.purchase}" min="1" th:id="${'quantity_' + cart.book.id}" class="form-control mr-sm-2">
+				<button type="submit" class="btn btn-sm btn-outline-primary">변경</button>
+			</form>
+			</div>
+		</td>
+		<td><form th:action="@{/cart/delete}" method="post" style="display: inline;">
+			<input type="hidden" name="cartId" th:value="${cart.id}"/>
+			<button type="submit" class="btn btn-sm btn-secondary">삭제</button>
+		</form></td>
 	</tr>
 	</tbody>
 	</table>
-	<!-- <script>
-    	function updateQuantity(bookId) {
-        // 수량 가져오기
-        var quantity = document.getElementById('quantity_' + bookId).value;
+    </tbody>
+    </table>
+    <!-- 총액 표시 -->
+    <div class="total-amount text-right" style="margin-top: 30px;">
+       <p>총액 : <span th:text="${totalPrice}"></span>원</p>
+    </div>
 
-        // 여기에 수량을 업데이트하는 JavaScript 코드를 추가할 수 있습니다.
-        // 예: 선택한 도서의 수량을 변경하고 총 가격을 업데이트하는 로직을 구현할 수 있습니다.
-        console.log('Updating purchase for bookId: ' + bookId + ', quantity: ' + quantity);
-    	}
-	</script> -->
+    <!-- 결제하기 버튼 -->
+    <div class="checkout-button  text-right">
+       <button class="btn btn-primary" onclick="checkout()" >주문하기</button>
+    </div>
 
+    <script>
+       function checkout() {
+          // 결제하기 버튼을 클릭했을 때 수행할 작업을 여기에 추가하세요.
+          console.log('결제하기 버튼 클릭됨');
+       }
+    </script>
+</div>    
+<script th:inline="javascript" type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js}" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>    
+</div>
 </body>
 </html>
