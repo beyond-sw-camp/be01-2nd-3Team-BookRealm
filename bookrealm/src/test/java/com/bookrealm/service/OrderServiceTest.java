@@ -1,10 +1,7 @@
 package com.bookrealm.service;
 
 import com.bookrealm.model.*;
-import com.bookrealm.repository.BookRepository;
-import com.bookrealm.repository.CartRepository;
-import com.bookrealm.repository.MemberRepository;
-import com.bookrealm.repository.OrderListRepository;
+import com.bookrealm.repository.*;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -37,8 +34,11 @@ class OrderServiceTest {
     private CartRepository cartRepository;
     @Autowired
     private OrderListRepository orderListRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
 
+    @Transactional
     public Book savedBook() {
         Book newBook = new Book();
         newBook.setPrice(12000);
@@ -54,6 +54,7 @@ class OrderServiceTest {
         return bookRepository.save(newBook);
     }
 
+    @Transactional
     public Member savedMember() {
         Member newMember = new Member();
         newMember.setEmail("bb@naver.com");
@@ -71,21 +72,21 @@ class OrderServiceTest {
     public void 구매총액(){
 
         //given
-        Book book = savedBook();
-        OrderList orderList1 = new OrderList();
-        orderList1.setBook(book);
-        orderList1.setPurchase(2);
+        Order order = new Order();
+        order.setId(1L);
 
         List<OrderList> orderLists = new ArrayList<>();
-        orderLists.add(orderList1);
+        OrderList orderList = new OrderList();
 
-        Order order = new Order();
-        order.setOrderLists(orderLists);
+        orderListRepository.findByOrderId(order.getId());
+        orderList.setBook(savedBook());
+        orderList.setPurchase(2);
+        orderLists.add(orderList);
 
-        // When
+        // when
         int totalPrice = orderService.totalPrice(order);
 
-        // Then
+        // then
         assertEquals(24000, totalPrice);
 
     }
