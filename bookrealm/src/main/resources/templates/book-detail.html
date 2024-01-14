@@ -126,6 +126,10 @@ ul {
                 <p>재고 : <span th:text="${book.stock}"></span></p>
                 <p>설명 : <br><span th:text="${book.description}"></span></p>
                 <p style="font-size:32px; margin-top: 30px;"><span th:text="${book.price}" style="font-weight:bold;"></span>원</p>
+                <button type="button" class="btn btn-outline-danger" id="wishButton" onclick="toggleWish()">
+                    <span id="heartIcon">&#9825;</span> <!-- 비어있는 하트 아이콘 -->
+                    찜하기
+                </button>
             </div>
 
             <!-- 도서 구매 및 리뷰 폼 -->
