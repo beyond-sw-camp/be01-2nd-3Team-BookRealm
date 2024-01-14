@@ -3,26 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="starter-template.css" rel="stylesheet">
     <title>마이페이지</title>
+<style>
+.container {
+	max-width: 1000px;
+	margin: 0 auto; 
+}
+</style>    
 </head>
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 <div class="container mt-5">
-    <h2>마이페이지</h2>
+    <h2 style="font-weight:bold;">마이페이지</h2>
 
     <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-md-6" style="margin-top: 30px;">
             <h4>개인 정보</h4>
-            <p><strong>이메일:</strong> <span th:text="${member.email}"></span></p>
-            <p><strong>이름:</strong> <span th:text="${member.username}"></span></p>
+            <p style="margin-top: 20px;"><strong>이메일 :</strong> <span th:text="${member.email}"></span></p>
+            <p><strong>이름 :</strong> <span th:text="${member.username}"></span></p>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" style="margin-top: 30px;">
             <h4>비밀번호 변경</h4>
             <!-- 비밀번호 변경 폼 -->
             <form th:action="@{/changePassword}" method="post">
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 20px;">
                     <label for="newPassword">새로운 비밀번호</label>
                     <input type="password" class="form-control" id="newPassword" name="newPassword" required>
                 </div>
@@ -32,16 +42,16 @@
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-md-6" style="margin-top: 50px;">
             <h4>주소</h4>
-            <p><strong>주소:</strong> <span th:text="${member.address}"></span></p>
+            <p style="margin-top: 20px;"><strong>주소 :</strong> <span th:text="${member.address}"></span></p>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" style="margin-top: 50px;">
             <h4>전화번호 변경</h4>
             <!-- 전화번호 변경 폼 -->
             <form th:action="@{/changePhoneNumber}" method="post">
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 20px;">
                     <label for="newPhoneNumber">새로운 전화번호</label>
                     <input type="text" class="form-control" id="newPhoneNumber" name="newPhoneNumber" required>
                 </div>
