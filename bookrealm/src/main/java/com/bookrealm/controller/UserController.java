@@ -54,6 +54,7 @@ public class UserController {
         memberService.phoneMod(principal.getName(), phoneNumber);
         return "redirect:/myPage";
     }
+
     @PostMapping("/changePassword")
     public String changePassword(Model model,String currentPassword, String newPassword, Principal principal) {
 

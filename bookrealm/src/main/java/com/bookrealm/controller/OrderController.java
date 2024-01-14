@@ -47,15 +47,19 @@ public class OrderController {
         model.addAttribute("cartItems", bookService.findBookById(id));
         model.addAttribute("currentUser", member);
         model.addAttribute("totalAmount", num);
-        return "order";
+        return "orderOne";
     }
 
     @RequestMapping(value = "/one/{id}/{num}", method = {RequestMethod.GET, RequestMethod.POST})
     public String oneOrder(@PathVariable("id") Long id, @PathVariable("num") int num, @RequestBody OrderDto orderDto,
                            Model model, Principal principal) {
-        return null;
+        Member member = memberService.getUser(principal.getName());
+        Order order = new Order();
+        order.setDestination(orderDto.getDestination());
+        order.setMember(member);
+        order.setPayment(orderDto.getPayment());
+        return "redirect:/order/success?id=" +  order.getId();
     }
-
 
     @PostMapping("/cart")
     public String cartOrder(
@@ -77,7 +81,6 @@ public class OrderController {
         else if(paymentMethod.equals("bank")) order.setPayment(Payment.BANK_TRANSFER);
 
         orderService.cartOrder(order);
-
 
         // 주문 완료 페이지로 리다이렉트
         return "redirect:/order/success?id=" + order.getId();

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문 페이지</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <!-- 주문 내용 -->
+    <div class="card">
+        <div class="card-header">
+            <h2>주문 내용</h2>
+        </div>
+        <div class="card-body">
+            <!-- Cart 정보 표시 -->
+            <div class="mb-4" th:each="item : ${cartItems}">
+                <!-- 여기에 Cart에서 가져온 정보를 표시하세요 -->
+                <p th:text="${item.book.getTitle() + ' - ' + item.purchase + '개'}"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 배송지 정보 입력 폼 -->
+    <div class="card mt-4">
+        <div class="card-header">
+            <h3>배송지 정보</h3>
+        </div>
+        <div class="card-body">
+            <!-- 배송지 수정 폼을 작성하세요 -->
+            <form th:action="@{/order/corder}" method="post">
+                <!-- 배송지 입력 필드 등을 추가하세요 -->
+                <div class="form-group">
+                    <label for="postcode">우편번호</label>
+                    <input type="text" class="form-control" id="postcode" name="postcode" th:value="${currentUser.address.postcode}" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">주소</label>
+                    <input type="text" class="form-control" id="address" name="address" th:value="${currentUser.address.address}" required>
+                </div>
+                <div class="form-group">
+                    <label for="detailAddress">상세주소</label>
+                    <input type="text" class="form-control" id="detailAddress" name="detailAddress" th:value="${currentUser.address.detailAddress}" required>
+                </div>
+                <div class="form-group">
+                    <label for="extraAddress">참고주소</label>
+                    <input type="text" class="form-control" id="extraAddress" name="extraAddress" th:value="${currentUser.address.extraAddress}">
+                </div>
+
+                <!-- 여기에 총 가격을 표시하세요 -->
+                <p th:text="${'총 가격: ' + totalAmount}"></p>
+
+                <!-- 결제 수단 선택 -->
+                <div class="form-check">
+                    <input type="radio" id="cardPayment" name="paymentMethod" value="card" class="form-check-input">
+                    <label for="cardPayment" class="form-check-label">카드 결제</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="bankTransfer" name="paymentMethod" value="bank" class="form-check-input">
+                    <label for="bankTransfer" class="form-check-label">계좌 이체</label>
+                </div>
+
+                <!-- 주문 버튼 -->
+                <button type="submit" class="btn btn-success mt-3">주문하기</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 스크립트 로드 -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

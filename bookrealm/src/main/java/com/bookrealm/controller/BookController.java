@@ -26,7 +26,6 @@ public class BookController {
 
     private final BookService bookService;
     private final ReviewService reviewService;
-
     private final MemberService memberService;
 
     @Autowired
@@ -65,7 +64,6 @@ public class BookController {
         model.addAttribute("searchBook", searchResults);
 
         return "book-search";
-
     }
 
     @GetMapping
