@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Member Manage</title>
+</head>
+<body>
+<!--<div align="center">
+    <h1>회원 관리</h1>
+    <br />
+    <form th:action="@{/admin/member/edit}" method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>이름: </td>
+                <td><input type="text" name="username" th:value="${member.username}" readonly/></td>
+            </tr>
+            <tr>
+                <td>아이디: </td>
+                <td><input type="text" name="email" th:value="${member.email}" readonly/></td>
+            </tr>
+            <tr>
+                <td>관리자 권한</td>
+                <td><input type="text" name="role" th:value="${member.role}" /></td>
+            </tr>
+            <tr>
+                <td>우편번호: </td>
+                <td><input type="text" name="postcode" th:value="${member.address.postcode}" readonly/></td>
+            </tr>
+            <tr>
+                <td>주소: </td>
+                <td><div th:text="|${member.address.address} ${member.address.extraAddress} ${member.address.detailAddress}|"></div></td>
+            </tr>
+        </table>
+    </form>
+</div>-->
+<div class="container mt-5">
+    <h2>회원 관리</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4>회원 기본 정보</h4>
+
+            <p><strong>이름 </strong> <span th:text="${member.username}"></span></p>
+            <p><strong>이메일 </strong> <span th:text="${member.email}"></span></p>
+            <p><strong>우편번호 </strong> <span th:text="${member.address.postcode}"></span></p>
+            <p><strong>주소 </strong> <span th:text="|${member.address.address} ${member.address.extraAddress} ${member.address.detailAddress}|"></span></p>
+            <p>
+                <strong>관리자 권한</strong>
+                <span>
+                    <select id="selectRole" name="selectRole">
+                        <option th:each="role : ${roles}" th:value="${role}" th:text="${role.getValue()}" th:selected="${role} == ${member.role}">
+                    </select>
+                </span>
+            </p>
+        </div>
+
+        <div class="col-md-6">
+            <h4>주문 내역</h4>
+        </div>
+    </div>
+</div>
+</body>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script th:inline="javascript">
+    var prev_val;
+    $("#selectRole").focus(function() {
+        prev_val = $(this).val();
+    }).change(function (){
+        if(confirm("권한을 변경하시겠습니까?")) {
+            //console.log([[${#authentication.principal.username}]])
+            if([[${member.email}]] === [[${#authentication.principal.username}]]){
+                alert("본인 권한은 변경할 수 없습니다.")
+            }
+            else{
+                $.ajax({
+                    type : "POST",
+                    url : "/admin/member/role",
+                    data : {
+                        "role" : $(this).val(),
+                        "id": [[${member.id}]]
+                    },
+                    beforeSend: function (jqXHR, settings) {
+                        var header = $("meta[name='_csrf_header']").attr("content");
+                        var token = $("meta[name='_csrf']").attr("content");
+                        jqXHR.setRequestHeader(header, token);
+                    },
+                    success : function(data) {
+                        alert("권한이 수정되었습니다.");
+                        location.reload();
+                    },
+                    error : function(e) {
+                        alert("수정 실패");
+                        $(this).val(prev_val);
+                    }
+                });
+            }
+        }
+        else{
+            $(this).val(prev_val);
+            return false;
+        }
+    });
+
+</script>
+</html>

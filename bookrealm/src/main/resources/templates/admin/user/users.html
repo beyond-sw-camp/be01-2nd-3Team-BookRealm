@@ -37,7 +37,7 @@
     <td th:text="${member.address.address} + ' ' + ${member.address.detailAddress} + ' ' + ${member.address.extraAddress}"></td>
     <td th:text="${member.phone}"></td>
     <td th:text="${member.role}"></td>
-    <td><button type="button" style="display: inline-block">수정/주문관리</button></td>
+    <td><button type="button" style="display: inline-block" th:onclick="|location.href='@{/admin/member/manage(id=${member.id})}'|">수정/주문관리</button></td>
     <td><button type="button" style="display: inline-block" th:onclick="|onClickDelete(${member.id})|">삭제</button></td>
   </tr>
 </table>
@@ -48,7 +48,7 @@
     if(confirm("정말 삭제하시겠습니까?")){
       $.ajax({
         type : "POST",
-        url : "/admin/user/delete",
+        url : "/admin/member/delete",
         data : {"id": id},
         beforeSend: function (jqXHR, settings) {
           var header = $("meta[name='_csrf_header']").attr("content");

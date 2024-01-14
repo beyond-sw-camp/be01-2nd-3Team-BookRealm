@@ -1,6 +1,7 @@
 package com.bookrealm.controller;
 
 import com.bookrealm.model.Book;
+import com.bookrealm.model.Role;
 import com.bookrealm.service.AdminService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,10 +61,15 @@ public class AdminRestController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @PostMapping("/user/delete")
+    @PostMapping("/member/delete")
     public ResponseEntity<Void> deleteUsers(@RequestParam Long id){
         adminService.deleteMemberById(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
 
+    }
+
+    @PostMapping("/member/role")
+    public ResponseEntity<Void> editRole(@RequestParam Role role, @RequestParam Long id){
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
