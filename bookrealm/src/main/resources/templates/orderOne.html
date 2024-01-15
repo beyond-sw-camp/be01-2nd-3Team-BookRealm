@@ -66,72 +66,72 @@ h3 {
 </head>
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
-	<div class="contents container mt-5">
+<div class="container mt-5">
 
-		<!-- 주문 내용 -->
-		<div class="card">
-			<div class="card-header">
-				<h3>주문 내용</h3>
-			</div>
-			<div class="card-body">
-				<!-- Cart 정보 표시 -->
-				<div class="mb-4" th:each="item : ${cartItems}" style="margin-top: 20px;">
-					<!-- 여기에 Cart에서 가져온 정보를 표시하세요 -->
-					<p th:text="${item.book.getTitle() + ' - ' + item.purchase + '권'}"></p>
-				</div>
-			</div>
-		</div>
-		
-		<form th:action="@{/order/cart}" method="post">
+    <!-- 주문 내용 -->
+    <div class="card">
+        <div class="card-header">
+            <h3>주문 내용</h3>
+        </div>
+        <div class="card-body">
+            <!-- Cart 정보 표시 -->
+            <div class="mb-4"  style="margin-top: 20px;">
+                <!-- 여기에 Cart에서 가져온 정보를 표시하세요 -->
+                <p th:text="${cartItems.getTitle() + ' - ' + purchase + '권'}"></p>
+            </div>
+        </div>
+    </div>
+    
+    <form th:action="@{/order/order/one}"  method="post">
 		<!-- 주문자 정보 -->
 		<div class="card mt-4">
 			<div class="card-header">
 				<h3>주문자 정보</h3>
 			</div>
 			<div class="card-body">
-					<div class="form-group">
-						<label for="username">이름</label> 
-						<input type="text" class="form-control" id="username" name="username"
+				<div class="form-group">
+					<label for="username">이름</label> 
+					<input type="text" class="form-control" id="username" name="username"
 							th:value="${currentUser.username}" required>
-					</div>
-					<div class="form-group">
-						<label for="email">이메일</label> 
-						<input type="text" class="form-control" id="email" name="email"
-							th:value="${currentUser.email}" required>
-					</div>
+				</div>
+				<div class="form-group">
+					<label for="email">이메일</label> 
+					<input type="text" class="form-control" id="email" name="email"
+								th:value="${currentUser.email}" required>
+				</div>
 			</div>
 		</div>
-
+			
 		<!-- 배송지 정보 입력 폼 -->
 		<div class="card mt-4">
 			<div class="card-header">
 				<h3>배송지 정보</h3>
 			</div>
 			<div class="card-body">
-				<!-- 배송지 수정 폼을 작성하세요 -->
-					<!-- 배송지 입력 필드 등을 추가하세요 -->
-					<div class="form-group">
-						<label for="postcode">우편번호</label> 
-						<input type="text" class="form-control" id="postcode" name="postcode"
-							th:value="${currentUser.address.postcode}" required>
-					</div>
-					<div class="form-group">
-						<label for="address">주소</label> 
-						<input type="text" class="form-control" id="address" name="address"
-							th:value="${currentUser.address.address}" required>
-					</div>
-					<div class="form-group">
-						<label for="detailAddress">상세주소</label> 
-						<input type="text" class="form-control" id="detailAddress" name="detailAddress"
-							th:value="${currentUser.address.detailAddress}" required>
-					</div>
-					<div class="form-group">
-						<label for="extraAddress">참고주소</label> 
-						<input type="text" class="form-control" id="extraAddress" name="extraAddress"
-							th:value="${currentUser.address.extraAddress}">
-					</div>
-			</div>
-		</div>
+	        <!-- 배송지 수정 폼을 작성하세요 -->
+	            <div class="form-group">
+	                <input type="hidden" name="bookId" th:value="${cartItems.id}"/>
+	                <input type="hidden" name="num" value="1"/>
+	            </div>
+	            <!-- 배송지 입력 필드 등을 추가하세요 -->
+	            <div class="form-group">
+	                <label for="postcode">우편번호</label>
+	                <input type="text" class="form-control" id="postcode" name="postcode" th:value="${currentUser.address.postcode}" required>
+	            </div>
+	            <div class="form-group">
+	                <label for="address">주소</label>
+	                <input type="text" class="form-control" id="address" name="address" th:value="${currentUser.address.address}" required>
+	            </div>
+	            <div class="form-group">
+	                <label for="detailAddress">상세주소</label>
+	                <input type="text" class="form-control" id="detailAddress" name="detailAddress" th:value="${currentUser.address.detailAddress}" required>
+	            </div>
+	            <div class="form-group">
+	                <label for="extraAddress">참고주소</label>
+	                <input type="text" class="form-control" id="extraAddress" name="extraAddress" th:value="${currentUser.address.extraAddress}">
+	            </div>
+	        </div> 
+	    </div>       
 		<!-- 결제 정보 입력 폼 -->
 		<div class="card mt-4">
 			<div class="card-header">

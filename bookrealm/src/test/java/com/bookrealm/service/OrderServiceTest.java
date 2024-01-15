@@ -66,30 +66,37 @@ class OrderServiceTest {
         return memberRepository.save(newMember);
     }
 
+    @Transactional
+    public Order saveOrder(){
+        Order order = new Order();
+        order.setId(1L);
+        return orderRepository.save(order);
+    }
 
+    @Transactional
+    public OrderList saveOrderList(){
+        OrderList orderList = new OrderList();
+        orderList.setPurchase(2);
+        orderList.setStatus(Status.ORDER_COMPLETE);
+        orderList.setBook(savedBook());
+        orderList.setOrder(saveOrder());
+        return orderListRepository.save(orderList);
+    }
 
     @Test
     public void 구매총액(){
 
         //given
-        Order order = new Order();
-        order.setId(1L);
-
-        List<OrderList> orderLists = new ArrayList<>();
-        OrderList orderList = new OrderList();
-
-        orderListRepository.findByOrderId(order.getId());
-        orderList.setBook(savedBook());
-        orderList.setPurchase(2);
-        orderLists.add(orderList);
+        OrderList orderList = saveOrderList();
 
         // when
-        int totalPrice = orderService.totalPrice(order);
+        int totalPrice = orderService.totalPrice(orderList.getOrder());
 
         // then
-        assertEquals(54000, totalPrice);
+        assertEquals(24000, totalPrice);
 
     }
+
     @Test
     public void 결재수단선택및결재(){
         //given

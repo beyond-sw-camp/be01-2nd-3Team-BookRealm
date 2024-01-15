@@ -5,7 +5,6 @@ import com.bookrealm.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +27,15 @@ public class JoinController {
         if(bindingResult.hasErrors()){
             return "signup_form";
         }
+        if(!memberService.emailValid(joinDto.getEmail())) {
+            bindingResult.rejectValue("email","emailnotValid",
+                    "이메일이 이미 존재합니다");
+            return "signup_form";
+        }
 
         if(!joinDto.getPassword1().equals(joinDto.getPassword2())){
             bindingResult.rejectValue("password2", "passwordInCorrect",
-                    "2개의 패스워드가 일치하지 않습니다.");
+                    "패스워드가 일치하지 않습니다.");
             return "signup_form";
         }
 

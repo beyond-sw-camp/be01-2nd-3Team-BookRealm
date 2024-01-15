@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="starter-template.css" rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="starter-template.css" rel="stylesheet">
 
-    <title>Book Realm</title>
-    <style>
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-        }
+<title>Book Realm</title>
+<style>
+.container {
+	max-width: 800px;
+	margin: 0 auto;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
 
-        .form-inline {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
+.form-inline {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	/
+}
 
-        .btn-outline-success {
-            margin-right: 10px;
-        }
-    </style>
+.form-control {
+	width: 60%;
+}
+</style>
 </head>
 
 <body>
@@ -41,7 +43,7 @@
     <div class="text-center" style="margin-top: 100px;">
         <form th:action="@{/admin/book/search/result}" method="get" class="form-inline">
             <label for="query" class="mr-sm-2"></label>
-            <input class="form-control mr-sm-2" type="text" id="query" name="query" placeholder="도서 제목이나 작가 입력" required style="width: 30%;">
+			<input class="form-control mr-sm-2" type="text" id="query" name="query" placeholder="도서 제목이나 작가 입력" required style="width: 30%;">
             <button type="submit" class="btn btn-outline-success my-2 my-sm-0">검색</button>
         </form>
     </div>

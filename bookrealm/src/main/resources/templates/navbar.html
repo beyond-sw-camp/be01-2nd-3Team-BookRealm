@@ -16,7 +16,7 @@
             </ul>    
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ml-auto">
                 <li class="nav-item">
-                   <div class="text-right">
+                   <div class="text-right" style="margin-top: 6px;">
                       <a sec:authorize="isAuthenticated()" th:href="@{/cart/add}">
                       <span class="material-icons" style="color: black;">shopping_bag</span></a>
                    </div>
@@ -40,8 +40,8 @@
 								onclick="ok()" sec:authorize="isAuthenticated()" style="margin-left: 10px;">마이페이지</button>
 							<ul class="dropdown-menu">
 								<li><a class="dropdown-item"  th:href="@{/myPage}">회원정보수정</a></li>
-								<li><a class="dropdown-item" href="#">주문내역</a></li>
-								<li><a class="dropdown-item" href="#">리뷰보기</a></li>
+								<li><a class="dropdown-item" href="/myPage/myOrders">주문내역</a></li>
+								<li><a class="dropdown-item" href="/myPage/myReview">리뷰보기</a></li>
 							</ul>
 						</div>
 					</div>

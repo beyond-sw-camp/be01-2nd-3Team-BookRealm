@@ -1,8 +1,8 @@
 package com.bookrealm.controller;
 
 import com.bookrealm.model.Address;
-import com.bookrealm.service.MemberService;
-import com.bookrealm.service.ReviewService;
+import com.bookrealm.model.Member;
+import com.bookrealm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,17 +18,19 @@ public class UserController {
 
     private final MemberService memberService;
     private final ReviewService reviewService;
+    private final OrderService orderService;
 
     @Autowired
-    public UserController(MemberService memberService, ReviewService reviewService) {
+    public UserController(MemberService memberService, ReviewService reviewService, OrderService orderService) {
         this.memberService = memberService;
         this.reviewService = reviewService;
+        this.orderService = orderService;
     }
 
     @GetMapping
     public String myPage(Model model, Principal principal) {
         model.addAttribute("member", memberService.getUser(principal.getName()));
-        model.addAttribute("reviews", reviewService.findByMemberId(memberService.getUserReturnId(principal.getName())));
+
         return "myPage";
     }
 
@@ -54,11 +56,27 @@ public class UserController {
         memberService.phoneMod(principal.getName(), phoneNumber);
         return "redirect:/myPage";
     }
+
     @PostMapping("/changePassword")
     public String changePassword(Model model,String currentPassword, String newPassword, Principal principal) {
 
         memberService.passwordMod(principal.getName(), currentPassword, newPassword);
         return "redirect:/myPage";
+    }
+
+    @GetMapping("/myReview")
+    public String myReview(Model model, Principal principal) {
+        model.addAttribute("reviews", reviewService.findByMemberId(memberService.getUserReturnId(principal.getName())));
+
+        return "myReviews";
+    }
+
+    @GetMapping("/myOrders")
+    public String myOrder(Model model, Principal principal) {
+        Member member = memberService.getUser(principal.getName());
+        model.addAttribute("user", member);
+
+        return "myOrders";
     }
 
 }

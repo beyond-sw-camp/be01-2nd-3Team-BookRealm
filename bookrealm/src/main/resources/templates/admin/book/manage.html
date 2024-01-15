@@ -1,136 +1,182 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.w3.org/1999/xhtml">
 <meta name="_csrf" th:content="${_csrf.token}">
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head>
-    <meta charset="UTF-8">
-    <title>Book Manage</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="starter-template.css" rel="stylesheet">
+
+<title>Book Realm</title>
 <style>
-    body {
-        max-width: 100%;
-        margin: 20px;
-    }
-    table {
-        width: 100%;
-    }
-    td {
-        padding: 10px;
-        text-align: center;
-    }
-    td img {
-        width: 100%;
-        height: auto;
-    }
-    .search-head {
-        margin: 10px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .search-head div {
-        text-align: center;
-        font-size: 24px;
-        font-weight: bold;
-    }
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.contents {
+	margin-bottom: 100px; 
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+td img {
+	width: 100%;
+	height: auto;
+}
+
+.search-head {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.search-head div {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+}
 </style>
 <body>
-<div class="search-head">
-    <div>도서 관리</div>
-    <div><button type="submit" style="display: inline-block" onclick="deleteChecked()">선택 도서 삭제</button></div>
-</div>
-<table border="1">
+<nav th:replace="~{admin/navbar-admin.html :: navbarFragment-admin}"></nav>
+<div class="contents container">
+	<div class="search-head">
+		<h2 style="font-weight: bold; margin-top: 20px;">도서 관리</h2>
+		<div>
+			<button type="submit" class="btn btn-sm btn-secondary" 
+			style="display: inline-block; margin-bottom: -80px;"
+				onclick="deleteChecked()">선택 도서 삭제</button>
+		</div>
+	</div>
+	<table border="1">
 
-    <tr>
-        <th width="10%"></th>
-        <th width="25%">title</th>
-        <th width="15%">author</th>
-        <th width="10%">금액</th>
-        <th width="10%">출판사</th>
-        <th width="10%">ISBN</th>
-        <th width="8%">출간일</th>
-        <th width="10%"></th>
-        <th width="2%"><input type="checkbox" id="allCheckBox" onclick="allChecked()"></th>
-    </tr>
-    <!-- Iterate over books -->
-    <tr th:each="book, num: ${bookList}">
-        <!--<td><a th:href="${book.link}" th:text="${book.link}"></a></td>-->
-        <td height="0">
-            <img th:src="${book.image}">
-        </td>
-        <td th:text="${book.title}"></td>
-        <td th:text="${book.writer}"></td>
-        <td th:text="${book.price}"></td>
-        <td th:text="${book.publisher}"></td>
-        <td th:text="${book.isbn}"></td>
-        <td th:text="${book.publishDate}"></td>
-        <td align="center"><input type="button" class="edit" name="edit" th:onclick="|location.href='@{/admin/book/manage/edit(id=${book.id})}'|" th:value="수정"></td>
-        <td align="center"><input type="checkbox" class="chk" name="chk" th:value="${book.id}"></td>
-    </tr>
-</table>
-<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script th:inline="javascript">
-    function allChecked(){
+		<tr>
+			<th width="2%"><input type="checkbox" id="allCheckBox"
+				onclick="allChecked()"></th>
+			<th width="10%">ISBN</th>	
+			<th width="10%">Image</th>
+			<th width="25%">Title</th>
+			<th width="15%">Writer</th>
+			<th width="10%">Price</th>
+			<th width="10%">Publisher</th>
+			<th width="15%">Publish Date</th>
+			<th width="10%"></th>
+			
+		</tr>
+		<!-- Iterate over books -->
+		<tr th:each="book, num: ${bookList}">
+			<!--<td><a th:href="${book.link}" th:text="${book.link}"></a></td>-->
+			<td align="center"><input type="checkbox" class="chk" name="chk"
+				th:value="${book.id}"></td>
+			<td th:text="${book.isbn}"></td>	
+			<td height="0"><img th:src="${book.image}"></td>
+			<td th:text="${book.title}"></td>
+			<td th:text="${book.writer}"></td>
+			<td th:text="${book.price}"></td>
+			<td th:text="${book.publisher}"></td>
+			<td th:text="${book.publishDate}"></td>
+			<td align="center"><input type="button" class="edit btn btn-sm btn-outline-primary" name="edit"
+				th:onclick="|location.href='@{/admin/book/manage/edit(id=${book.id})}'|"
+				th:value="수정"></td>
+		</tr>
+	</table>
+	<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script th:inline="javascript">
+		function allChecked() {
 
-        const checkbox = document.getElementById('allCheckBox');  //전체 체크박스 버튼
-        const is_checked = checkbox.checked;                      //전체 체크박스 버튼 체크 여부
+			const checkbox = document.getElementById('allCheckBox'); //전체 체크박스 버튼
+			const is_checked = checkbox.checked; //전체 체크박스 버튼 체크 여부
 
-        if(is_checked){
-            chkAllChecked()
-        } else{
-            chkAllUnChecked()
-        }
-    }
+			if (is_checked) {
+				chkAllChecked()
+			} else {
+				chkAllUnChecked()
+			}
+		}
 
-    //체크박스 전체 체크
-    function chkAllChecked(){
-        document.querySelectorAll(".chk").forEach(function(v, i) {
-            v.checked = true;
-        });
-    }
+		//체크박스 전체 체크
+		function chkAllChecked() {
+			document.querySelectorAll(".chk").forEach(function(v, i) {
+				v.checked = true;
+			});
+		}
 
-    //체크박스 전체 체크 해제
-    function chkAllUnChecked(){
-        document.querySelectorAll(".chk").forEach(function(v, i) {
-            v.checked = false;
-        });
-    }
+		//체크박스 전체 체크 해제
+		function chkAllUnChecked() {
+			document.querySelectorAll(".chk").forEach(function(v, i) {
+				v.checked = false;
+			});
+		}
 
-    function deleteChecked() {
-        const selects = document.querySelectorAll('input[name="chk"]:checked');
+		function deleteChecked() {
+			const selects = document
+					.querySelectorAll('input[name="chk"]:checked');
 
-        if(selects.length === 0){
-            alert("선택된 항목이 없습니다.");
-            return false;
-        }
-        else{
-            if(confirm("선택한 도서를 삭제하시겠습니까?")){
-                const arr = [];
+			if (selects.length === 0) {
+				alert("선택된 항목이 없습니다.");
+				return false;
+			} else {
+				if (confirm("선택한 도서를 삭제하시겠습니까?")) {
+					const arr = [];
 
-                document.querySelectorAll('input[name="chk"]:checked').forEach(function(v, i) {
-                    arr.push(v.value);
-                });
+					document.querySelectorAll('input[name="chk"]:checked')
+							.forEach(function(v, i) {
+								arr.push(v.value);
+							});
 
-                $.ajax({
-                    type : "POST",
-                    url : "/admin/book/delete",
-                    data : {"ids": arr},
-                    beforeSend: function (jqXHR, settings) {
-                        var header = $("meta[name='_csrf_header']").attr("content");
-                        var token = $("meta[name='_csrf']").attr("content");
-                        jqXHR.setRequestHeader(header, token);
-                    },
-                    success : function(data) {
-                        alert("삭제가 완료되었습니다.");
-                        location.reload();
-                    },
-                    error : function(e) {
-                        alert("삭제 실패");
-                    }
-                });
-            }
-        }
-    }
-</script>
+					$
+							.ajax({
+								type : "POST",
+								url : "/admin/book/delete",
+								data : {
+									"ids" : arr
+								},
+								beforeSend : function(jqXHR, settings) {
+									var header = $("meta[name='_csrf_header']")
+											.attr("content");
+									var token = $("meta[name='_csrf']").attr(
+											"content");
+									jqXHR.setRequestHeader(header, token);
+								},
+								success : function(data) {
+									alert("삭제가 완료되었습니다.");
+									location.reload();
+								},
+								error : function(e) {
+									alert("삭제 실패");
+								}
+							});
+				}
+			}
+		}
+	</script>
+</div>	
 </body>
+</head>
 </html>

@@ -52,16 +52,16 @@ public class Book {
     @Column(columnDefinition = "TEXT")
     private String description;  // 네이버 도서의 책 소개
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<Cart> carts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<Favorite> favorites = new ArrayList<>();
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<Review> reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = CascadeType.REMOVE)
     private List<OrderList> orderlists = new ArrayList<>();
 
 }

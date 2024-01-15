@@ -33,15 +33,13 @@ public class CartController {
 
     private final CartService cartService;
     private final MemberService memberService;
-    private final BookService bookService;
     private final BookRepository bookRepository;
     private final CartRepository cartRepository;
 
     @Autowired
-    public CartController(CartService cartService, MemberService memberService, BookService bookService, BookRepository bookRepository, CartRepository cartRepository) {
+    public CartController(CartService cartService, MemberService memberService, BookRepository bookRepository, CartRepository cartRepository) {
         this.cartService = cartService;
         this.memberService = memberService;
-        this.bookService = bookService;
         this.bookRepository = bookRepository;
         this.cartRepository = cartRepository;
     }

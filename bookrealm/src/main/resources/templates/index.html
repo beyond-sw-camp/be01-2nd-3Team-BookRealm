@@ -58,15 +58,15 @@ th {
 </head>
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
-<div class="contents container">
+<div class="contents container" style="margin-bottom: 50px;">
 	<h2>Best Sellers</h2>
 	
 	<table>
 		<tr>
-			<th>Image</th>
-			<th>Title</th>
-			<th>Writer</th>
-			<th>publisher</th>
+			<th width="10%">Image</th>
+			<th width="25%">Title</th>
+			<th width="15%">Writer</th>
+			<th width="10%">Publisher</th>
 		</tr>
 		<tr th:each="book : ${bestSellers}">
 			<td class="text-center"><img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image" style="width: 100px;"></td>

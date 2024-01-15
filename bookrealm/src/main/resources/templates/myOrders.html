@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>회원 주문내역</title>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 th:text="${user.username + '님의 주문내역'}"></h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>주문번호</th>
+            <th>책 제목</th>
+            <th>배송상태</th>
+            <!-- 다른 주문 정보들... -->
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf 반복문을 이용해 주문내역을 출력 -->
+        <tr th:each="order : ${user.orders}">
+            <td th:text="${order.getId()}"></td>
+            <td>
+                <!-- 책 제목과 배송상태를 함께 표시 -->
+                <span th:each="orderList : ${order.orderLists}">
+                    <span th:text="${orderList.book.getTitle()}"></span>
+                    <span th:text="${orderList.getStatus()}"></span>
+                    <br/>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
