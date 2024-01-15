@@ -80,12 +80,12 @@ td img {
 			<tr>
 				<th width="2%"><input type="checkbox" id="allCheckBox"
 					onclick="allChecked()"></th>
+				<th width="10%">ISBN</th>	
 				<th width="10%">Image</th>
 				<th width="25%">Title</th>
 				<th width="15%">Writer</th>
 				<th width="10%">Price</th>
 				<th width="10%">Publisher</th>
-				<th width="10%">ISBN</th>
 				<th width="10%">Publish Date</th>
 				
 			</tr>
@@ -94,12 +94,12 @@ td img {
 				<!--<td><a th:href="${book.link}" th:text="${book.link}"></a></td>-->
 				<td align="center"><input type="checkbox" class="chk"
 					name="chk" th:value="${num.index}"></td>
+				<td th:text="${book.isbn}"></td>	
 				<td height="0"><img th:src="${book.image}"></td>
 				<td th:text="${book.title}"></td>
 				<td th:text="${book.author}"></td>
 				<td th:text="${book.discount}"></td>
 				<td th:text="${book.publisher}"></td>
-				<td th:text="${book.isbn}"></td>
 				<td th:text="${book.pubdate}"></td>
 				
 			</tr>

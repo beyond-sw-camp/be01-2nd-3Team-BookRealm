@@ -25,6 +25,19 @@ public class OrderService {
         this.orderListRepository = orderListRepository;
     }
 
+    public List<Order> getAllOrdersWithBooks() {
+        return orderRepository.findAll();
+    }
+
+    public Order getOrderWithBooksById(Long orderId) {
+        return orderRepository.findOrderWithBooksById(orderId);
+    }
+
+    public List<Order> findByMemberId(Long id) {
+        List<Order> order = orderRepository.findByMemberId(id);
+        return null;
+    }
+
     public Order findById(Long id) {
         Order order = orderRepository.findById(id).orElse(null);
         return order;
