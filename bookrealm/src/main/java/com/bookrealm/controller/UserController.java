@@ -2,6 +2,7 @@ package com.bookrealm.controller;
 
 import com.bookrealm.model.Address;
 import com.bookrealm.model.Member;
+import com.bookrealm.model.Order;
 import com.bookrealm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -77,6 +79,17 @@ public class UserController {
         model.addAttribute("user", member);
 
         return "myOrders";
+    }
+    
+    @GetMapping("/myOrders/detail")
+    public String myOrderDetail(@RequestParam("id") Long orderId, Model model, Principal principal) {
+        Member member = memberService.getUser(principal.getName());
+        Order order = orderService.findById(orderId);
+        
+        model.addAttribute("user", member);
+        model.addAttribute("order", order);
+
+        return "myOrders-detail";
     }
 
 }

@@ -63,6 +63,7 @@ public class OrderController {
         else if(paymentMethod.equals("bank")) order.setPayment(Payment.BANK_TRANSFER);
 
         orderService.cartOrder(order);
+        cartService.deleteCart(member);
 
         // 주문 완료 페이지로 리다이렉트
         return "redirect:/order/success?id=" + order.getId();
@@ -87,6 +88,7 @@ public class OrderController {
         Member member = memberService.getUser(principal.getName());
         Book book = bookService.findBookById(id);
         Order order = new Order();
+        order.setOrderDate(LocalDateTime.now());
         Address address1 = new Address(postcode, address, detailAddress, extraAddress);
         order.setDestination(address1);
         order.setMember(member);

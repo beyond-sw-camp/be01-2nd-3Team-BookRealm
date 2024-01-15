@@ -105,4 +105,8 @@ public class CartService {
 		}
 	}
 
+	public void deleteCart(Member member) {
+		cartRepository.deleteByMemberId(member.getId());
+	}
+
 }
