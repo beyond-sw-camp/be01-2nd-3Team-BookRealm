@@ -67,12 +67,12 @@ div {
 	
 	<table>
 		<tr>
-			<th>Image</th>
-			<th>Title</th>
-			<th>Writer</th>
-			<th>Price</th>
-			<th>publisher</th>
-			<th>publishDate</th>
+			<th width="10%">Image</th>
+			<th width="25%">Title</th>
+			<th width="15%">Writer</th>
+			<th width="10%">Price</th>
+			<th width="10%">Publisher</th>
+			<th width="10%">Publish Date</th>
 		</tr>
 		<tr th:each="book : ${searchBook}">
 			<td class="text-center"><img th:if="${book.image != null}" th:src="${book.image}" alt="Book Image" style="width: 100px;"></td>

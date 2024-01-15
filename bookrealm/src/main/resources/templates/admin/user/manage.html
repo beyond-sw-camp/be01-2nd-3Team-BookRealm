@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.w3.org/1999/xhtml">
 <meta name="_csrf" th:content="${_csrf.token}">
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Member Manage</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="starter-template.css" rel="stylesheet">
+
+<title>Book Realm</title>
+<style>
+.container {
+	max-width: 1000px;
+	margin: 0 auto; 
+}
+</style> 
 <body>
 <!--<div align="center">
     <h1>회원 관리</h1>
@@ -38,28 +54,28 @@
         </table>
     </form>
 </div>-->
+<nav th:replace="~{admin/navbar-admin.html :: navbarFragment-admin}"></nav>
 <div class="container mt-5">
-    <h2>회원 관리</h2>
+    <h2 style="font-weight:bold; ">회원 관리</h2>
 
     <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-md-6" style="margin-top: 30px;">
             <h4>회원 기본 정보</h4>
-
-            <p><strong>이름 </strong> <span th:text="${member.username}"></span></p>
-            <p><strong>이메일 </strong> <span th:text="${member.email}"></span></p>
-            <p><strong>우편번호 </strong> <span th:text="${member.address.postcode}"></span></p>
-            <p><strong>주소 </strong> <span th:text="|${member.address.address} ${member.address.extraAddress} ${member.address.detailAddress}|"></span></p>
-            <p>
-                <strong>관리자 권한</strong>
+            <p style="margin-top: 20px;"><strong>이름 :</strong> <span th:text="${member.username}"></span></p>
+            <p><strong>이메일 :</strong> <span th:text="${member.email}"></span></p>
+            <p><strong>우편번호 :</strong> <span th:text="${member.address.postcode}"></span></p>
+            <p><strong>주소 :</strong> <span th:text="|${member.address.address} ${member.address.extraAddress} ${member.address.detailAddress}|"></span></p>
+            <p class="form-inline">
+                <strong style="margin-right: 10px;">관리자 권한</strong>
                 <span>
-                    <select id="selectRole" name="selectRole">
+                    <select id="selectRole" name="selectRole" class="form-control">
                         <option th:each="role : ${roles}" th:value="${role}" th:text="${role.getValue()}" th:selected="${role} == ${member.role}">
                     </select>
                 </span>
             </p>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-6" style="margin-top: 30px;">
             <h4>주문 내역</h4>
         </div>
     </div>
@@ -107,4 +123,5 @@
     });
 
 </script>
+</head>
 </html>
