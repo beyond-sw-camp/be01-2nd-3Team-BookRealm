@@ -1,7 +1,6 @@
 package com.bookrealm.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,8 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.bookrealm.exception.AppException;
-import com.bookrealm.exception.ErrorCode;
 import com.bookrealm.model.Book;
 import com.bookrealm.repository.BookRepository;
 
@@ -48,8 +45,8 @@ public class BookService {
 	}
 	
 	// book_id로 도서 조회 (도서 상세페이지로 가기 위함)
-	public Optional<Book> findBookById(Long id) {
-		return bookRepository.findById(id);
+	public Book findBookById(Long id) {
+		return bookRepository.findById(id).orElse(null);
 	}
 
 }

@@ -15,9 +15,9 @@
         </div>
         <div class="card-body">
             <!-- Cart 정보 표시 -->
-            <div class="mb-4" th:each="item : ${cartItems}">
+            <div class="mb-4" >
                 <!-- 여기에 Cart에서 가져온 정보를 표시하세요 -->
-                <p th:text="${item.book.getTitle() + ' - ' + item.purchase + '개'}"></p>
+                <p th:text="${cartItems.getTitle() + ' - ' + purchase + '개'}"></p>
             </div>
         </div>
     </div>
@@ -29,7 +29,9 @@
         </div>
         <div class="card-body">
             <!-- 배송지 수정 폼을 작성하세요 -->
-            <form th:action="@{/order/corder}" method="post">
+            <form th:action="@{/order/order/one}"  method="post">
+                <input type="hidden" name="bookId" th:value="${cartItems.id}"/>
+                <input type="hidden" name="num" value="1"/>
                 <!-- 배송지 입력 필드 등을 추가하세요 -->
                 <div class="form-group">
                     <label for="postcode">우편번호</label>

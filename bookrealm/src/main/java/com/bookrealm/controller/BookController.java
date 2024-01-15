@@ -78,9 +78,9 @@ public class BookController {
     @GetMapping("/detail")
     public String getBookDetail(Model model, @RequestParam("id") Long id) {
 
-        Optional<Book> bookDetail = bookService.findBookById(id);
+        Book bookDetail = bookService.findBookById(id);
         List<Review> reviews = reviewService.findByBookId(id);
-        model.addAttribute("book", bookDetail.orElse(null));
+        model.addAttribute("book", bookDetail);
         model.addAttribute("reviews", reviews);
 
         return "book-detail";
@@ -91,12 +91,12 @@ public class BookController {
                             @RequestParam("contents") String contents,
                             @RequestParam("popular") int popular, Principal principal) {
 
-        Optional<Book> bookDetail = bookService.findBookById(bookId);
-        if (bookDetail.isPresent()) {
-            Book book = bookDetail.get();
-            // 리뷰 추가
-            reviewService.addReview(memberService.getUser(principal.getName()), book, contents, popular);
-        }
+        Book bookDetail = bookService.findBookById(bookId);
+
+        Book book = bookDetail;
+        // 리뷰 추가
+        reviewService.addReview(memberService.getUser(principal.getName()), book, contents, popular);
+
 
         // 도서 상세 페이지로 리다이렉트
         return "redirect:/detail?id=" + bookId;
