@@ -58,16 +58,15 @@ public class OrderService {
 
     }
 
-    public void selectPayment(Order order, Payment payment){
+    public void selectPayment(Order order){
 
-        int totalPrice = totalPrice(order);
-        switch (payment) {
+        switch (order.getPayment()) {
             case CREDIT_CARD:
-                processCreditCardPayment(totalPrice);
+                processCreditCardPayment(order.getTotalAmount());
                 break;
 
             case BANK_TRANSFER:
-                processBankTransferPayment(totalPrice);
+                processBankTransferPayment(order.getTotalAmount());
                 break;
             default:
                 throw new IllegalArgumentException("지원하지 않는 결제수단입니다.");
@@ -88,6 +87,8 @@ public class OrderService {
     public Order cartOrder(Order order) {
         order = orderRepository.save(order);
         List<Cart> carts = cartRepository.findByMemberId(order.getMember().getId());
+        int price = 0;
+
         for(Cart cart : carts) {
             OrderList orderList = new OrderList();
             Book book = cart.getBook();
@@ -98,11 +99,16 @@ public class OrderService {
 
             book.setStock(book.getStock() - cart.getPurchase());
             book.setSales(book.getSales() + cart.getPurchase());
+
+            price = price + (book.getPrice() * orderList.getPurchase());
             bookRepository.save(book);
             orderListRepository.save(orderList);
         }
 
-        selectPayment(order, order.getPayment());
+        order.setTotalAmount(price);
+        order = orderRepository.save(order);
+
+        selectPayment(order);
         return order;
     }
 
@@ -118,10 +124,12 @@ public class OrderService {
         book.setStock(book.getStock() - num);
         book.setSales(book.getSales() + num);
 
+        order.setTotalAmount(book.getPrice() * num);
+
         bookRepository.save(book);
         orderListRepository.save(orderList);
 
-        selectPayment(order, order.getPayment());
+        selectPayment(order);
 
         return order;
     }

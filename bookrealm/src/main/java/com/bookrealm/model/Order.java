@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,11 @@ public class Order {
 
     @Embedded
     private Address destination;
+
+    private Integer totalAmount;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime orderDate;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")

@@ -110,20 +110,19 @@ class OrderServiceTest {
 
         Order order = new Order();
         order.setOrderLists(orderLists);
-        int totalPrice = orderService.totalPrice(order);
         Payment payment = CREDIT_CARD;
 
         //when
-        orderService.selectPayment(order, payment);
+        orderService.selectPayment(order);
 
         //then
         switch (payment) {
             case CREDIT_CARD:
-                orderService.processCreditCardPayment(totalPrice);
+                orderService.processCreditCardPayment(order.getTotalAmount());
                 break;
 
             case BANK_TRANSFER:
-                orderService.processBankTransferPayment(totalPrice);
+                orderService.processBankTransferPayment(order.getTotalAmount());
                 break;
 
             default:
