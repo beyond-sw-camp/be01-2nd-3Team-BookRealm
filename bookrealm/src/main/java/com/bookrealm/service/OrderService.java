@@ -26,7 +26,7 @@ public class OrderService {
     }
 
     public Order findById(Long id) {
-        Order order = orderRepository.findById(id).orElseThrow();
+        Order order = orderRepository.findById(id).orElse(null);
         return order;
     }
 
@@ -90,6 +90,26 @@ public class OrderService {
         }
 
         selectPayment(order, order.getPayment());
+        return order;
+    }
+
+    public Order oneOrder(Order order, Book book, int num) {
+        order = orderRepository.save(order);
+
+        OrderList orderList = new OrderList();
+        orderList.setBook(book);
+        orderList.setOrder(order);
+        orderList.setPurchase(num);
+        orderList.setStatus(Status.ORDER_COMPLETE);
+
+        book.setStock(book.getStock() - num);
+        book.setSales(book.getSales() + num);
+
+        bookRepository.save(book);
+        orderListRepository.save(orderList);
+
+        selectPayment(order, order.getPayment());
+
         return order;
     }
 }

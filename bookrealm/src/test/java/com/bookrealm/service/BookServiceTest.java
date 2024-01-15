@@ -19,6 +19,7 @@ import com.bookrealm.model.Book;
 import com.bookrealm.repository.BookRepository;
 
 import jakarta.transaction.Transactional;
+import org.springframework.util.Assert;
 
 @SpringBootTest
 @Transactional
@@ -87,9 +88,8 @@ class BookServiceTest {
     	
         // 성공적인 도서 상세 정보 조회
         Long existingBookId = 1L;
-        Optional<Book> bookDetail = bookService.findBookById(existingBookId);
-        assertTrue(bookDetail.isPresent());
-
+        Book bookDetail = bookService.findBookById(existingBookId);
+        assertNotNull(bookDetail);
     }
     
     @Test
