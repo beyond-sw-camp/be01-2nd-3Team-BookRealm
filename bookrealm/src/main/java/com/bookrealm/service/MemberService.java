@@ -105,4 +105,9 @@ public class MemberService {
         selectedUser.setPhone(phone);
         memberRepository.save(selectedUser);
     }
+
+    public boolean emailValid(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        return member.isEmpty();
+    }
 }

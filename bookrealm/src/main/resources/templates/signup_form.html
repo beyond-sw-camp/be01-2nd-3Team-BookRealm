@@ -23,6 +23,11 @@
 	width: 200px;
 }
 
+.field-error {
+    font-size: 14px;
+    color: #ff0000;
+}
+
 </style>
 <body>
 <div class="text-center" style="margin-top: 100px;">
@@ -34,14 +39,10 @@
     <div class="my-3 border-bottom">
     </div>
     <form th:action="@{/join}" th:object="${JoinDto}" method="post">
-        <div th:if="${param.error}">
-            <div class="alert alert-danger">
-                이미 존재하는 이메일 입니다
-            </div>
-        </div>
         <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
             <input type="email" th:field="*{email}" class="form-control">
+            <div class="field-error" th:errors="*{email}">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호</label>
@@ -50,6 +51,7 @@
         <div class="mb-3">
             <label for="password" class="form-label">비밀번호 확인</label>
             <input type="password" th:field="*{password2}" class="form-control">
+            <div class="field-error" th:errors="*{password2}">
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">이름</label>
