@@ -82,7 +82,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
-    public List<OrderDto> findOrderByMemberId(Long memberId) {
+    public List<Order> findAllOrderByMemberId(Long memberId) {
         return orderRepository.findAllOrderByMemberId(memberId);
     }
 

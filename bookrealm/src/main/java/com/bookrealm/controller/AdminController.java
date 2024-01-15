@@ -2,6 +2,7 @@ package com.bookrealm.controller;
 
 import com.bookrealm.model.Book;
 import com.bookrealm.model.Member;
+import com.bookrealm.model.Order;
 import com.bookrealm.model.Role;
 import com.bookrealm.naver.NaverBookClient;
 import com.bookrealm.naver.dto.SearchBookReq;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,8 +97,10 @@ public class AdminController {
     public ModelAndView editMemberView(@RequestParam Long id){
         ModelAndView mav = new ModelAndView("/admin/user/manage");
         Optional<Member> member = adminService.findMemberById(id);
+        List<Order> orders = adminService.findAllOrderByMemberId(id);
         mav.addObject("member", member.get());
         mav.addObject("roles", Role.values());
+        mav.addObject("orders", orders);
         return mav;
     }
 
