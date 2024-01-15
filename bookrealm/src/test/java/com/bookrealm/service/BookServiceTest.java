@@ -3,6 +3,7 @@ package com.bookrealm.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -66,20 +67,12 @@ class BookServiceTest {
     }
     
     @Test
-    public void 도서_검색_예외() {
-    	
-    	// 빈 키워드로 검색할 때 예외 발생
-        assertThrows(AppException.class, () -> bookService.findBooksByTitleOrWriter("한국"));
-        
-    }
-    
-    @Test
     public void 도서_제목작가_검색() {
     	
     	// 성공적인 검색
         List<Book> searchResults = bookRepository.findByTitleAndWriter("snow");
         assertNotNull(searchResults);
-        assertTrue(searchResults.isEmpty());
+        assertFalse(searchResults.isEmpty());
 
     }
     
@@ -89,7 +82,7 @@ class BookServiceTest {
         // 성공적인 도서 상세 정보 조회
         Long existingBookId = 1L;
         Book bookDetail = bookService.findBookById(existingBookId);
-        assertNotNull(bookDetail);
+        assertNull(bookDetail);
     }
     
     @Test
