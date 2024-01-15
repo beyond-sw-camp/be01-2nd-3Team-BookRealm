@@ -4,7 +4,6 @@ import com.bookrealm.model.Book;
 import com.bookrealm.model.Member;
 import com.bookrealm.model.Order;
 import com.bookrealm.model.Role;
-import com.bookrealm.model.dto.OrderDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,5 +28,5 @@ public interface AdminService {
 
     void updateRole(Role role, Long id);
 
-    List<OrderDto> findOrderByMemberId(Long memberId);
+    List<Order> findAllOrderByMemberId(Long memberId);
 }

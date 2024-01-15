@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -54,6 +55,7 @@ public class OrderController {
         Address address1 = new Address(postcode, address, detailAddress,extraAddress);
         Member member = memberService.getUser(principal.getName());
         Order order = new Order();
+        order.setOrderDate(LocalDateTime.now());
         order.setDestination(address1);
         order.setMember(member);
 
@@ -102,9 +104,8 @@ public class OrderController {
     public String showOrderCompletePage(Model model, @RequestParam("id") Long id) {
         // 여기에 주문 정보를 모델에 추가하세요
         Order order = orderService.findById(id);
-        int total = orderService.totalPrice(order);
         model.addAttribute("orderNumber", id);
-        model.addAttribute("orderTotalAmount", total);
+        model.addAttribute("orderTotalAmount", order.getTotalAmount());
 
         return "order_complete";
     }

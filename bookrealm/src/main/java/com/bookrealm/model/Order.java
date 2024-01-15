@@ -2,11 +2,9 @@ package com.bookrealm.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +27,11 @@ public class Order {
 
     @Embedded
     private Address destination;
+
+    private Integer totalAmount;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime orderDate;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
