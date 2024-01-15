@@ -96,6 +96,7 @@ class OrderServiceTest {
         assertEquals(24000, totalPrice);
 
     }
+
     @Test
     public void 결재수단선택및결재(){
         //given

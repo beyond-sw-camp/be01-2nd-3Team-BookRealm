@@ -70,6 +70,7 @@ public class AdminRestController {
 
     @PostMapping("/member/role")
     public ResponseEntity<Void> editRole(@RequestParam Role role, @RequestParam Long id){
+        adminService.updateRole(role,id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
