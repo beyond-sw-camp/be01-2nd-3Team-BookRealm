@@ -67,4 +67,8 @@ class AdminServiceImplTest {
         //System.out.println(pageBook.getContent());
         assertNotNull(pageBook);
     }
+
+    @Test
+    void 고객번호_주문전체조회() {
+    }
 }

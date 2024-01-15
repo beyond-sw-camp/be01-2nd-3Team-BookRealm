@@ -2,8 +2,12 @@ package com.bookrealm.service;
 
 import com.bookrealm.model.Book;
 import com.bookrealm.model.Member;
+import com.bookrealm.model.Order;
+import com.bookrealm.model.Role;
+import com.bookrealm.model.dto.OrderDto;
 import com.bookrealm.repository.BookRepository;
 import com.bookrealm.repository.MemberRepository;
+import com.bookrealm.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +19,14 @@ public class AdminServiceImpl implements AdminService{
 
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
+    private final OrderRepository orderRepository;
 
     @Autowired
-    public AdminServiceImpl(BookRepository bookRepository, MemberRepository memberRepository) {
+    public AdminServiceImpl(BookRepository bookRepository, MemberRepository memberRepository, OrderRepository orderRepository) {
 
         this.bookRepository = bookRepository;
         this.memberRepository = memberRepository;
+        this.orderRepository = orderRepository;
     }
 
 
@@ -68,6 +74,16 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void deleteMemberById(Long id) {
         memberRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateRole(Role role, Long id) {
+        memberRepository.updateMemberRoleById(role,id);
+    }
+
+    @Override
+    public List<OrderDto> findOrderByMemberId(Long memberId) {
+        return orderRepository.findAllOrderByMemberId(memberId);
     }
 
 
