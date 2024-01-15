@@ -1,9 +1,11 @@
 package com.bookrealm.service;
 
-import com.bookrealm.model.Book;
+import com.bookrealm.model.*;
 import com.bookrealm.naver.NaverBookClient;
 import com.bookrealm.naver.dto.SearchBookReq;
 import com.bookrealm.naver.dto.SearchBookRes;
+import com.bookrealm.repository.OrderRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +28,9 @@ class AdminServiceImplTest {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    OrderRepository orderRepository;
 
     @Autowired
     private NaverBookClient naverBookClient;
@@ -68,7 +72,32 @@ class AdminServiceImplTest {
         assertNotNull(pageBook);
     }
 
-    @Test
+    /*@Test
+    @Transactional
     void 고객번호_주문전체조회() {
-    }
+
+        Member member = new Member();
+        Address address = new Address("","","","");
+        member.setId(5L);
+        member.setAddress(address);
+
+        Order order1 = new Order();
+        order1.setId(1L);
+        order1.setMember(member);
+
+        Order order2 = new Order();
+        order2.setId(2L);
+        order2.setMember(member);
+
+        Order order3 = new Order();
+        order3.setId(3L);
+        order3.setMember(member);
+
+        orderRepository.save(order1);
+        orderRepository.save(order2);
+        orderRepository.save(order3);
+
+        List<Order> orderDtos = adminService.findOrderByMemberId(5L);
+        System.out.println(orderDtos.size());
+    }*/
 }

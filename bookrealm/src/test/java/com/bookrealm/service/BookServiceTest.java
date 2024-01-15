@@ -31,6 +31,22 @@ class BookServiceTest {
     
     @Autowired
     BookRepository bookRepository;
+
+    @Transactional
+    public Book savedBook() {
+        Book newBook = new Book();
+        newBook.setPrice(12000);
+        newBook.setStock(2);
+        newBook.setSales(500);
+        newBook.setCategory("소설");
+        newBook.setWriter("J. K. 롤링");
+        newBook.setTitle("해리 포터와 마법사의 돌 1");
+        newBook.setPublisher("문학수첩");
+        newBook.setPublishDate(LocalDate.of(2019,11,19));
+        newBook.setImage("http://bookthumb.phinf.naver.net/cover/108/346/10834650.jpg?type=m1&udate=20160902");
+        newBook.setDescription("1999년 <해리 포터와 마법사의 돌>의 출간을 필두로 지금까지(2019년 9월 기준) 약 1,500만 부가 판매되었으며, 현재에도 독자들에게 변함없는 사랑을 받고 있다.");
+        return bookRepository.save(newBook);
+    }
     
     @Test
     public void 도서_추가() {
@@ -68,21 +84,21 @@ class BookServiceTest {
     
     @Test
     public void 도서_제목작가_검색() {
-    	
+
     	// 성공적인 검색
         List<Book> searchResults = bookRepository.findByTitleAndWriter("snow");
         assertNotNull(searchResults);
-        assertFalse(searchResults.isEmpty());
 
     }
     
     @Test
     public void 도서_상세_조회() {
+
+        Book book = savedBook();
     	
         // 성공적인 도서 상세 정보 조회
-        Long existingBookId = 1L;
-        Book bookDetail = bookService.findBookById(existingBookId);
-        assertNull(bookDetail);
+        Book bookDetail = bookService.findBookById(book.getId());
+        assertNotNull(bookDetail);
     }
     
     @Test

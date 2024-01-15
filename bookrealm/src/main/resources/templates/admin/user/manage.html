@@ -77,6 +77,25 @@
 
         <div class="col-md-6" style="margin-top: 30px;">
             <h4>주문 내역</h4>
+
+            <table border="1">
+
+                <tr>
+                    <th width="5%"></th>
+                    <th width="50%">주소</th>
+                    <th width="20%">총액</th>
+                    <th width="5%">결제수단</th>
+                    <th width="20%">결제일자</th>
+                </tr>
+
+                <tr th:each="order: ${orders}"> <!--th:onclick="|location.href='@{/admin/book/manage/edit(id=${book.id})}'|"-->
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.destination.address} + ' ' + ${order.destination.detailAddress} + ' ' + ${order.destination.extraAddress}"></td>
+                    <td></td>
+                    <td th:text="${order.payment}" style="font-size: 12px" ></td>
+                    <td></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>
