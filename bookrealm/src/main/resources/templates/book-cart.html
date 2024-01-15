@@ -2,13 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="starter-template.css" rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="starter-template.css" rel="stylesheet">
 
 <title>Book Realm</title>
 <style>
@@ -58,96 +62,117 @@ div {
 }
 
 .total-amount, .checkout-button {
-	margin-top: 10px;
+	margin-top: 15px;
 	text-align: right;
 }
 
 .total-amount {
 	font-weight: bold;
 	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+    align-items: center; 
 }
 
 /* 수정 부분 시작 */
 .contents table td div {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .contents table td div form {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .contents table td div input {
-    width: 100px;
-    margin-right: 10px;
+	width: 100px;
+	margin-right: 10px;
 }
 /* 수정 부분 끝 */
-
 </style>
 </head>
 <body>
-<nav th:replace="~{navbar :: navbarFragment}"></nav>
-<div class="contents container">
+	<nav th:replace="~{navbar :: navbarFragment}"></nav>
+	<div class="contents container">
 
-	<h2>Book Cart</h2>
+		<h2>Book Cart</h2>
 
-	<table>
-  <thead>
-    <tr>
-      <th>도서 이미지</th>
-      <th>도서 제목</th>
-      <th>도서 작가</th>
-      <th>도서 가격</th>
-      <th>도서 수량</th>
-      <th>삭제</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- 예제 도서 정보 -->
-	<tr th:each="cart : ${cartBooks}">
-    	<td><img th:if="${cart.book.image != null}" th:src="${cart.book.image}" alt="Book Image"></td>
-    	<td><span th:text="${cart.book.title}"></span></td>
-    	<td><span th:text="${cart.book.writer}"></span></td>
-    	<td><span th:text="${cart.book.price}"></span></td>
-		<td>
-			<div class="text-left" style="display: flex;">
-			<form th:action="@{/cart/update}" method="post">
-				<input type="hidden" name="bookId" th:value="${cart.book.id}">
-				<input type="number" name="purchase" th:value="${cart.purchase}" min="1" th:id="${'quantity_' + cart.book.id}" class="form-control mr-sm-2">
-				<button type="submit" class="btn btn-sm btn-outline-primary">변경</button>
+		<table>
+			<thead>
+				<tr>
+					<th>도서 이미지</th>
+					<th>도서 제목</th>
+					<th>도서 작가</th>
+					<th>도서 가격</th>
+					<th>도서 수량</th>
+					<th>삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 예제 도서 정보 -->
+				<tr th:each="cart : ${cartBooks}">
+					<td class="text-center"><img
+						th:if="${cart.book.image != null}" th:src="${cart.book.image}"
+						alt="Book Image" style="width: 100px;"></td>
+					<td><span th:text="${cart.book.title}"></span></td>
+					<td><span th:text="${cart.book.writer}"></span></td>
+					<td><span th:text="${cart.book.price}"></span></td>
+					<td>
+						<div class="text-left" style="display: flex;">
+							<form th:action="@{/cart/update}" method="post">
+								<input type="hidden" name="bookId" th:value="${cart.book.id}">
+								<input type="number" name="purchase" th:value="${cart.purchase}"
+									min="1" th:id="${'quantity_' + cart.book.id}"
+									class="form-control mr-sm-2">
+								<button type="submit" class="btn btn-sm btn-outline-primary">변경</button>
+							</form>
+						</div>
+					</td>
+					<td><form th:action="@{/cart/delete}" method="post"
+							style="display: inline;">
+							<input type="hidden" name="cartId" th:value="${cart.id}" />
+							<button type="submit" class="btn btn-sm btn-secondary">삭제</button>
+						</form></td>
+				</tr>
+			</tbody>
+		</table>
+		</tbody>
+		</table>
+		<!-- 총액 표시 -->
+    <div class="total-amount text-left" style="margin-top: 30px;">
+    	<p>총 주문금액</p>
+        <!-- 여기에 실제 총 주문금액을 표시 -->
+        <p><span th:text="${totalPrice}" style="font-size: 28px;"></span> 원</p>
+    </div>	
+		<hr style="margin-top: 5px; margin-bottom: 5px;">
+		<!-- 결제하기 버튼 -->
+		<div class="checkout-button text-right">
+			<form th:action="@{/order/cart}" method="get"
+				style="display: inline;"
+				th:if="${#authorization.expression('isAuthenticated')}">
+				<button class="btn btn-success" onclick="checkout()">주문하기</button>
 			</form>
-			</div>
-		</td>
-		<td><form th:action="@{/cart/delete}" method="post" style="display: inline;">
-			<input type="hidden" name="cartId" th:value="${cart.id}"/>
-			<button type="submit" class="btn btn-sm btn-secondary">삭제</button>
-		</form></td>
-	</tr>
-	</tbody>
-	</table>
-    </tbody>
-    </table>
-    <!-- 총액 표시 -->
-    <div class="total-amount text-right" style="margin-top: 30px;">
-       <p>총액 : <span th:text="${totalPrice}"></span>원</p>
-    </div>
+		</div>
 
-    <!-- 결제하기 버튼 -->
-    <div class="checkout-button  text-right">
-       <button class="btn btn-primary" onclick="checkout()" >주문하기</button>
-    </div>
+		<script>
+			function checkout() {
+				// 결제하기 버튼을 클릭했을 때 수행할 작업을 여기에 추가하세요.
+				console.log('결제하기 버튼 클릭됨');
+			}
+		</script>
+	</div>
+	<script th:inline="javascript" type="text/javascript"
+		th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	<script th:inline="javascript"
+		th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+		crossorigin="anonymous"></script>
+	<script th:inline="javascript"
+		th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js}"
+		integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa"
+		crossorigin="anonymous"></script>
 
-    <script>
-       function checkout() {
-          // 결제하기 버튼을 클릭했을 때 수행할 작업을 여기에 추가하세요.
-          console.log('결제하기 버튼 클릭됨');
-       }
-    </script>
-</div>    
-<script th:inline="javascript" type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
-<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js}" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>    
-</div>
 </body>
+</head>
 </html>

@@ -1,34 +1,67 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.w3.org/1999/xhtml">
 <meta name="_csrf" th:content="${_csrf.token}">
 <meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head>
-    <meta charset="UTF-8">
-    <title>User List</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="starter-template.css" rel="stylesheet">
+
+<title>Book Realm</title>
 <style>
-  body {
-    max-width: 100%;
-    margin: 20px;
-  }
-  td {
-    padding: 10px;
-    text-align: center;
-  }
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.contents {
+	margin-bottom: 100px; 
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+th, td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
 </style>
 <body>
-  <h2>회원 관리</h2>
+<nav th:replace="~{admin/navbar-admin.html :: navbarFragment-admin}"></nav>
+<div class="contents container">
+	<div class="search-head">
+		<h2 style="font-weight: bold; margin-top: 20px;">회원 관리</h2>
+	</div>
 
-<table border="1" width="90%">
+<table border="1">
 
   <tr>
-    <th width="10%">이름</th>
+    <th width="10%">Name</th>
     <th width="15%">Email</th>
-    <th width="25%">주소</th>
-    <th width="20%">연락처</th>
-    <th width="10%">관리자권한</th>
-    <th width="10%"></th>
-    <th width="10%"></th>
+    <th width="25%">Address</th>
+    <th width="10%">Phone</th>
+    <th width="10%">Role</th>
+    <th width="20%"></th>
   </tr>
 
   <tr th:each="member: ${members}">
@@ -37,10 +70,11 @@
     <td th:text="${member.address.address} + ' ' + ${member.address.detailAddress} + ' ' + ${member.address.extraAddress}"></td>
     <td th:text="${member.phone}"></td>
     <td th:text="${member.role}"></td>
-    <td><button type="button" style="display: inline-block" th:onclick="|location.href='@{/admin/member/manage(id=${member.id})}'|">수정/주문관리</button></td>
-    <td><button type="button" style="display: inline-block" th:onclick="|onClickDelete(${member.id})|">삭제</button></td>
+    <td><button type="button" class="edit btn btn-sm btn-outline-primary" style="display: inline-block" th:onclick="|location.href='@{/admin/member/manage(id=${member.id})}'|">수정/주문관리</button>
+    <button type="button" class="btn btn-sm btn-secondary"  style="display: inline-block" th:onclick="|onClickDelete(${member.id})|">삭제</button></td>
   </tr>
 </table>
+</div>
 </body>
 <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script th:inline="javascript">
@@ -66,4 +100,6 @@
     }
   }
 </script>
+
+</head>
 </html>
