@@ -54,8 +54,10 @@ h3 {
 	font-weight: bold;
 	margin-top: 30px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
+	border-top: 1px solid #ccc; 
+	padding-top: 10px; 
 }
 
 .form-check {
@@ -76,11 +78,14 @@ h3 {
 	        <h3>주문 내용</h3>
 	    </div>
 	    <div class="card-body">
-	        <!-- Cart 정보 표시 -->
 	        <div class="mb-4" th:each="orderList : ${order.orderLists}" style="margin-top: 20px;">
-	            <!-- 여기에 OrderList에서 가져온 정보를 표시하세요 -->
-	            <p th:text="${orderList.book.getTitle() + ' - ' + orderList.purchase + '권 ' + '｜' + ' 배송 상태 : ' + orderList.status}"></p>
+	            <span th:text="${orderList.book.getTitle() + ' - ' + orderList.purchase + '권 ' + '｜'}" ></span>
+	            <span style="color:red;" th:text="${orderList.status}" ></span>
 	        </div>
+	        <div class="total-amount">
+    			<span>Total Price : </span>
+   				<span style="padding-left: 10px; font-size: 20px;" th:each="currentOrder : ${user.orders}" th:if="${currentOrder.getId() eq order.getId()}" th:text="${currentOrder.getTotalAmount()}"></span>
+			</div>
 	    </div>
 	</div>
 	
@@ -101,14 +106,12 @@ h3 {
 	    </div>
 	</div>
 	
-	<!-- 배송지 정보 입력 폼 -->
+	<!-- 배송지 정보 입력 -->
 	<div class="card mt-4">
 	    <div class="card-header">
 	        <h3>배송지 정보</h3>
 	    </div>
 	    <div class="card-body">
-	        <!-- 배송지 수정 폼을 작성하세요 -->
-	        <!-- 배송지 입력 필드 등을 추가하세요 -->
 	        <div class="form-group">
 	            <label for="postcode">우편번호</label> 
 	            <p class="form-control-static" style="font-weight: bold;" th:text="${order.member.address.postcode}"></p>
@@ -128,7 +131,7 @@ h3 {
 	    </div>
 	</div>
 	
-	<!-- 결제 정보 입력 폼 -->
+	<!-- 결제 정보 입력 -->
 	<div class="card mt-4">
 	    <div class="card-header">
 	        <h3>결제 정보</h3>
