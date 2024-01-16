@@ -1,6 +1,7 @@
 package com.bookrealm.repository;
 
 import com.bookrealm.model.Order;
+import com.bookrealm.model.Status;
 import com.bookrealm.model.dto.OrderDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

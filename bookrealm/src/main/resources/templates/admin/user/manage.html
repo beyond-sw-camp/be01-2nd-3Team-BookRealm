@@ -88,12 +88,12 @@
                     <th width="20%">결제일자</th>
                 </tr>
 
-                <tr th:each="order: ${orders}"> <!--th:onclick="|location.href='@{/admin/book/manage/edit(id=${book.id})}'|"-->
+                <tr th:each="order: ${orders}" th:onclick="|location.href='@{/admin/member/orders(orderId=${order.id})}'|"> <!--th:onclick="|location.href='@{/admin/book/manage/edit(id=${book.id})}'|"-->
                     <td th:text="${order.id}"></td>
                     <td th:text="${order.destination.address} + ' ' + ${order.destination.detailAddress} + ' ' + ${order.destination.extraAddress}"></td>
-                    <td></td>
+                    <td th:text="${order.totalAmount}"></td>
                     <td th:text="${order.payment}" style="font-size: 12px" ></td>
-                    <td></td>
+                    <td th:text="${order.orderDate}"></td>
                 </tr>
             </table>
         </div>
