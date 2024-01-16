@@ -50,17 +50,17 @@ body {
             <!-- Display Personal Information -->
             <div style="margin-bottom: 50px; margin-top: 20px;">
                 <h4 style="margin-bottom: 20px;">개인 정보</h4>
-                <p><strong>이메일:</strong> <span th:text="${member.email}"></span></p>
-                <p><strong>이름:</strong> <span th:text="${member.username}"></span></p>
+                <p><strong>이메일 :</strong> <span th:text="${member.email}"></span></p>
+                <p><strong>이름 :</strong> <span th:text="${member.username}"></span></p>
             </div>
 
             <!-- Display Address with Edit Button -->
             <div class="mt-4">
                 <h4 style="margin-bottom: 20px;">주소</h4>
-                <p><strong>우편번호:</strong> <span th:text="${member.address.postcode}"></span></p>
-                <p><strong>주소:</strong> <span th:text="${member.address.address}"></span></p>
-                <p><strong>상세주소:</strong> <span th:text="${member.address.detailAddress}"></span></p>
-                <p><strong>참고사항:</strong> <span th:text="${member.address.extraAddress}"></span></p>
+                <p><strong>우편번호 :</strong> <span th:text="${member.address.postcode}"></span></p>
+                <p><strong>주소 :</strong> <span th:text="${member.address.address}"></span></p>
+                <p><strong>상세주소 :</strong> <span th:text="${member.address.detailAddress}"></span></p>
+                <p><strong>참고사항 :</strong> <span th:text="${member.address.extraAddress}"></span></p>
                 <!-- Add Edit button for Address -->
                 <a class="btn btn-primary" th:href="@{/myPage/address}">주소 수정</a>
             </div>
@@ -90,7 +90,7 @@ body {
 
             <div class="mt-4">
                 <h4 style="margin-bottom: 20px;">전화번호 변경</h4>
-                <p><strong>전화번호:</strong> <span th:text="${member.phone}"></span></p>
+                <p><strong>전화번호 :</strong> <span th:text="${member.phone}"></span></p>
                 <a class="btn btn-primary" th:href="@{/myPage/phone}">번호 수정</a>
             </div>
         </div>
