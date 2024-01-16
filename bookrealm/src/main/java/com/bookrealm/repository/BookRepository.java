@@ -31,12 +31,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query("delete from Book b where b.id in :ids")
     void deleteAllByIds(@Param("ids") List<Long> ids);
 
-    //void saveAll(List<Book> books);
-    
-//    페이지 없이 한 페이지에 모든 리스트를 보여줄 때
-//    @Query("SELECT b FROM Book b")
-//    List<Book> findAll();
-//    
-//    @Query("SELECT b FROM Book b ORDER BY b.sales DESC")
-//    List<Book> findBestSellers();
 }

@@ -65,22 +65,28 @@ th {
     <table class="table">
         <thead>
         <tr>
-            <th width="10%">Order No.</th>
-            <th width="20%">Order Date</th>
-            <th width="10%">Total Amount</th>
+            <th width="7%">Order No.</th>
+            <th width="15%">Order Date</th>
+            <th width="20%">Book Title</th>
+            <th width="7%">Total Price</th>
             <th width="10%">Delivery status</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Thymeleaf 반복문을 이용해 주문내역을 출력 -->
         <tr th:each="order : ${user.orders}">
             <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getId()}"></a></td>
-                <!-- 주문날짜 표시 -->
-            <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getOrderDate()}"></a></td>
-            <!-- 총 주문 금액 표시 -->
-            <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getTotalAmount() + '원'}"></a></td>
-                <!-- 배송상태 표시 -->
-            <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.orderLists[0].getStatus()}"></a></td>
+            <!-- 주문날짜 -->
+            <td><span th:text="${order.getOrderDate()}"></span></td>
+            <!-- 책 제목 -->
+            <td>
+                <span th:each="orderList : ${order.orderLists}">
+                    <span th:text="${orderList.book.getTitle()}"></span><br>
+                </span>
+            </td>
+            <!-- 총 주문 금액 -->
+            <td><span th:text="${order.getTotalAmount()}"></span></td>
+            <!-- 배송상태 -->
+            <td><span th:text="${order.orderLists[0].getStatus()}"></span></td>
         </tr>
         </tbody>
     </table>

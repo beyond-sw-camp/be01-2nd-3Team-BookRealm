@@ -108,7 +108,7 @@ div {
 				</tr>
 			</thead>
 			<tbody>
-				<!-- 예제 도서 정보 -->
+				<!-- 도서 정보 -->
 				<tr th:each="cart : ${cartBooks}">
 					<td class="text-center"><img
 						th:if="${cart.book.image != null}" th:src="${cart.book.image}"
@@ -140,7 +140,7 @@ div {
 		<!-- 총액 표시 -->
     <div class="total-amount text-left" style="margin-top: 30px;">
     	<p>총 주문금액</p>
-        <!-- 여기에 실제 총 주문금액을 표시 -->
+        <!-- 실제 총 주문금액 표시 -->
         <p><span th:text="${totalPrice}" style="font-size: 28px;"></span> 원</p>
     </div>	
 		<hr style="margin-top: 5px; margin-bottom: 5px;">
@@ -155,7 +155,6 @@ div {
 
 		<script>
 			function checkout() {
-				// 결제하기 버튼을 클릭했을 때 수행할 작업을 여기에 추가하세요.
 				console.log('결제하기 버튼 클릭됨');
 			}
 		</script>
