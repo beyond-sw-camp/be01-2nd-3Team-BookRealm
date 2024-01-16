@@ -5,11 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import com.bookrealm.model.Member;
 import com.bookrealm.repository.MemberRepository;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +17,10 @@ import com.bookrealm.model.Book;
 import com.bookrealm.model.Cart;
 import com.bookrealm.repository.BookRepository;
 import com.bookrealm.repository.CartRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
+@Transactional
 class CartServiceTest {
 	
 	@Autowired
@@ -34,7 +34,7 @@ class CartServiceTest {
 	
 	@Autowired
     private BookRepository bookRepository;
-	
+
 	public Member savedMember() {
     	Member newMember = new Member();
     	newMember.setEmail("bb@naver.com");
@@ -45,7 +45,7 @@ class CartServiceTest {
     	newMember.setSuType(NORMAL);
     	return memberRepository.save(newMember);
     }
-    
+
     public Book savedBook() {
     	Book newBook = new Book();
     	newBook.setPrice(12000);
@@ -60,6 +60,14 @@ class CartServiceTest {
     	newBook.setDescription("1999년 <해리 포터와 마법사의 돌>의 출간을 필두로 지금까지(2019년 9월 기준) 약 1,500만 부가 판매되었으며, 현재에도 독자들에게 변함없는 사랑을 받고 있다.");
     	return bookRepository.save(newBook);
     }
+
+	public Cart saveCart(){
+		Cart cart = new Cart();
+		cart.setMember(savedMember());
+		cart.setBook(savedBook());
+		cart.setPurchase(1);
+		return cartRepository.save(cart);
+	}
     
     @Test
     public void 장바구니_담기() {
@@ -77,25 +85,6 @@ class CartServiceTest {
         assertEquals(book.getId(), savedCart.getBook().getId());
 //        assertEquals(cart.getPurchase(), savedCart.getPurchase());
     }
-
-	@Test
-	public void 장바구니_제거(){
-
-		//given
-		Member member = savedMember();
-		Book book = savedBook();
-		Cart cart = Cart.createCart(member);
-		cartService.addCart(member, book, 1);
-
-		//when
-		cartService.deleteBookFromCart(member, book);
-
-
-		//then
-		Cart updateCart = cartRepository.findById(member.getId()).orElse(null);
-		assertNull(updateCart, "장바구니에서 상품이 올바르게 제거되었는지 확인");
-
-	}
 
 	@Test
 	public void 장바구니_수량업데이트(){

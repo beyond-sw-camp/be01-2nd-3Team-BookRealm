@@ -69,7 +69,6 @@ class ReviewServiceTest {
     @Transactional
     public Review saveReview(){
         Review review = new Review();
-        review.setId(1L);
         review.setBook(savedBook());
         review.setMember(savedMember());
         review.setContents("굿굿굿굿");
@@ -94,7 +93,7 @@ class ReviewServiceTest {
         reviewService.addReview(member,book,reviewDto.getContents(),reviewDto.getPopular());
 
         //then
-        Review savedReview = reviewRepository.findAll().get(0);
+        Review savedReview = reviewRepository.findByMemberId(member.getId()).get(0);
 
         assertEquals(member.getId(), savedReview.getMember().getId());
         assertEquals(book.getId(), savedReview.getBook().getId());
