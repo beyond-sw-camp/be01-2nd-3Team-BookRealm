@@ -1,44 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>마이페이지</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="starter-template.css" rel="stylesheet">
+
+<title>Book Realm</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+.contents {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+	overflow: auto;
+}
+
+.container {
+	max-width: 1000px;
+	margin: 0 auto; 
+	margin-top: 50px !important;
+}
+</style>
 </head>
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 <div class="container mt-5">
-    <h2>마이페이지</h2>
+    <h2 style="font-weight: bold;">마이페이지</h2>
 
     <!-- Two-column layout using Bootstrap's Grid System -->
     <div class="row mt-4">
         <!-- Left Column for Personal Information and Address -->
         <div class="col-md-6">
             <!-- Display Personal Information -->
-            <div style="margin-bottom: 50px">
-                <h4>개인 정보</h4>
-                <p><strong>이메일:</strong> <span th:text="${member.email}"></span></p>
-                <p><strong>이름:</strong> <span th:text="${member.username}"></span></p>
+            <div style="margin-bottom: 50px; margin-top: 20px;">
+                <h4 style="margin-bottom: 20px;">개인 정보</h4>
+                <p><strong>이메일 :</strong> <span th:text="${member.email}"></span></p>
+                <p><strong>이름 :</strong> <span th:text="${member.username}"></span></p>
             </div>
 
             <!-- Display Address with Edit Button -->
             <div class="mt-4">
-                <h4>주소</h4>
-                <p><strong>우편번호:</strong> <span th:text="${member.address.postcode}"></span></p>
-                <p><strong>주소:</strong> <span th:text="${member.address.address}"></span></p>
-                <p><strong>상세주소:</strong> <span th:text="${member.address.detailAddress}"></span></p>
-                <p><strong>참고사항:</strong> <span th:text="${member.address.extraAddress}"></span></p>
+                <h4 style="margin-bottom: 20px;">주소</h4>
+                <p><strong>우편번호 :</strong> <span th:text="${member.address.postcode}"></span></p>
+                <p><strong>주소 :</strong> <span th:text="${member.address.address}"></span></p>
+                <p><strong>상세주소 :</strong> <span th:text="${member.address.detailAddress}"></span></p>
+                <p><strong>참고사항 :</strong> <span th:text="${member.address.extraAddress}"></span></p>
                 <!-- Add Edit button for Address -->
-                <a class="btn btn-secondary" th:href="@{/myPage/address}">주소 수정</a>
+                <a class="btn btn-primary" th:href="@{/myPage/address}">주소 수정</a>
             </div>
         </div>
 
         <!-- Right Column for Password Change and Phone Number Change -->
         <div class="col-md-6">
             <!-- Change Password Form -->
-            <div style="margin-bottom: 50px">
-                <h4>비밀번호 변경</h4>
+            <div style="margin-bottom: 50px; margin-top: 20px;">
+                <h4 style="margin-bottom: 20px;">비밀번호 변경</h4>
                 <form th:action="@{/myPage/changePassword}" method="post">
                     <!-- 현재 비밀번호 입력 -->
                     <div class="form-group">
@@ -56,19 +88,18 @@
                 </form>
             </div>
 
-            <!-- Display Phone Number with Edit Button -->
             <div class="mt-4">
-                <h4>전화번호 변경</h4>
-                <p><strong>전화번호:</strong> <span th:text="${member.phone}"></span></p>
-                <!-- Add Edit button for Phone Number -->
-                <a class="btn btn-secondary" th:href="@{/myPage/phone}">번호 수정</a>
+                <h4 style="margin-bottom: 20px;">전화번호 변경</h4>
+                <p><strong>전화번호 :</strong> <span th:text="${member.phone}"></span></p>
+                <a class="btn btn-primary" th:href="@{/myPage/phone}">번호 수정</a>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script th:inline="javascript" type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js}" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+
 </body>
 </html>
