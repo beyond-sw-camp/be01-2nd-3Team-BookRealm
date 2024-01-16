@@ -76,11 +76,11 @@ th {
         <tr th:each="order : ${user.orders}">
             <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getId()}"></a></td>
             <!-- 주문날짜 -->
-            <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getOrderDate()}"></a></td>
+            <td><span th:text="${order.getOrderDate()}"></span></td>
             <!-- 책 제목 -->
             <td>
                 <span th:each="orderList : ${order.orderLists}">
-                    <a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${orderList.book.getTitle()}"></a><br>
+                    <span th:text="${orderList.book.getTitle()}"></span><br>
                 </span>
             </td>
             <!-- 총 주문 금액 -->
