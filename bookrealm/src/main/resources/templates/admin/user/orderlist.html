@@ -1,10 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head>
     <meta charset="UTF-8">
-    <title>OrderList</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>주문상세</title>
 </head>
 <body>
-
+<div class="container mt-4">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>주문번호</th>
+            <th>책 제목</th>
+            <th>가격</th>
+            <th>수량</th>
+            <th>배송상태</th>
+            <!-- 다른 주문 정보들... -->
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Thymeleaf 반복문을 이용해 주문내역을 출력 -->
+        <tr th:each="order : ${orderLists}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.book.title}"></td>
+            <td th:text="${order.book.price}"></td>
+            <td th:text="${order.purchase}"></td>
+            <td>
+                <form name="statusForm" th:action="@{/admin/member/order/stat}" method="post">
+                    <select id="selectStatus" name="selectStatus" class="form-control" >
+                        <option th:each="stat : ${status}" th:value="${stat}" th:text="${stat.name()}"
+                                th:selected="${stat} == ${order.status}">
+                    </select>
+                    <input hidden="hidden" name="orderList_id" th:value="${order.id}">
+                    <input hidden="hidden" name="order_id" th:value="${order.order.id}">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
+<script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script th:inline="javascript">
+    var prev_val;
+    $("#selectStatus").focus(function() {
+        prev_val = $(this).val();
+    }).change(function() {
+       var form = document.statusForm;
+       form.submit();
+    });
+</script>
 </html>

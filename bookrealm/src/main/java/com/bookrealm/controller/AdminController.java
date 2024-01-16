@@ -1,15 +1,13 @@
 package com.bookrealm.controller;
 
-import com.bookrealm.model.Book;
-import com.bookrealm.model.Member;
-import com.bookrealm.model.Order;
-import com.bookrealm.model.Role;
+import com.bookrealm.model.*;
 import com.bookrealm.naver.NaverBookClient;
 import com.bookrealm.naver.dto.SearchBookReq;
 import com.bookrealm.naver.dto.SearchBookRes;
 import com.bookrealm.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -109,5 +107,22 @@ public class AdminController {
         adminService.save(editbook);
 
         return "redirect:/admin/member";
+    }
+
+    @GetMapping("/member/orders")
+    public String memberOrderList(Model model, @RequestParam Long orderId){
+        List<OrderList> orderLists = adminService.findAllOrderListByOrderId(orderId);
+        model.addAttribute("orderLists", orderLists);
+        model.addAttribute("status", Status.values());
+
+        return "/admin/user/orderlist";
+    }
+
+    @PostMapping("/member/order/stat")
+    public String editRole(@RequestParam(value = "selectStatus") Status status,
+                           @RequestParam(value = "orderList_id") Long orderListId,
+                           @RequestParam(value = "order_id") Long orderId){
+        adminService.updateOrderListStatus(status,orderListId);
+        return "redirect:/admin/member/orders?orderId=" + orderId;
     }
 }

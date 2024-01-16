@@ -13,6 +13,46 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;200;400;500&display=swap" rel="stylesheet">
+
+<!-- 페이지 상단에 추가된 JavaScript 코드 -->
+<!-- 페이지 상단에 추가된 JavaScript 코드 -->
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function () {
+        handleOutOfStock();
+    });
+
+    function handleOutOfStock() {
+        // 여기에서 도서의 실제 재고 값을 가져오세요.
+        var stockElement = document.getElementById("stockValue");
+        var stock = stockElement ? parseInt(stockElement.innerText) : 0;
+
+        if (stock === 0) {
+            hideButtonsAndShowMessage();
+        }
+    }
+
+    function hideButtonsAndShowMessage() {
+        // 장바구니 버튼 숨기기
+        var cartButton = document.getElementById("cartButton");
+        if (cartButton) {
+            cartButton.style.display = "none";
+        }
+
+        // 바로구매 버튼 숨기기
+        var purchaseButton = document.getElementById("purchaseButton");
+        if (purchaseButton) {
+            purchaseButton.style.display = "none";
+        }
+
+        // 품절 메시지 표시
+        var outOfStockMessage = document.getElementById("outOfStockMessage");
+        if (outOfStockMessage) {
+            outOfStockMessage.style.display = "block";
+        }
+    }
+</script>
+
+
 <title>Book Realm</title>
 <style>
 * {
@@ -122,7 +162,7 @@ ul {
             <div class="book-details" style="margin-top: 20px;">
                 <p>출판사 : <span th:text="${book.publisher}"></span></p>
                 <p>출판일 : <span th:text="${book.publishDate}"></span></p>
-                <p>재고 : <span th:text="${book.stock}"></span></p>
+                <p>재고 : <span id="stockValue" th:text="${book.stock}"></span></p>
                 <p>설명 : <br><span th:text="${book.description}"></span></p>
                 <p style="font-size:32px; margin-top: 30px;"><span th:text="${book.price}" style="font-weight:bold;"></span>원</p>
                 <button type="button" class="btn btn-outline-danger" id="wishButton" onclick="toggleWish()">
@@ -132,22 +172,26 @@ ul {
             </div>
 
             <!-- 도서 구매 및 리뷰 폼 -->
-            <div class="my-3 text-left" style="display: flex;">
-                <form th:action="@{/cart/add}" method="post" style="display: inline;">
-                    <input type="hidden" name="bookId" th:value="${book.id}"/>
-                    <input type="hidden" name="purchase" value="1"/> <!-- 수량 기본값은 1로 설정 -->
-                    <button type="submit" class="btn btn-outline-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px; width: 200px;">
-                        장바구니
-                    </button>
-                </form>
-                <form th:action="@{/order/one}" method="post" style="display: inline;">
-                    <input type="hidden" name="bookId" th:value="${book.id}"/>
-                    <input type="hidden" name="purchase" value="1"/> <!-- 수량 기본값은 1로 설정 -->
-                    <button type="submit" class="btn btn-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px; width: 200px;">
-                        바로구매
-                    </button>
-                </form>
-            </div>
+			<div class="my-3 text-left" style="display: flex;">
+			    <form th:action="@{/cart/add}" method="post" style="display: inline;">
+			        <input type="hidden" name="bookId" th:value="${book.id}"/>
+			        <input type="hidden" name="purchase" value="1"/> <!-- 수량 기본값은 1로 설정 -->
+			        <button type="submit" id="cartButton" class="btn btn-outline-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px; width: 200px;">
+			            장바구니
+			        </button>
+			    </form>
+			    <form th:action="@{/order/one}" method="post" style="display: inline;">
+			        <input type="hidden" name="bookId" th:value="${book.id}"/>
+			        <input type="hidden" name="purchase" value="1"/> <!-- 수량 기본값은 1로 설정 -->
+			        <button type="submit" id="purchaseButton" class="btn btn-primary me-auto mb-2 mb-lg-0" style="margin-right: 10px; width: 200px;">
+			            바로구매
+			        </button>
+			    </form>
+			    <!-- 품절 메시지 -->
+			    <div id="outOfStockMessage" style="display: none; color: red;">
+			        품절된 상품입니다.
+			    </div>
+			</div>
 
         </div>
 

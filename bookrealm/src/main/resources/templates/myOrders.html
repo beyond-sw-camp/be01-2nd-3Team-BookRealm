@@ -1,38 +1,102 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <title>회원 주문내역</title>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="starter-template.css" rel="stylesheet">
+
+<title>Book Realm</title>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+.contents {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding-left: 20px;
+	padding-right: 20px;
+	overflow: auto;
+}
+
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+</style>
 </head>
 <body>
-<div class="container mt-4">
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+<div class="contents container mt-5">
     <h2 th:text="${user.username + '님의 주문내역'}"></h2>
     <table class="table">
         <thead>
         <tr>
-            <th>주문번호</th>
-            <th>책 제목</th>
-            <th>배송상태</th>
-            <!-- 다른 주문 정보들... -->
+            <th width="7%">Order No.</th>
+            <th width="15%">Order Date</th>
+            <th width="20%">Book Title</th>
+            <th width="7%">Total Price</th>
+            <th width="10%">Delivery status</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Thymeleaf 반복문을 이용해 주문내역을 출력 -->
         <tr th:each="order : ${user.orders}">
-            <td th:text="${order.getId()}"></td>
+            <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getId()}"></a></td>
+            <!-- 주문날짜 -->
+            <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getOrderDate()}"></a></td>
+            <!-- 책 제목 -->
             <td>
-                <!-- 책 제목과 배송상태를 함께 표시 -->
                 <span th:each="orderList : ${order.orderLists}">
-                    <span th:text="${orderList.book.getTitle()}"></span>
-                    <span th:text="${orderList.getStatus()}"></span>
-                    <br/>
+                    <a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${orderList.book.getTitle()}"></a><br>
                 </span>
             </td>
+            <!-- 총 주문 금액 -->
+            <td><span th:text="${order.getTotalAmount()}"></span></td>
+            <!-- 배송상태 -->
+            <td><span th:text="${order.orderLists[0].getStatus()}"></span></td>
         </tr>
         </tbody>
     </table>
 </div>
+
+<!-- Bootstrap 스크립트 로드 -->
+<script th:inline="javascript" type="text/javascript" th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js}"
+		integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script th:inline="javascript" th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js}"
+		integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 </body>
 </html>
