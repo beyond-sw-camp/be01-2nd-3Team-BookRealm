@@ -1,12 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.w3.org/1999/xhtml">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>주소 수정</title>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+	crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="starter-template.css" rel="stylesheet">
+
+<title>Book Realm</title>
+<style>
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.contents {
+	margin-bottom: 100px; 
+}
+</style>
 <body>
+<nav th:replace="~{admin/navbar-admin.html :: navbarFragment-admin}"></nav>
+
 <div class="container mt-5">
     <form th:action="@{/myPage/changeAddress}" method="post">
         <div class="form-group row">
@@ -17,7 +43,7 @@
         </div>
         <div class="form-group row">
             <div class="col-sm-10 offset-sm-2">
-                <input type="button" class="btn btn-primary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+                <input type="button" class="btn btn-sm btn-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
             </div>
         </div>
         <div class="form-group row">
@@ -38,7 +64,11 @@
                 <input type="text" class="form-control" id="sample6_extraAddress" placeholder="참고항목" th:field="*{address.extraAddress}">
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">변경</button>
+        <div class="form-group row text-right" style="border-top: 1px solid #ccc; padding-top: 20px; margin-top: 50px;">
+            <div class="col-sm-10 offset-sm-2">
+                <button type="submit" class="btn btn-primary">변경</button>
+            </div>
+        </div>
     </form>
 </div>
 
