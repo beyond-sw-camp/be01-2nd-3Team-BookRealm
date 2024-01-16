@@ -75,17 +75,17 @@ th {
         <tbody>
         <tr th:each="order : ${user.orders}">
             <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getId()}"></a></td>
-            <!-- 주문날짜 표시 -->
+            <!-- 주문날짜 -->
             <td><a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${order.getOrderDate()}"></a></td>
-            <!-- 책 제목 표시 -->
+            <!-- 책 제목 -->
             <td>
                 <span th:each="orderList : ${order.orderLists}">
                     <a th:href="@{/myPage/myOrders/detail(id=*{order.id})}" th:text="${orderList.book.getTitle()}"></a><br>
                 </span>
             </td>
-            <!-- 총 주문 금액 표시 -->
+            <!-- 총 주문 금액 -->
             <td><span th:text="${order.getTotalAmount()}"></span></td>
-            <!-- 배송상태 표시 -->
+            <!-- 배송상태 -->
             <td><span th:text="${order.orderLists[0].getStatus()}"></span></td>
         </tr>
         </tbody>
