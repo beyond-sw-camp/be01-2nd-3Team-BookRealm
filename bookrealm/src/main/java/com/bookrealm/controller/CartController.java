@@ -85,17 +85,14 @@ public class CartController {
         if (principal != null) {
             Member member = memberService.getUser(principal.getName());
 
-            // Remove the specific item from the cart
             cartRepository.deleteByIdAndMemberId(cartId, member.getId());
 
-            // Check if the cart is empty after removal
+            // 제거 후 카트가 비었는지 확인
             List<Cart> remainingItems = cartRepository.findByMemberId(member.getId());
             if (remainingItems.isEmpty()) {
-                // Redirect to book-detail if the cart is empty
                 return "redirect:/cart/add";
             }
         }
-        // Redirect to cart page in any other case
         return "redirect:/cart/add";
     }
 

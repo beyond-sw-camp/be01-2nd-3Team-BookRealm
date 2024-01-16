@@ -21,7 +21,7 @@ public class BookService {
 		this.bookRepository = bookRepository;
 	}
 
-	// 모든 도서 조회 (페이징)
+	// 모든 도서 조회
     public Page<Book> findAll(Pageable pageable) {
         return bookRepository.findAll(pageable);
     }
@@ -37,7 +37,7 @@ public class BookService {
         return searchResults;
     }
 
-	// 판매량 기준으로 상위 5개 도서 조회 (페이징)
+	// 판매량 기준으로 상위 5개 도서 조회
 	public List<Book> findBestSellers() {
 		Pageable pageable = PageRequest.of(0, 5);
 		Page<Book> bestSellersPage = bookRepository.findBestSellers(pageable);

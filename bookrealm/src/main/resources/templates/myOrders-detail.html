@@ -69,7 +69,7 @@ h3 {
 <body>
 <nav th:replace="~{navbar :: navbarFragment}"></nav>
 <div class="contents container mt-5">
-	<!-- 주문번호 표시 -->
+	<!-- 주문번호 -->
 	<a style="font-size: 18px; font-weight: bold;" th:text="${'주문번호 : ' + order.getId()}"></a>
 	
 	<!-- 주문 내용 -->
@@ -82,7 +82,7 @@ h3 {
 	            <span th:text="${orderList.book.getTitle() + ' - ' + orderList.purchase + '권 ' + '｜'}" ></span>
 	            <span style="color:red;" th:text="${orderList.status}" ></span>
 	        </div>
-	        <div class="total-amount">
+	        <div class="total-amount" style="margin-bottom: 10px;">
     			<span>Total Price : </span>
    				<span style="padding-left: 10px; font-size: 20px;" th:each="currentOrder : ${user.orders}" th:if="${currentOrder.getId() eq order.getId()}" th:text="${currentOrder.getTotalAmount()}"></span>
 			</div>
@@ -95,7 +95,7 @@ h3 {
 	        <h3>주문자 정보</h3>
 	    </div>
 	    <div class="card-body">
-	        <div class="form-group">
+	        <div class="form-group" style="margin-top: 20px;">
 	            <label for="username">이름</label> 
 	            <p class="form-control-static" style="font-weight: bold;" th:text="${order.member.username}"></p>
 	        </div>
@@ -106,13 +106,13 @@ h3 {
 	    </div>
 	</div>
 	
-	<!-- 배송지 정보 입력 -->
+	<!-- 배송지 정보 -->
 	<div class="card mt-4">
 	    <div class="card-header">
 	        <h3>배송지 정보</h3>
 	    </div>
 	    <div class="card-body">
-	        <div class="form-group">
+	        <div class="form-group" style="margin-top: 20px;">
 	            <label for="postcode">우편번호</label> 
 	            <p class="form-control-static" style="font-weight: bold;" th:text="${order.member.address.postcode}"></p>
 	        </div>
@@ -131,14 +131,14 @@ h3 {
 	    </div>
 	</div>
 	
-	<!-- 결제 정보 입력 -->
+	<!-- 결제 정보 -->
 	<div class="card mt-4">
 	    <div class="card-header">
 	        <h3>결제 정보</h3>
 	    </div>
 	    <div class="card-body">
 	        <!-- 결제 수단 선택 -->
-	        <div class="form-group">
+	        <div class="form-group" style="margin-top: 20px;">
 	            <label for="paymentMethod">결제 수단</label>
 	            <p class="form-control-static" style="font-weight: bold;" th:text="${order.payment}"></p>
 	        </div>
