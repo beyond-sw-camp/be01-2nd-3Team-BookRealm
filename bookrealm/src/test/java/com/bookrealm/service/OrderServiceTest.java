@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,9 @@ class OrderServiceTest {
     public Order saveOrder(){
         Order order = new Order();
         order.setId(1L);
+        order.setOrderDate(LocalDateTime.now());
+        order.setTotalAmount(10);
+        order.setPayment(CREDIT_CARD);
         return orderRepository.save(order);
     }
 
@@ -100,23 +104,21 @@ class OrderServiceTest {
     @Test
     public void 결재수단선택및결재(){
         //given
-        Book book = savedBook();
-        OrderList orderList1 = new OrderList();
-        orderList1.setBook(book);
-        orderList1.setPurchase(2);
+        OrderList orderList = saveOrderList();
 
         List<OrderList> orderLists = new ArrayList<>();
-        orderLists.add(orderList1);
+        orderLists.add(orderList);
 
-        Order order = new Order();
+        Order order = saveOrder();
         order.setOrderLists(orderLists);
-        Payment payment = CREDIT_CARD;
+
+        order.setPayment(Payment.CREDIT_CARD);
 
         //when
         orderService.selectPayment(order);
 
         //then
-        switch (payment) {
+        switch (order.getPayment()) {
             case CREDIT_CARD:
                 orderService.processCreditCardPayment(order.getTotalAmount());
                 break;
