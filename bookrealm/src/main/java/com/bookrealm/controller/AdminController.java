@@ -122,6 +122,7 @@ public class AdminController {
     public String editRole(@RequestParam(value = "selectStatus") Status status,
                            @RequestParam(value = "orderList_id") Long orderListId,
                            @RequestParam(value = "order_id") Long orderId){
+        System.out.println(status + "/ " + orderListId + " / " + orderId);
         adminService.updateOrderListStatus(status,orderListId);
         return "redirect:/admin/member/orders?orderId=" + orderId;
     }
