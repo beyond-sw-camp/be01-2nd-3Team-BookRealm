@@ -14,15 +14,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;200;400;500&display=swap" rel="stylesheet">
 
-<!-- 페이지 상단에 추가된 JavaScript 코드 -->
-<!-- 페이지 상단에 추가된 JavaScript 코드 -->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", function () {
         handleOutOfStock();
     });
 
     function handleOutOfStock() {
-        // 여기에서 도서의 실제 재고 값을 가져오세요.
+        // 도서의 재고 값
         var stockElement = document.getElementById("stockValue");
         var stock = stockElement ? parseInt(stockElement.innerText) : 0;
 
@@ -51,7 +49,6 @@
         }
     }
 </script>
-
 
 <title>Book Realm</title>
 <style>
@@ -103,7 +100,6 @@ h3.mt-4 {
     margin-top: 100px !important;
 }
 
-/* Book Detail 스타일링 */
 .book-info-container {
     display: flex;
     justify-content: center;
@@ -171,7 +167,7 @@ ul {
                 </button>
             </div>
 
-            <!-- 도서 구매 및 리뷰 폼 -->
+            <!-- 도서 구매 및 리뷰 -->
 			<div class="my-3 text-left" style="display: flex;">
 			    <form th:action="@{/cart/add}" method="post" style="display: inline;">
 			        <input type="hidden" name="bookId" th:value="${book.id}"/>
@@ -199,7 +195,7 @@ ul {
 </div>
 </div>
 
-<!-- 리뷰 작성 폼 -->
+<!-- 리뷰 작성 -->
 <form th:action="@{/detail/add-review}" method="post" class="mt-3">
     <input type="hidden" name="id" th:value="${book.id}"/>
     <div class="form-group" style="margin-top: 20px;">

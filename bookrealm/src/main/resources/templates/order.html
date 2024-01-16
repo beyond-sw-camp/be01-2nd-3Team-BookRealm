@@ -74,9 +74,7 @@ h3 {
 				<h3>주문 내용</h3>
 			</div>
 			<div class="card-body">
-				<!-- Cart 정보 표시 -->
 				<div class="mb-4" th:each="item : ${cartItems}" style="margin-top: 20px;">
-					<!-- 여기에 Cart에서 가져온 정보를 표시하세요 -->
 					<p th:text="${item.book.getTitle() + ' - ' + item.purchase + '권'}"></p>
 				</div>
 			</div>
@@ -102,14 +100,12 @@ h3 {
 			</div>
 		</div>
 
-		<!-- 배송지 정보 입력 폼 -->
+		<!-- 배송지 정보 -->
 		<div class="card mt-4">
 			<div class="card-header">
 				<h3>배송지 정보</h3>
 			</div>
 			<div class="card-body">
-				<!-- 배송지 수정 폼을 작성하세요 -->
-					<!-- 배송지 입력 필드 등을 추가하세요 -->
 					<div class="form-group">
 						<label for="postcode">우편번호</label> 
 						<input type="text" class="form-control" id="postcode" name="postcode"
@@ -132,7 +128,7 @@ h3 {
 					</div>
 			</div>
 		</div>
-		<!-- 결제 정보 입력 폼 -->
+		<!-- 결제 정보 -->
 		<div class="card mt-4">
 			<div class="card-header">
 				<h3>결제 정보</h3>
@@ -151,15 +147,13 @@ h3 {
 
 			</div>
 		</div>
-		<!-- 여기에 총 가격을 표시하세요 -->
+		<!-- 총 주문금액 -->
 		<div class="totalAmount">
    				<div class="total-amount text-left">
         			<p>총 주문금액</p>
         			<p><span th:text="${totalAmount}" style="font-size: 28px;"></span> 원</p>
         		</div>
-        			<!-- totalAmount 값을 전달하는 hidden input 추가 -->
         		<hr style="margin-top: 5px; margin-bottom: 5px;">
-        		<!-- 주문하기 버튼 추가 -->
         		<div class="checkout-button text-right">
         			<button type="submit" class="btn btn-success">주문하기</button>
         		</div>	
