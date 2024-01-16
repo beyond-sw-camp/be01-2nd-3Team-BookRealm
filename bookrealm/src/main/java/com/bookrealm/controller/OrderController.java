@@ -104,7 +104,6 @@ public class OrderController {
 
     @GetMapping("/success")
     public String showOrderCompletePage(Model model, @RequestParam("id") Long id) {
-        // 여기에 주문 정보를 모델에 추가하세요
         Order order = orderService.findById(id);
         model.addAttribute("orderNumber", id);
         model.addAttribute("orderTotalAmount", order.getTotalAmount());
