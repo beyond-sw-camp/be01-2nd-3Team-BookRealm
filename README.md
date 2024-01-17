@@ -15,7 +15,7 @@
  👳‍♂️**최원규** - GitHub 총괄책임, 관리자 서비스 구현, 네이버 도서검색 API 적용 <br />
  <br /><br /><br />
 
- # 기술 스택
+ # 📜 기술 스택
  IDE <br />
  ![intellij](https://img.shields.io/badge/intellijidea-000000.svg?style=for-the-badge&logo=intellijidea&logoColor=white) ![STS](https://img.shields.io/badge/STS-6DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)<br />
  BACKEND<br />
@@ -26,6 +26,33 @@
   ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)	![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)<br />
 협업<br />
   ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white) ![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)<br /><br /><br />
+
+# 🛠 프로젝트 주요 기능
+1. 도서 구매:
+   - 원하는 도서를 선택하고 간편한 구매 프로세스를 통해 손쉽게 구매할 수 있습니다.
+3. 도서 검색:
+   - 제목과 작가를 기준으로 도서를 검색할 수 있습니다.
+3. 장바구니:
+   - 원하는 도서를 장바구니에 저장하여 나중에 손쉽게 찾아볼 수 있습니다.
+4. 리뷰 작성 및 평점 부여:
+   - 구매한 도서에 대한 리뷰를 작성하고 별점을 부여하여 다른 사용자들과 의견을 공유할 수 있습니다.
+5. 도서 상세 정보 확인:
+   - 도서의 상세 정보를 자세히 확인할 수 있으며, 가격, 수량, 별점, 리뷰 등을 통해 구매 결정을 내릴 수 있습니다.
+6. 관리자의 도서 및 회원 관리:
+   - 도서를 추가, 삭제, 수정하여 소장한 도서를 효과적으로 관리할 수 있습니다.
+   - 회원의 정보를 수정하고 배송상태를 관리할 수 있습니다.
+7. 회원 정보 관리:
+   - 개인 정보를 손쉽게 관리하고 구매 이력, 리뷰 내역을 확인하여 더 나은 서비스를 경험할 수 있습니다.<br /><br /><br />
+
+# 📅 WBS
+
+![image (5)](https://github.com/choi3179/BookRealm/assets/73848116/8a13da2a-7680-42ed-907c-ef2d2d3f9ced)
+<br /><br /><br />
+
+# 🖥 화면설계도
+
+![image (6)](https://github.com/choi3179/BookRealm/assets/73848116/1d6e984e-4fc9-4a7f-b4ca-37d35d342263)
+<br /><br /><br />
 
  
 # 📝 프로젝트 요구사항 분석서
@@ -48,16 +75,9 @@
   관리자는 구매완료된 도서를 조회할 수 있다.
   관리자는 회원 정보를 관리할 수 있다.
 ```
+<br /><br /><br />
 
 # ⚙ DB설계
-<h3>✔ 개념적 설계</h3>
-
-![image](https://github.com/choi3179/BookRealm/assets/145534055/eebaad93-cdd2-422a-aa01-ff4507f995f6) <br /><br />
-
-<h3>✔ 논리적 설계</h3>
 
 ![이미지](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EB%85%BC%EB%A6%AC%EC%A0%81%20%EC%84%A4%EA%B3%84.png) <br /><br />
 
-<h3>✔ 물리적 설계</h3>
-
-[물리적 설계 보기](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EB%AC%BC%EB%A6%AC%EC%A0%81%20%EC%84%A4%EA%B3%84.sql)
