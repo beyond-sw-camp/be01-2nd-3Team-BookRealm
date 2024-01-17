@@ -56,7 +56,7 @@
 
  
 # 📝 프로젝트 요구사항 분석서
-[요구사항 분석서](https://github.com/choi3179/BookRealm/blob/dev/%EB%AC%B8%EC%84%9C%EC%9E%90%EB%A3%8C%20%EB%B0%8F%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EB%B6%84%EC%84%9D.png) <br /><br /><br />
+[요구사항 분석서](https://github.com/choi3179/BookRealm/blob/dev/%EB%AC%B8%EC%84%9C%EC%9E%90%EB%A3%8C%20%EB%B0%8F%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EB%B6%84%EC%84%9D.png) <br />
 ```
   회원은 도서를 구매할 수 있다.
   회원과 비회원은 (제목,작가, 베스트셀러 여부, 카테고리)를 기준으로 검색을 할 수 있다.
@@ -79,5 +79,159 @@
 
 # ⚙ DB설계
 
-![이미지](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EB%85%BC%EB%A6%AC%EC%A0%81%20%EC%84%A4%EA%B3%84.png) <br /><br />
+![이미지](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EB%85%BC%EB%A6%AC%EC%A0%81%20%EC%84%A4%EA%B3%84.png) <br /><br /><br />
+
+# 📂 프로젝트 구조
+
+```
++---main
+|   +---java
+|   |   \---com
+|   |       \---bookrealm
+|   |           |   BookrealmApplication.java
+|   |           |   
+|   |           +---config
+|   |           |       SecurityConfig.java
+|   |           |       SwaggerConfig.java
+|   |           |       
+|   |           +---controller
+|   |           |       AdminController.java
+|   |           |       AdminRestController.java
+|   |           |       BookController.java
+|   |           |       CartController.java
+|   |           |       JoinController.java
+|   |           |       LoginController.java
+|   |           |       OrderController.java
+|   |           |       UserController.java
+|   |           |       
+|   |           +---exception
+|   |           |       AppException.java
+|   |           |       ErrorCode.java
+|   |           |       ExceptionManager.java
+|   |           |       
+|   |           +---model
+|   |           |   |   Address.java
+|   |           |   |   Book.java
+|   |           |   |   Cart.java
+|   |           |   |   Favorite.java
+|   |           |   |   Member.java
+|   |           |   |   Order.java
+|   |           |   |   OrderList.java
+|   |           |   |   Payment.java
+|   |           |   |   Review.java
+|   |           |   |   Role.java
+|   |           |   |   Status.java
+|   |           |   |   SuType.java
+|   |           |   |   
+|   |           |   \---dto
+|   |           |           JoinDto.java
+|   |           |           LoginDto.java
+|   |           |           OrderDto.java
+|   |           |           ReviewDto.java
+|   |           |           
+|   |           +---naver
+|   |           |   |   NaverBookClient.java
+|   |           |   |   
+|   |           |   \---dto
+|   |           |           SearchBookReq.java
+|   |           |           SearchBookRes.java
+|   |           |           
+|   |           +---repository
+|   |           |       BookRepository.java
+|   |           |       CartRepository.java
+|   |           |       FavoriteRepository.java
+|   |           |       MemberRepository.java
+|   |           |       OrderListRepository.java
+|   |           |       OrderRepository.java
+|   |           |       ReviewRepository.java
+|   |           |       
+|   |           \---service
+|   |                   AdminService.java
+|   |                   AdminServiceImpl.java
+|   |                   BookService.java
+|   |                   CartService.java
+|   |                   MemberDetailsService.java
+|   |                   MemberService.java
+|   |                   OrderService.java
+|   |                   ReviewService.java
+|   |                   
+|   \---resources
+|       |   application-private.yml
+|       |   application.properties
+|       |   application.yml
+|       |   
+|       +---static
+|       |       bootstrap.min.css
+|       |       bootstrap.min.js
+|       |       myscript.js
+|       |       style.css
+|       |       
+|       \---templates
+|           |   add-review-form.html
+|           |   addressMod.html
+|           |   book-cart.html
+|           |   book-detail.html
+|           |   book-search.html
+|           |   form_errors.html
+|           |   index.html
+|           |   login_form.html
+|           |   myOrders-detail.html
+|           |   myOrders.html
+|           |   myPage.html
+|           |   myReviews.html
+|           |   navbar.html
+|           |   order.html
+|           |   orderOne.html
+|           |   order_complete.html
+|           |   phoneMod.html
+|           |   review-list.html
+|           |   signup_form.html
+|           |   
+|           \---admin
+|               |   home.html
+|               |   navbar-admin.html
+|               |   
+|               +---book
+|               |       edit.html
+|               |       manage.html
+|               |       search.html
+|               |       search_result_save.html
+|               |       
+|               \---user
+|                       manage.html
+|                       orderlist.html
+|                       users.html
+|                       
+\---test
+    \---java
+        \---com
+            \---bookrealm
+                |   BookrealmApplicationTests.java
+                |   
+                +---naver
+                |       NaverBookClientTest.java
+                |       
+                \---service
+                        AdminServiceImplTest.java
+                        BookServiceTest.java
+                        CartServiceTest.java
+                        OrderServiceTest.java
+                        ReviewServiceTest.java
+                        
+```
+<br /><br /><br />
+
+# 📐 서비스 아키텍처
+
+![image (7)](https://github.com/choi3179/BookRealm/assets/73848116/5f8f7d9b-19ce-46a7-a672-deddd1cde319)
+
+
+<br /><br /><br />
+
+# [🎬 시연 영상](https://youtu.be/xgWXry78Gug)
+
+
+#  회고
+
+
 
