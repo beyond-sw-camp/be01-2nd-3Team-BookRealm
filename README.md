@@ -232,7 +232,14 @@
 
 <br /><br /><br />
 
-#  회고
+# 🔥 아쉬운점
 
+![image (9)](https://github.com/choi3179/BookRealm/assets/73848116/ef5584dc-0031-496a-8c3b-a174182d193e)
 
+<br /><br /><br />
 
+# 💭 회고
+
+![image (10)](https://github.com/choi3179/BookRealm/assets/73848116/56f4f8f9-dc2f-438e-aba3-679f07a69116)
+
+<br /><br /><br />
