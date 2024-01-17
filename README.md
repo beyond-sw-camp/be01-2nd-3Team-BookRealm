@@ -17,7 +17,7 @@
 
  # 기술 스택
  IDE <br />
- ![intellij](https://img.shields.io/badge/intellijidea-000000.svg?style=for-the-badge&logo=intellijidea&logoColor=white)<br />
+ ![intellij](https://img.shields.io/badge/intellijidea-000000.svg?style=for-the-badge&logo=intellijidea&logoColor=white) ![STS](https://img.shields.io/badge/STS-6DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)<br />
  BACKEND<br />
  ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white) ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white) ![SpringBoot](https://img.shields.io/badge/SpringBoot-6DB33F.svg?style=for-the-badge&logo=lombok&logoColor=white)  ![SpringSecurity](https://img.shields.io/badge/springsecurity-6DB33F.svg?style=for-the-badge&logo=springsecurity&logoColor=white)  ![apachmaven](https://img.shields.io/badge/apachemaven-C71A36.svg?style=for-the-badge&logo=apachemaven&logoColor=white) ![lombok](https://img.shields.io/badge/lombok-C70D2C.svg?style=for-the-badge&logo=lombok&logoColor=white) ![mariaDB](https://img.shields.io/badge/mariadb-003545.svg?style=for-the-badge&logo=mariadb&logoColor=white) ![RESSTAPI](https://img.shields.io/badge/RESTapi-1997B5?style=for-the-badge&logo=java&logoColor=white) ![Swagger](https://img.shields.io/badge/swagger-85EA2D.svg?style=for-the-badge&logo=swagger&logoColor=white)  <br />
  FRONTEND<br />
