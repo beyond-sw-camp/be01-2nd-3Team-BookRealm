@@ -56,7 +56,7 @@
 
  
 # 📝 프로젝트 요구사항 분석서
-[요구사항 분석서](https://github.com/choi3179/BookRealm/blob/main/DB%EC%84%A4%EA%B3%84/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%20%EB%B6%84%EC%84%9D.txt) <br /><br /><br />
+[요구사항 분석서](https://github.com/choi3179/BookRealm/blob/dev/%EB%AC%B8%EC%84%9C%EC%9E%90%EB%A3%8C%20%EB%B0%8F%20%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81/%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD%EB%B6%84%EC%84%9D.png) <br /><br /><br />
 ```
   회원은 도서를 구매할 수 있다.
   회원과 비회원은 (제목,작가, 베스트셀러 여부, 카테고리)를 기준으로 검색을 할 수 있다.
