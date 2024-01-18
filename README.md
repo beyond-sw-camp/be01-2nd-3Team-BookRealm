@@ -230,7 +230,7 @@
 
 # [🎬 시연 영상](https://youtu.be/xgWXry78Gug)
 
-https://github.com/choi3179/BookRealm/assets/62015109/0b21fb9b-1593-4a7b-9300-a4c9be149d55
+https://github.com/choi3179/BookRealm/assets/62015109/fa116e6b-2f03-4947-94b3-2954056c65e9
 
 <br /><br /><br />
 
