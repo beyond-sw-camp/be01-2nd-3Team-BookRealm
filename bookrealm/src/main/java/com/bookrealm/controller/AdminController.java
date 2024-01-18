@@ -31,13 +31,13 @@ public class AdminController {
     // 관리자 홈 화면
     @RequestMapping
     public String home(){
-        return "/admin/home";
+        return "admin/home";
     }
 
     // DB 저장 도서 관리 페이지
     @RequestMapping("/book/manage")
     public ModelAndView manageBook() {
-        ModelAndView mav = new ModelAndView("/admin/book/manage");
+        ModelAndView mav = new ModelAndView("admin/book/manage");
         List<Book> bookList = adminService.findAll();
         mav.addObject("bookList",bookList);
         return mav;
@@ -46,7 +46,7 @@ public class AdminController {
     // 수정 폼
     @GetMapping("/book/manage/edit")
     public ModelAndView editBookView(@RequestParam Long id){
-        ModelAndView mav = new ModelAndView("/admin/book/edit");
+        ModelAndView mav = new ModelAndView("admin/book/edit");
         Optional<Book> book = adminService.findById(id);
         mav.addObject("book", book.get());
         return mav;
@@ -63,12 +63,12 @@ public class AdminController {
     @GetMapping("/book/search")
     public String searchBook(){
 
-        return "/admin/book/search";
+        return "admin/book/search";
     }
     @GetMapping("/book/search/result")
     public ModelAndView searchBook(@RequestParam(name = "query") String query){
 
-        ModelAndView mav = new ModelAndView("/admin/book/search_result_save");
+        ModelAndView mav = new ModelAndView("admin/book/search_result_save");
 
         SearchBookRes result = naverBookClient.searchBookApi(new SearchBookReq(query));
         //List<SearchBookRes.SearchBookItem> list = result.getItems();
@@ -82,7 +82,7 @@ public class AdminController {
      */
     @GetMapping("/member")
     public ModelAndView manageMembers(){
-        ModelAndView mav = new ModelAndView("/admin/user/users");
+        ModelAndView mav = new ModelAndView("admin/user/users");
         List<Member> members = adminService.findAllMember();
 
         mav.addObject("members", members);
@@ -92,7 +92,7 @@ public class AdminController {
     // 수정 폼
     @GetMapping("/member/manage")
     public ModelAndView editMemberView(@RequestParam Long id){
-        ModelAndView mav = new ModelAndView("/admin/user/manage");
+        ModelAndView mav = new ModelAndView("admin/user/manage");
         Optional<Member> member = adminService.findMemberById(id);
         List<Order> orders = adminService.findAllOrderByMemberId(id);
         mav.addObject("member", member.get());
@@ -115,7 +115,7 @@ public class AdminController {
         model.addAttribute("orderLists", orderLists);
         model.addAttribute("status", Status.values());
 
-        return "/admin/user/orderlist";
+        return "admin/user/orderlist";
     }
 
     @PostMapping("/member/order/stat")
